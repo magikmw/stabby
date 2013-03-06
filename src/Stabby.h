@@ -23,6 +23,7 @@
 // SFML includes
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
+#include <SFML/Window.h>
 
 // Version and title name
 #define WINDOW_NAME "Stabby "
@@ -39,12 +40,18 @@
 // Size of tiles/sprites in px
 #define TILE_SIZE 32
 
+// Number of textures
 #define TEXTURE_NO 2
+
+// Number of static UI elements
+#define STATIC_UI_NO 5
 
 #define BORDER_OFFSET 14 // Useless border offset (window/panels)
 
 // "0" X value for the right (menu) panel's right border
 #define PANEL_ZERO_X MAP_X * TILE_SIZE + BORDER_OFFSET
+
+enum directions {NW, N, NE, W, E, SW, S, SE};
 
 // basic tile struct
 typedef struct
@@ -53,3 +60,12 @@ typedef struct
     int y;
     sfSprite* sprite;
 } Tile;
+
+// player character structure
+typedef struct
+{
+    int x, y;
+    int direction;
+    sfSprite* sprite;
+    void (*move)(int);
+} Player;

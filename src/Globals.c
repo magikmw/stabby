@@ -22,8 +22,13 @@
 sfTexture* textureArray[TEXTURE_NO];
 void loadTextures(sfTexture* textureArray[TEXTURE_NO]){
     textureArray[0] = sfTexture_createFromFile("assets/sprites.png", NULL);
+    textureArray[1] = sfTexture_createFromFile("assets/border.png", NULL);
 }
 
 // Variables
 sfClock* fpsClock;
+Player player;
+
+// Arrays
 Tile map[MAP_X * MAP_Y];
+sfSprite* staticUI[STATIC_UI_NO];

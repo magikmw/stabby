@@ -25,8 +25,6 @@ int main()
 {
     sfVideoMode mode = {WINDOW_X, WINDOW_Y, 32};
     sfRenderWindow* window;
-    sfTexture* texture;
-    sfSprite* sprite;
     sfFont* font;
     sfText* text;
     sfEvent event;
@@ -34,40 +32,25 @@ int main()
     /* Create the main window */
     char NAME_VERSION[] = WINDOW_NAME; strcat(NAME_VERSION, VERSION);
     window = sfRenderWindow_create(mode, NAME_VERSION, sfClose, NULL);
-
-    /* Load a sprite to display */
-    texture = sfTexture_createFromFile("assets/sprites.png", NULL);
-    sprite = sfSprite_create();
-    sfSprite_setTexture(sprite, texture, sfTrue);
-    sfSprite_setTextureRect(sprite, (sfIntRect){0*TILE_SIZE, 0*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-    sfSprite_setPosition(sprite, (sfVector2f){0*TILE_SIZE + BORDER_OFFSET, 0*TILE_SIZE + BORDER_OFFSET});
-    // sfSprite_setScale(sprite, (sfVector2f){0.5, 0.5});
+    // sfRenderWindow_setFramerateLimit(window, 120);
 
     loadTextures(textureArray);
     createMap(map);
+    createStaticUI(staticUI);
+    player.x = 2;
+    player.y = 2;
+    player.direction = N;
+    player.sprite = sfSprite_create();
+    sfSprite_setTexture(player.sprite, textureArray[0], sfTrue);
+    sfSprite_setOrigin(player.sprite, (sfVector2f){TILE_SIZE/2, TILE_SIZE/2});
+    sfSprite_setTextureRect(player.sprite, (sfIntRect){0*TILE_SIZE, 0*TILE_SIZE, TILE_SIZE, TILE_SIZE});
+    sfSprite_setPosition(player.sprite, (sfVector2f){player.x*TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET, player.y*TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET});
+    player.move = player_move;
 
-    sfTexture* border_texture = sfTexture_createFromFile("assets/border.png", NULL);
-    sfSprite* borderTop = sfSprite_create();
-    sfSprite_setTexture(borderTop, border_texture, sfTrue);
-
-    sfSprite* borderBot = sfSprite_create();
-    sfSprite_setTexture(borderBot, border_texture, sfTrue);
-    sfSprite_setPosition(borderBot, (sfVector2f){0, WINDOW_Y-BORDER_OFFSET});
-
-    sfSprite* borderLeft = sfSprite_create();
-    sfSprite_setTexture(borderLeft, border_texture, sfTrue);
-    sfSprite_setPosition(borderLeft, (sfVector2f){BORDER_OFFSET, 0});
-    sfSprite_setRotation(borderLeft, 90);
-    
-    sfSprite* borderRight = sfSprite_create();
-    sfSprite_setTexture(borderRight, border_texture, sfTrue);
-    sfSprite_setPosition(borderRight, (sfVector2f){WINDOW_X, 0});
-    sfSprite_setRotation(borderRight, 90);
-
-    sfSprite* borderPanel = sfSprite_create();
-    sfSprite_setTexture(borderPanel, border_texture, sfTrue);
-    sfSprite_setPosition(borderPanel, (sfVector2f){PANEL_ZERO_X+BORDER_OFFSET, 0});
-    sfSprite_setRotation(borderPanel, 90);    
+    sfSprite* mob = sfSprite_create();
+    sfSprite_setTexture(mob, textureArray[0], sfTrue);
+    sfSprite_setTextureRect(mob, (sfIntRect){1*TILE_SIZE, 0*TILE_SIZE, TILE_SIZE, TILE_SIZE});
+    sfSprite_setPosition(mob, (sfVector2f){4*TILE_SIZE + BORDER_OFFSET, 2*TILE_SIZE + BORDER_OFFSET});    
 
     /* Create a graphical text to display */
     font = sfFont_createFromFile("assets/mandrill.ttf");
@@ -89,6 +72,8 @@ int main()
     sfText_setPosition(debug_text, (sfVector2f){WINDOW_X-BORDER_OFFSET*2-1, BORDER_OFFSET});
     char fps_text[5];
 
+    int player_action = 0;
+
     /* Start the game loop */
     while (sfRenderWindow_isOpen(window))
     {
@@ -99,18 +84,19 @@ int main()
         while (sfRenderWindow_pollEvent(window, &event))
         {
             /* Close window : exit */
-            if (event.type == sfEvtClosed)
-            sfRenderWindow_close(window);
+            if (event.type == sfEvtClosed || player_action == 2)
+                sfRenderWindow_close(window);
+            else if (event.type == sfEvtKeyPressed)
+                player_action = handleKeys();
         }
+
+        // player_action = handleKeys();
 
         /* Clear the screen */
         sfRenderWindow_clear(window, (sfColor){200, 200, 200});
 
-        sfRenderWindow_drawSprite(window, borderLeft, NULL);
-        sfRenderWindow_drawSprite(window, borderRight, NULL);
-        sfRenderWindow_drawSprite(window, borderPanel, NULL);
-        sfRenderWindow_drawSprite(window, borderTop, NULL);
-        sfRenderWindow_drawSprite(window, borderBot, NULL);
+        for(int i=0; i < STATIC_UI_NO; i++)
+            sfRenderWindow_drawSprite(window, staticUI[i], NULL);
         
         for(int x=0; x < MAP_X; x++)
             for(int y=0; y < MAP_Y; y++) {
@@ -119,7 +105,9 @@ int main()
             }
 
         /* Draw the sprite */
-        sfRenderWindow_drawSprite(window, sprite, NULL);
+        sfRenderWindow_drawSprite(window, mob, NULL);
+
+        sfRenderWindow_drawSprite(window, player.sprite, NULL);
 
         /* Draw the text */
         sfRenderWindow_drawText(window, text, NULL);

@@ -6,9 +6,13 @@ RELEASENAME=stabby-0.1
 
 SRCFILES=src/StabbyMain.c \
 		 src/Globals.c \
-		 src/Architect.c
+		 src/Architect.c \
+		 src/UI.c \
+		 src/Keyboard.c \
+		 src/Interaction.c \
+		 src/Graphics.c
 
-LIBRARIES =-lcsfml-graphics-d -lcsfml-system-d
+LIBRARIES =-lcsfml-graphics-d -lcsfml-system-d -lcsfml-window-d
 
 all : bin/stabby
 

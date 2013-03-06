@@ -22,7 +22,15 @@ extern sfTexture* textureArray[TEXTURE_NO];
 
 // Variables
 extern sfClock* fpsClock;
+extern Player player;
+
+// Arrays
 extern Tile map[MAP_X * MAP_Y];
+extern sfSprite* staticUI[STATIC_UI_NO];
 
 // Functions
 void createMap(Tile* map);
+void createStaticUI(sfSprite* staticUI[]);
+int handleKeys(void);
+void player_move(int);
+void updatePlayerSprite(void);
