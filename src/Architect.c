@@ -19,7 +19,12 @@
 #include "Stabby.h"
 #include "IncludeGlobals.h"
 
+Edge* alloc_edge(void);
+
 void createMap(Tile* map){
+    map[MAP_X * 5 + 5].edge = alloc_edge();
+    map[MAP_X * 5 + 5].edge -> N = true;
+    map[MAP_X * 5 + 5].edge -> E = true;
     for(int x=0; x < MAP_X; x++)
         for(int y=0; y < MAP_Y; y++) {
             // printf("Array index: %i\n", MAP_X * y + x);
@@ -29,5 +34,42 @@ void createMap(Tile* map){
             sfSprite_setTexture(map[MAP_X * y + x].sprite, textureArray[0], sfTrue);
             sfSprite_setTextureRect(map[MAP_X * y + x].sprite, (sfIntRect){0*TILE_SIZE,1*TILE_SIZE,TILE_SIZE,TILE_SIZE});
             sfSprite_setPosition(map[MAP_X * y + x].sprite, (sfVector2f){map[MAP_X * y + x].x * TILE_SIZE + BORDER_OFFSET, map[MAP_X * y + x].y * TILE_SIZE + BORDER_OFFSET});
+
+            if(map[MAP_X * y + x].edge != NULL)
+            {
+                if(map[MAP_X * y + x].edge -> N == true)
+                {
+                    map[MAP_X * y + x].edge -> sprite[0] = sfSprite_create();
+                    sfSprite_setTexture(map[MAP_X * y + x].edge -> sprite[0], textureArray[0], sfTrue);
+                    sfSprite_setTextureRect(map[MAP_X * y + x].edge -> sprite[0], (sfIntRect){1*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
+                    sfSprite_setPosition(map[MAP_X * y + x].edge -> sprite[0], sfSprite_getPosition(map[MAP_X * y + x].sprite));
+                }
+                if(map[MAP_X * y + x].edge -> S == true)
+                {
+                    map[MAP_X * y + x].edge -> sprite[1] = sfSprite_create();
+                    sfSprite_setTexture(map[MAP_X * y + x].edge -> sprite[1], textureArray[0], sfTrue);
+                    sfSprite_setTextureRect(map[MAP_X * y + x].edge -> sprite[1], (sfIntRect){2*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
+                    sfSprite_setPosition(map[MAP_X * y + x].edge -> sprite[1], sfSprite_getPosition(map[MAP_X * y + x].sprite));
+                }
+                if(map[MAP_X * y + x].edge -> W == true)
+                {
+                    map[MAP_X * y + x].edge -> sprite[2] = sfSprite_create();
+                    sfSprite_setTexture(map[MAP_X * y + x].edge -> sprite[2], textureArray[0], sfTrue);
+                    sfSprite_setTextureRect(map[MAP_X * y + x].edge -> sprite[2], (sfIntRect){3*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
+                    sfSprite_setPosition(map[MAP_X * y + x].edge -> sprite[2], sfSprite_getPosition(map[MAP_X * y + x].sprite));
+                }
+                if(map[MAP_X * y + x].edge -> E == true)
+                {
+                    map[MAP_X * y + x].edge -> sprite[3] = sfSprite_create();
+                    sfSprite_setTexture(map[MAP_X * y + x].edge -> sprite[3], textureArray[0], sfTrue);
+                    sfSprite_setTextureRect(map[MAP_X * y + x].edge -> sprite[3], (sfIntRect){4*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
+                    sfSprite_setPosition(map[MAP_X * y + x].edge -> sprite[3], sfSprite_getPosition(map[MAP_X * y + x].sprite));
+                }
+            }
         }
+}
+
+Edge* alloc_edge(void)
+{
+    return (Edge*) calloc(1, sizeof(Edge) +1);
 }

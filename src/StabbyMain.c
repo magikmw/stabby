@@ -102,6 +102,10 @@ int main()
             for(int y=0; y < MAP_Y; y++) {
                 // printf("x:%i,y:%i\n", x, y);
                 sfRenderWindow_drawSprite(window, map[MAP_X * y + x].sprite, NULL);
+                if(map[MAP_X * y + x].edge != NULL)
+                    for(int i = 0; i < 4; i++)
+                        if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
+                            sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
             }
 
         /* Draw the sprite */

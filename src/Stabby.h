@@ -19,6 +19,7 @@
 // STD includes
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 // SFML includes
 #include <SFML/Graphics.h>
@@ -26,32 +27,47 @@
 #include <SFML/Window.h>
 
 // Version and title name
-#define WINDOW_NAME "Stabby "
-#define VERSION     "0.1"
+#define WINDOW_NAME     "Stabby "
+#define VERSION         "0.1"
 
 // Window dimensions in px
-#define WINDOW_X 960
-#define WINDOW_Y 540
+#define WINDOW_X        960
+#define WINDOW_Y        540
 
 // Map dimensions in tiles
-#define MAP_X 24
-#define MAP_Y 16
+#define MAP_X           24
+#define MAP_Y           16
 
 // Size of tiles/sprites in px
-#define TILE_SIZE 32
+#define TILE_SIZE       32
 
 // Number of textures
-#define TEXTURE_NO 2
+#define TEXTURE_NO      2
 
 // Number of static UI elements
-#define STATIC_UI_NO 5
+#define STATIC_UI_NO    5
 
-#define BORDER_OFFSET 14 // Useless border offset (window/panels)
+#define BORDER_OFFSET   14 // Useless border offset (window/panels)
 
 // "0" X value for the right (menu) panel's right border
-#define PANEL_ZERO_X MAP_X * TILE_SIZE + BORDER_OFFSET
+#define PANEL_ZERO_X    MAP_X * TILE_SIZE + BORDER_OFFSET
+
+// let's make ourselves a boolean 'type'
+#define boolean         char
+#define true            1
+#define false           0
 
 enum directions {NW, N, NE, W, E, SW, S, SE};
+
+// wall edge struct
+typedef struct
+{
+    boolean N;
+    boolean S;
+    boolean W;
+    boolean E;
+    sfSprite* sprite[4];
+} Edge;
 
 // basic tile struct
 typedef struct
@@ -59,6 +75,7 @@ typedef struct
     int x;
     int y;
     sfSprite* sprite;
+    Edge* edge;
 } Tile;
 
 // player character structure
