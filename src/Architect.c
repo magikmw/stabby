@@ -20,6 +20,7 @@
 #include "IncludeGlobals.h"
 
 Edge* alloc_edge(void);
+Edge* makeBorders(int direction);
 
 void createMap(Tile* map){
     map[MAP_X * 5 + 5].edge = alloc_edge();
@@ -35,6 +36,42 @@ void createMap(Tile* map){
             sfSprite_setTextureRect(map[MAP_X * y + x].sprite, (sfIntRect){0*TILE_SIZE,1*TILE_SIZE,TILE_SIZE,TILE_SIZE});
             sfSprite_setPosition(map[MAP_X * y + x].sprite, (sfVector2f){map[MAP_X * y + x].x * TILE_SIZE + BORDER_OFFSET, map[MAP_X * y + x].y * TILE_SIZE + BORDER_OFFSET});
 
+
+            // This section creates border walls (so nothing will fall off)
+            switch(x)
+            {
+                case 0:
+                {
+                    map[MAP_X * y + x].edge = makeBorders(W);
+                    break;
+                }
+                case MAP_X - 1:
+                {
+                    map[MAP_X * y + x].edge = makeBorders(E);
+                    break;
+                }
+            }
+            switch(y)
+            {
+                case 0:
+                {
+                    if(map[MAP_X * y + x].edge == NULL)
+                        map[MAP_X * y + x].edge = makeBorders(N);
+                    else
+                        map[MAP_X * y + x].edge -> N = true;
+                    break;
+                }
+                case MAP_Y - 1:
+                {
+                    if(map[MAP_X * y + x].edge == NULL)
+                        map[MAP_X * y + x].edge = makeBorders(S);
+                    else
+                        map[MAP_X * y + x].edge -> S = true;
+                    break;
+                }   
+            }
+
+            // This section creates the sprites for the walls
             if(map[MAP_X * y + x].edge != NULL)
             {
                 if(map[MAP_X * y + x].edge -> N == true)
@@ -72,4 +109,34 @@ void createMap(Tile* map){
 Edge* alloc_edge(void)
 {
     return (Edge*) calloc(1, sizeof(Edge) +1);
+}
+
+Edge* makeBorders(int direction)
+{
+    Edge* temp_ptr = alloc_edge();
+    switch(direction)
+    {
+        case N:
+        {
+            temp_ptr -> N = true;
+            break;
+        }
+        case S:
+        {
+            temp_ptr -> S = true;
+            break;
+        }
+        case W:
+        {
+            temp_ptr -> W = true;
+            break;
+        }
+        case E:
+        {
+            temp_ptr -> E = true;
+            break;
+        }
+    }
+
+    return temp_ptr;
 }
