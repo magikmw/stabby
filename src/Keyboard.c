@@ -56,6 +56,20 @@ int handleKeys(void)
     else if(sfKeyboard_isKeyPressed(sfKeyEscape)){
         return 2;
     }
+    
+    #ifdef DEBUG
+    // DEBUG KEYS
+    else if(sfKeyboard_isKeyPressed(sfKeyNumpad0)){ // Display edge/wall status of a tile
+        printf("---\nPlayer: %i,%i\n", player.x, player.y);
+        printf("Tile has edge: %s\n", (map[MAP_X * player.y + player.x].edge != NULL) ? "Yes" : "No" );
+        if(map[MAP_X * player.y + player.x].edge != NULL)
+            printf("Edges: N:%i, S:%i, W:%i, E:%i\n", map[MAP_X * player.y + player.x].edge -> N, map[MAP_X * player.y + player.x].edge -> S, map[MAP_X * player.y + player.x].edge -> W, map[MAP_X * player.y + player.x].edge -> E);
+
+        return 0;
+    }
+    #endif
+
+    // No keys from the list above, skip
     else
         return 0;
 }

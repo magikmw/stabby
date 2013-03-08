@@ -26,6 +26,9 @@
 #include <SFML/System.h>
 #include <SFML/Window.h>
 
+// Uncomment for debug mode
+#define DEBUG
+
 // Version and title name
 #define WINDOW_NAME     "Stabby "
 #define VERSION         "0.1"
