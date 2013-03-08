@@ -26,6 +26,8 @@
 #include <SFML/System.h>
 #include <SFML/Window.h>
 
+#include "icon.h"
+
 // Uncomment for debug mode
 #define DEBUG
 
