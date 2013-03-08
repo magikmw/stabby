@@ -170,12 +170,54 @@ boolean checkCollision(sfVector2f origin, int direction)
             {
                 if(y+1 >= MAP_Y || x+1 >= MAP_X) return false;
                 if((map[MAP_X * y + x].edge -> S || (map[MAP_X * (y+1) + x].edge != NULL && map[MAP_X * (y+1) + x].edge -> E))
-                    && (map[MAP_X * y + x].edge -> E || (map[MAP_X * y + (x+1)].edge != NULL && map[MAP_X * y + (x+1)].edge -> S)) == 1)
+                    && (map[MAP_X * y + x].edge -> E || (map[MAP_X * y + (x+1)].edge != NULL && map[MAP_X * y + (x+1)].edge -> S)))
                         return false;
 
                 break;
             }
 
+        }
+    }
+    else
+    {
+        switch(direction)
+        {
+            case NW:
+            {
+                if(y-1 < 0 || x-1 <0) return false;
+                if((map[MAP_X * (y-1) + x].edge != NULL && map[MAP_X * (y-1) + x].edge -> W)
+                    && (map[MAP_X * y + (x-1)].edge != NULL && map[MAP_X * y + (x-1)].edge -> N))
+                        return false;
+
+                break;
+            }
+            case NE:
+            {
+                if(y-1 < 0 || x+1 >= MAP_X) return false;
+                if((map[MAP_X * (y-1) + x].edge != NULL && map[MAP_X * (y-1) + x].edge -> E)
+                    && (map[MAP_X * y + (x+1)].edge != NULL && map[MAP_X * y + (x+1)].edge -> N))
+                        return false;
+
+                break;
+            }
+            case SW:
+            {
+                if(y+1 >= MAP_Y || x-1 < 0) return false;
+                if((map[MAP_X * (y+1) + x].edge != NULL && map[MAP_X * (y+1) + x].edge -> W)
+                    && (map[MAP_X * y + (x-1)].edge != NULL && map[MAP_X * y + (x-1)].edge -> S))
+                        return false;
+
+                break;
+            }
+            case SE:
+            {
+                if(y+1 >= MAP_Y || x+1 >= MAP_X) return false;
+                if((map[MAP_X * (y+1) + x].edge != NULL && map[MAP_X * (y+1) + x].edge -> E)
+                    && (map[MAP_X * y + (x+1)].edge != NULL && map[MAP_X * y + (x+1)].edge -> S))
+                        return false;
+
+                break;
+            }
         }
     }
     

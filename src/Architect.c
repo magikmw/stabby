@@ -26,7 +26,7 @@ void makeBorders(int x, int y, int w, int h, char* mod);
 void createMap(Tile* map){
 
     makeBorders(0, 0, MAP_X, MAP_Y, "in"); // make map edge walls
-    makeBorders(3, 3, 4, 4, "both");
+    makeBorders(3, 3, 4, 4, "in");
     makeBorders(5, 5, 1, 1, "both");
     makeBorders(1, 1, 10, 10, "both");
 
@@ -127,7 +127,7 @@ void makeBorders(int point_x, int point_y, int w, int h, char* mod)
     else
         printf("makeBorders(): ERROR, WRONG MODE PROVIDED: %s\n", mod);
 
-    printf("makeBorders(): %i\n", mode);
+    // printf("makeBorders(): %i\n", mode);
 
     if(mode == 0 || mode == 2)
     {
