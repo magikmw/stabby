@@ -90,6 +90,7 @@ void player_move(int direction)
         case SE:
         {
             player.direction = SE;
+            // printf("collision: %i\n", checkCollision((sfVector2f){player.x, player.y}, SE));
             if(checkCollision((sfVector2f){player.x, player.y}, SE)){
                 player.x += 1;
                 player.y += 1;
@@ -141,8 +142,8 @@ boolean checkCollision(sfVector2f origin, int direction)
             case NW:
             {
                 if(y-1 < 0 || x-1 <0) return false;
-                if((map[MAP_X * y + x].edge -> N || (map[MAP_X * y-1 + x].edge != NULL && map[MAP_X * y-1 + x].edge -> W))
-                    && (map[MAP_X * y + x].edge -> W || (map[MAP_X * y + x-1].edge != NULL && map[MAP_X * y + x-1].edge -> N)))
+                if((map[MAP_X * y + x].edge -> N || (map[MAP_X * (y-1) + x].edge != NULL && map[MAP_X * (y-1) + x].edge -> W))
+                    && (map[MAP_X * y + x].edge -> W || (map[MAP_X * y + (x-1)].edge != NULL && map[MAP_X * y + (x-1)].edge -> N)))
                         return false;
 
                 break;
@@ -150,8 +151,8 @@ boolean checkCollision(sfVector2f origin, int direction)
             case NE:
             {
                 if(y-1 < 0 || x+1 >= MAP_X) return false;
-                if((map[MAP_X * y + x].edge -> N || (map[MAP_X * y-1 + x].edge != NULL && map[MAP_X * y-1 + x].edge -> E))
-                    && (map[MAP_X * y + x].edge -> E || (map[MAP_X * y + x+1].edge != NULL && map[MAP_X * y + x+1].edge -> N)))
+                if((map[MAP_X * y + x].edge -> N || (map[MAP_X * (y-1) + x].edge != NULL && map[MAP_X * (y-1) + x].edge -> E))
+                    && (map[MAP_X * y + x].edge -> E || (map[MAP_X * y + (x+1)].edge != NULL && map[MAP_X * y + (x+1)].edge -> N)))
                         return false;
 
                 break;
@@ -159,8 +160,8 @@ boolean checkCollision(sfVector2f origin, int direction)
             case SW:
             {
                 if(y+1 >= MAP_Y || x-1 < 0) return false;
-                if((map[MAP_X * y + x].edge -> S || (map[MAP_X * y+1 + x].edge != NULL && map[MAP_X * y+1 + x].edge -> W))
-                    && (map[MAP_X * y + x].edge -> W || (map[MAP_X * y + x-1].edge != NULL && map[MAP_X * y + x-1].edge -> S)))
+                if((map[MAP_X * y + x].edge -> S || (map[MAP_X * (y+1) + x].edge != NULL && map[MAP_X * (y+1) + x].edge -> W))
+                    && (map[MAP_X * y + x].edge -> W || (map[MAP_X * y + (x-1)].edge != NULL && map[MAP_X * y + (x-1)].edge -> S)))
                         return false;
 
                 break;
@@ -168,12 +169,13 @@ boolean checkCollision(sfVector2f origin, int direction)
             case SE:
             {
                 if(y+1 >= MAP_Y || x+1 >= MAP_X) return false;
-                if((map[MAP_X * y + x].edge -> S || (map[MAP_X * y+1 + x].edge != NULL && map[MAP_X * y+1 + x].edge -> E))
-                    && (map[MAP_X * y + x].edge -> E || (map[MAP_X * y + x+1].edge != NULL && map[MAP_X * y + x+1].edge -> S)))
+                if((map[MAP_X * y + x].edge -> S || (map[MAP_X * (y+1) + x].edge != NULL && map[MAP_X * (y+1) + x].edge -> E))
+                    && (map[MAP_X * y + x].edge -> E || (map[MAP_X * y + (x+1)].edge != NULL && map[MAP_X * y + (x+1)].edge -> S)) == 1)
                         return false;
 
                 break;
             }
+
         }
     }
     

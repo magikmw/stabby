@@ -20,12 +20,18 @@
 #include "IncludeGlobals.h"
 
 Edge* alloc_edge(void);
-Edge* makeBorders(int direction);
+Edge* makeWall(int direction);
+void makeBorders(int x, int y, int w, int h, char* mod);
 
 void createMap(Tile* map){
+
     map[MAP_X * 5 + 5].edge = alloc_edge();
     map[MAP_X * 5 + 5].edge -> N = true;
     map[MAP_X * 5 + 5].edge -> E = true;
+    makeBorders(0, 0, MAP_X, MAP_Y, "in"); // make map edge walls
+    makeBorders(3, 3, 4, 4, "in");
+    makeBorders(3, 3, 10, 10, "in");
+
     for(int x=0; x < MAP_X; x++)
         for(int y=0; y < MAP_Y; y++) {
             // printf("Array index: %i\n", MAP_X * y + x);
@@ -38,38 +44,38 @@ void createMap(Tile* map){
 
 
             // This section creates border walls (so nothing will fall off)
-            switch(x)
-            {
-                case 0:
-                {
-                    map[MAP_X * y + x].edge = makeBorders(W);
-                    break;
-                }
-                case MAP_X - 1:
-                {
-                    map[MAP_X * y + x].edge = makeBorders(E);
-                    break;
-                }
-            }
-            switch(y)
-            {
-                case 0:
-                {
-                    if(map[MAP_X * y + x].edge == NULL)
-                        map[MAP_X * y + x].edge = makeBorders(N);
-                    else
-                        map[MAP_X * y + x].edge -> N = true;
-                    break;
-                }
-                case MAP_Y - 1:
-                {
-                    if(map[MAP_X * y + x].edge == NULL)
-                        map[MAP_X * y + x].edge = makeBorders(S);
-                    else
-                        map[MAP_X * y + x].edge -> S = true;
-                    break;
-                }   
-            }
+            // switch(x)
+            // {
+            //     case 0:
+            //     {
+            //         map[MAP_X * y + x].edge = makeWall(W);
+            //         break;
+            //     }
+            //     case MAP_X - 1:
+            //     {
+            //         map[MAP_X * y + x].edge = makeWall(E);
+            //         break;
+            //     }
+            // }
+            // switch(y)
+            // {
+            //     case 0:
+            //     {
+            //         if(map[MAP_X * y + x].edge == NULL)
+            //             map[MAP_X * y + x].edge = makeWall(N);
+            //         else
+            //             map[MAP_X * y + x].edge -> N = true;
+            //         break;
+            //     }
+            //     case MAP_Y - 1:
+            //     {
+            //         if(map[MAP_X * y + x].edge == NULL)
+            //             map[MAP_X * y + x].edge = makeWall(S);
+            //         else
+            //             map[MAP_X * y + x].edge -> S = true;
+            //         break;
+            //     }   
+            // }
 
             // This section creates the sprites for the walls
             if(map[MAP_X * y + x].edge != NULL)
@@ -111,7 +117,7 @@ Edge* alloc_edge(void)
     return (Edge*) calloc(1, sizeof(Edge) +1);
 }
 
-Edge* makeBorders(int direction)
+Edge* makeWall(int direction)
 {
     Edge* temp_ptr = alloc_edge();
     switch(direction)
@@ -139,4 +145,44 @@ Edge* makeBorders(int direction)
     }
 
     return temp_ptr;
+}
+
+void makeBorders(int point_x, int point_y, int w, int h, char* mod)
+{
+    // printf("makeBorders() call strcmp(mod, in): %i\n", strcmp(mod, "in"));
+    if(strcmp(mod, "in") == 0)
+    {
+        // printf("in executed\n");
+        for(int x=point_x; x < point_x+w; x++)
+            for(int y=point_y; y < point_y+h; y++) {
+                if(x == point_x)
+                {
+                    if(map[MAP_X * y + x].edge == NULL)
+                        map[MAP_X * y + x].edge = makeWall(W);
+                    else
+                        map[MAP_X * y + x].edge -> W = true;
+                }
+                else if(x == point_x + w-1)
+                {
+                    if(map[MAP_X * y + x].edge == NULL)
+                        map[MAP_X * y + x].edge = makeWall(E);
+                    else
+                        map[MAP_X * y + x].edge -> E = true;
+                }
+                if(y == point_y)
+                {
+                    if(map[MAP_X * y + x].edge == NULL)
+                        map[MAP_X * y + x].edge = makeWall(N);
+                    else
+                        map[MAP_X * y + x].edge -> N = true;
+                }
+                if(y == point_y + h - 1)
+                {
+                    if(map[MAP_X * y + x].edge == NULL)
+                        map[MAP_X * y + x].edge = makeWall(S);
+                    else
+                        map[MAP_X * y + x].edge -> S = true;
+                }   
+            }
+    }
 }
