@@ -47,6 +47,7 @@ int main()
     sfSprite_setTextureRect(player.sprite, (sfIntRect){0*TILE_SIZE, 0*TILE_SIZE, TILE_SIZE, TILE_SIZE});
     sfSprite_setPosition(player.sprite, (sfVector2f){player.x*TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET, player.y*TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET});
     player.move = player_move;
+    updatePlayerSprite();
 
     sfSprite* mob = sfSprite_create();
     sfSprite_setTexture(mob, textureArray[0], sfTrue);
