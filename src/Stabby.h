@@ -62,6 +62,12 @@
 #define true            1
 #define false           0
 
+// map coordinate aid
+#define MAP_COORD(x, y) (MAP_X * (y) + (x))
+
+// FOV consts
+#define VIEW_DISTANCE 10
+
 enum directions {NW, N, NE, W, E, SW, S, SE};
 
 // wall edge struct
@@ -81,6 +87,7 @@ typedef struct
     int y;
     sfSprite* sprite;
     Edge* edge;
+    boolean visible;
 } Tile;
 
 // player character structure

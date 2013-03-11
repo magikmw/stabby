@@ -10,7 +10,8 @@ SRCFILES=src/StabbyMain.c \
 		 src/UI.c \
 		 src/Keyboard.c \
 		 src/Interaction.c \
-		 src/Graphics.c
+		 src/Graphics.c \
+		 src/SpiralShadowcasting.c
 
 LIBRARIES =-lcsfml-graphics-d -lcsfml-system-d -lcsfml-window-d
 

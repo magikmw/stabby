@@ -34,3 +34,10 @@ void createStaticUI(sfSprite* staticUI[]);
 int handleKeys(void);
 void player_move(int);
 void updatePlayerSprite(void);
+boolean hasEdges(int x, int y);
+boolean isMap(int x, int y);
+
+// fov functions
+void showAll(void);
+void clearVisibility(void);
+void doFOV(void);

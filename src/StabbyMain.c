@@ -38,8 +38,8 @@ int main()
     loadTextures(textureArray);
     createMap(map);
     createStaticUI(staticUI);
-    player.x = 2;
-    player.y = 2;
+    player.x = 10;
+    player.y = 10;
     player.direction = N;
     player.sprite = sfSprite_create();
     sfSprite_setTexture(player.sprite, textureArray[0], sfTrue);
@@ -103,11 +103,14 @@ int main()
         for(int x=0; x < MAP_X; x++)
             for(int y=0; y < MAP_Y; y++) {
                 // printf("x:%i,y:%i\n", x, y);
-                sfRenderWindow_drawSprite(window, map[MAP_X * y + x].sprite, NULL);
-                if(map[MAP_X * y + x].edge != NULL)
-                    for(int i = 0; i < 4; i++)
-                        if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
-                            sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
+                if(map[MAP_COORD(x,y)].visible == true)
+                {
+                    sfRenderWindow_drawSprite(window, map[MAP_X * y + x].sprite, NULL);
+                    if(map[MAP_X * y + x].edge != NULL)
+                        for(int i = 0; i < 4; i++)
+                            if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
+                                sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
+                }
             }
 
         /* Draw the sprite */

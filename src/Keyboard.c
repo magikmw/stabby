@@ -67,6 +67,24 @@ int handleKeys(void)
 
         return 0;
     }
+    else if(sfKeyboard_isKeyPressed(sfKeyS)){
+        printf("---\nClearing up vision map.\n");
+        clearVisibility();
+
+        return 0;
+    }
+    else if(sfKeyboard_isKeyPressed(sfKeyD)){
+        printf("---\nShow all.\n");
+        showAll();
+
+        return 0;
+    }
+    else if(sfKeyboard_isKeyPressed(sfKeyA)){
+        printf("---\nDo FOV.\n");
+        doFOV();
+        printf("End\n");
+        return 0;
+    }
     #endif
 
     // No keys from the list above, skip

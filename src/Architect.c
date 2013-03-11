@@ -26,7 +26,7 @@ void makeBorders(int x, int y, int w, int h, char* mod);
 void createMap(Tile* map){
 
     makeBorders(0, 0, MAP_X, MAP_Y, "in"); // make map edge walls
-    makeBorders(3, 3, 4, 4, "in");
+    makeBorders(3, 3, 4, 4, "both");
     makeBorders(5, 5, 1, 1, "both");
     makeBorders(1, 1, 10, 10, "both");
 
@@ -199,6 +199,18 @@ void makeBorders(int point_x, int point_y, int w, int h, char* mod)
                 }   
             }
     }
+}
 
+boolean hasEdges(int x, int y){
+    if(isMap(x, y) == false || map[MAP_COORD(x,y)].edge == NULL)
+        return false;
+    else
+        return true;
+}
 
+boolean isMap(int x, int y){
+    if(x < 0 || x >= MAP_X || y < 0 || y >= MAP_Y)
+        return false;
+    else
+        return true;
 }
