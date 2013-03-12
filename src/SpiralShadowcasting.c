@@ -96,7 +96,36 @@ void doFOV(void) {
     dest = losbuf + 1;
     src->len = 0;
 
-    printf("1\n");
+    // check the player tile
+    src -> idx = 0; dest -> idx = 0;
+    for (int far=0; far < 3; far++)
+        {
+            fovhead_zoomto(dest, src, far, hasEdges(player.x, player.y) && map[MAP_COORD(player.x, player.y)].edge -> N);
+            dest-> idx++;
+        }
+    for (int far=2; far < 5; far++)
+        {
+            fovhead_zoomto(dest, src, 4.0, hasEdges(player.x, player.y) && map[MAP_COORD(player.x, player.y)].edge -> E);
+            dest-> idx++;
+        }
+    for (int far=4; far < 7; far++)
+        {
+            fovhead_zoomto(dest, src, 6.0, hasEdges(player.x, player.y) && map[MAP_COORD(player.x, player.y)].edge -> S);
+            dest-> idx++;
+        }
+    for (int far=6; far < 9; far++)
+        {
+            fovhead_zoomto(dest, src, 8.0, hasEdges(player.x, player.y) && map[MAP_COORD(player.x, player.y)].edge -> W);
+            dest-> idx++;
+        }
+
+    // dest-> idx = 8;
+
+    fovhead *swap = src;
+    src = dest;
+    dest = swap;
+
+    // printf("1\n");
     for (z = 1; z < VIEW_DISTANCE; z += 1.0) {
         x = player.x - z;
         y = player.y - z;
@@ -109,20 +138,20 @@ void doFOV(void) {
         src->idx = 0;
         dest->idx = 0;
 
-        printf("2\n");
+        // printf("2\n");
         for (side = 0; side < 4; side++) {
             if (side == 3.0) sidelength += 1.0;
-            printf("3\n");
+            // printf("3\n");
             for (t = 0.0; t < sidelength; t += 1.0) {
                 double close = (cellnumber + 0.5) / length;
 
                 int cell_x = x;
                 int cell_y = y;
 
-                printf("4 cell_x:%i, cell_y:%i\n", cell_x, cell_y);
+                // printf("4 cell_x:%i, cell_y:%i\n", cell_x, cell_y);
                 if (isMap(cell_x,cell_y)) {
                     int cellisopaque;
-                    printf("4.5\n");
+                    // printf("4.5\n");
                     switch(side){
                         case 0:
                         {
@@ -146,7 +175,7 @@ void doFOV(void) {
                         }
                     }
 
-                    printf("5\n");
+                    // printf("5\n");
                     int haslos = fovhead_zoomto(dest, src, close, cellisopaque);
                     map[MAP_COORD(cell_x,cell_y)].visible = haslos;
                 }
@@ -161,9 +190,9 @@ void doFOV(void) {
 
                 cellnumber += 1.0;
 
-                printf("6\n");
+                // printf("6\n");
             }
-            printf("7\n");
+            // printf("7\n");
         }
 
         dest->len = dest->idx;

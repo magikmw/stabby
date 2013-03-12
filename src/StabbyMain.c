@@ -94,6 +94,10 @@ int main()
 
         // player_action = handleKeys();
 
+        // clearVisibility();
+        // doFOV();
+        showAll();
+
         /* Clear the screen */
         sfRenderWindow_clear(window, (sfColor){200, 200, 200});
 
@@ -114,7 +118,7 @@ int main()
             }
 
         /* Draw the sprite */
-        sfRenderWindow_drawSprite(window, mob, NULL);
+        // sfRenderWindow_drawSprite(window, mob, NULL);
 
         sfRenderWindow_drawSprite(window, player.sprite, NULL);
 
