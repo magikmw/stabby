@@ -1,5 +1,5 @@
 /*
-    Globals.c is a part of Stabby
+    Random.c is a part of Stabby
     Copyright (C) 2013 Michał Walczak
 
     This program is free software: you can redistribute it and/or modify
@@ -17,20 +17,13 @@
 */
 
 #include "Stabby.h"
+#include "IncludeGlobals.h"
 
-// Textures
-sfTexture* textureArray[TEXTURE_NO];
-void loadTextures(sfTexture* textureArray[TEXTURE_NO]){
-    textureArray[0] = sfTexture_createFromFile("assets/sprites.png", NULL);
-    textureArray[1] = sfTexture_createFromFile("assets/border.png", NULL);
+void initRand(unsigned int seed){
+    srand(seed);
 }
 
-// Variables
-sfClock* fpsClock;
-Player player;
-int rooms_number;
-
-// Arrays
-Tile map[MAP_X * MAP_Y];
-Room* rooms[MAX_ROOMS];
-sfSprite* staticUI[STATIC_UI_NO];
+int randInt(int min, int max){
+    int range = max - min + 1;
+    return rand() % range + min;
+}

@@ -23,21 +23,33 @@ extern sfTexture* textureArray[TEXTURE_NO];
 // Variables
 extern sfClock* fpsClock;
 extern Player player;
+extern int rooms_number;
 
 // Arrays
 extern Tile map[MAP_X * MAP_Y];
 extern sfSprite* staticUI[STATIC_UI_NO];
+extern Room* rooms[MAX_ROOMS];
 
 // Functions
-void createMap(Tile* map);
+void createMap();
 void createStaticUI(sfSprite* staticUI[]);
 int handleKeys(void);
 void player_move(int);
+
+// graphics
 void updatePlayerSprite(void);
+void makeMapSprites(void);
+
+// map properties checks
 boolean hasEdges(int x, int y);
 boolean isMap(int x, int y);
+sfVector2f roomCenter(Room* room);
 
 // fov functions
 void showAll(void);
 void clearVisibility(void);
 void doFOV(void);
+
+// random
+void initRand(unsigned int seed);
+int randInt(int, int);

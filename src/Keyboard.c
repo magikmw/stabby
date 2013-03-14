@@ -85,6 +85,10 @@ int handleKeys(void)
         printf("End\n");
         return 0;
     }
+    else if(sfKeyboard_isKeyPressed(sfKeyR)){
+        printf("---\nRandom int: %i\n", randInt(ROOM_MIN_SIZE, ROOM_MAX_SIZE));
+        return 0;
+    }
     #endif
 
     // No keys from the list above, skip

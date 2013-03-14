@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h> // for srand, for now
 
 // SFML includes
 #include <SFML/Graphics.h>
@@ -33,7 +34,7 @@
 
 // Version and title name
 #define WINDOW_NAME     "Stabby "
-#define VERSION         "0.1"
+#define VERSION         "0.2"
 
 // Window dimensions in px
 #define WINDOW_X        960
@@ -45,6 +46,12 @@
 
 // Size of tiles/sprites in px
 #define TILE_SIZE       32
+
+// room properties
+#define MAX_ROOMS       30
+#define MIN_ROOMS       8
+#define ROOM_MIN_SIZE   4
+#define ROOM_MAX_SIZE   6
 
 // Number of textures
 #define TEXTURE_NO      2
@@ -61,6 +68,17 @@
 #define boolean         char
 #define true            1
 #define false           0
+
+// min/max macros
+#define max(a,b) \
+   ({ __typeof__ (a) _a = (a); \
+       __typeof__ (b) _b = (b); \
+     _a > _b ? _a : _b; })
+
+#define min(a,b) \
+   ({ __typeof__ (a) _a = (a); \
+       __typeof__ (b) _b = (b); \
+     _a < _b ? _a : _b; })
 
 // map coordinate aid
 #define MAP_COORD(x, y) (MAP_X * (y) + (x))
@@ -88,7 +106,26 @@ typedef struct
     sfSprite* sprite;
     Edge* edge;
     boolean visible;
+    boolean light;          // if the tile is lit
+    boolean corridor;
+    boolean corridor_end;
 } Tile;
+
+// mapgen
+typedef struct
+{
+    int x1;
+    int y1;
+    int x2;
+    int y2;
+} Rect;
+
+typedef struct
+{
+    int x1, y1, x2, y2;
+    sfVector2f* doors[20];  // holds positions of entrances
+    boolean light;          // true if the room is lit (tiles within permalit)
+} Room;
 
 // player character structure
 typedef struct

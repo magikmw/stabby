@@ -11,7 +11,8 @@ SRCFILES=src/StabbyMain.c \
 		 src/Keyboard.c \
 		 src/Interaction.c \
 		 src/Graphics.c \
-		 src/SpiralShadowcasting.c
+		 src/SpiralShadowcasting.c \
+		 src/Random.c
 
 LIBRARIES =-lcsfml-graphics-d -lcsfml-system-d -lcsfml-window-d
 

@@ -35,11 +35,16 @@ int main()
     // sfRenderWindow_setFramerateLimit(window, 120);
     sfRenderWindow_setIcon(window, window_icon.width, window_icon.height, window_icon.pixel_data);
 
+    initRand(time(NULL));
+
     loadTextures(textureArray);
-    createMap(map);
     createStaticUI(staticUI);
-    player.x = 10;
-    player.y = 10;
+
+    //mapgen
+    createMap();
+
+    player.x = roomCenter(rooms[0]).x;
+    player.y = roomCenter(rooms[0]).y;
     player.direction = N;
     player.sprite = sfSprite_create();
     sfSprite_setTexture(player.sprite, textureArray[0], sfTrue);

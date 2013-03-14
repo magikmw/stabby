@@ -20,66 +20,110 @@
 #include "IncludeGlobals.h"
 
 Edge* alloc_edge(void);
+void clearMap(void);
+void fillMap(void);
+
 Edge* makeWall(int direction);
 void makeBorders(int x, int y, int w, int h, char* mod);
+Room* makeRoom(Rect* rect);
+void delRoom(Room* room);
+Rect* makeRect(int x, int y, int w, int h);
+void delRect(Rect* rect);
 
-void createMap(Tile* map){
+boolean checkIntersection(Rect* this, Room* other);
 
-    makeBorders(0, 0, MAP_X, MAP_Y, "in"); // make map edge walls
-    makeBorders(3, 3, 4, 4, "both");
-    makeBorders(5, 5, 1, 1, "both");
-    makeBorders(1, 1, 10, 10, "both");
+void makeCorridorH(int x1, int x2, int y);
+void makeCorridorV(int y1, int y2, int x);
 
-    for(int x=0; x < MAP_X; x++)
-        for(int y=0; y < MAP_Y; y++) {
-            // printf("Array index: %i\n", MAP_X * y + x);
-            map[MAP_X * y + x].x = x;
-            map[MAP_X * y + x].y = y;
-            map[MAP_X * y + x].sprite = sfSprite_create();
-            sfSprite_setTexture(map[MAP_X * y + x].sprite, textureArray[0], sfTrue);
-            sfSprite_setTextureRect(map[MAP_X * y + x].sprite, (sfIntRect){0*TILE_SIZE,1*TILE_SIZE,TILE_SIZE,TILE_SIZE});
-            sfSprite_setPosition(map[MAP_X * y + x].sprite, (sfVector2f){map[MAP_X * y + x].x * TILE_SIZE + BORDER_OFFSET, map[MAP_X * y + x].y * TILE_SIZE + BORDER_OFFSET});
+sfVector2f roomCenter(Room* room);
 
+void createMap(){
+    #ifdef DEBUG
+    sfClock* timer = sfClock_create();
+    static int tries = 0;
+    #endif
 
+    clearMap();
 
-            // This section creates the sprites for the walls
-            if(map[MAP_X * y + x].edge != NULL)
-            {
-                if(map[MAP_X * y + x].edge -> N == true)
-                {
-                    map[MAP_X * y + x].edge -> sprite[0] = sfSprite_create();
-                    sfSprite_setTexture(map[MAP_X * y + x].edge -> sprite[0], textureArray[0], sfTrue);
-                    sfSprite_setTextureRect(map[MAP_X * y + x].edge -> sprite[0], (sfIntRect){1*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-                    sfSprite_setPosition(map[MAP_X * y + x].edge -> sprite[0], sfSprite_getPosition(map[MAP_X * y + x].sprite));
-                }
-                if(map[MAP_X * y + x].edge -> S == true)
-                {
-                    map[MAP_X * y + x].edge -> sprite[1] = sfSprite_create();
-                    sfSprite_setTexture(map[MAP_X * y + x].edge -> sprite[1], textureArray[0], sfTrue);
-                    sfSprite_setTextureRect(map[MAP_X * y + x].edge -> sprite[1], (sfIntRect){2*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-                    sfSprite_setPosition(map[MAP_X * y + x].edge -> sprite[1], sfSprite_getPosition(map[MAP_X * y + x].sprite));
-                }
-                if(map[MAP_X * y + x].edge -> W == true)
-                {
-                    map[MAP_X * y + x].edge -> sprite[2] = sfSprite_create();
-                    sfSprite_setTexture(map[MAP_X * y + x].edge -> sprite[2], textureArray[0], sfTrue);
-                    sfSprite_setTextureRect(map[MAP_X * y + x].edge -> sprite[2], (sfIntRect){3*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-                    sfSprite_setPosition(map[MAP_X * y + x].edge -> sprite[2], sfSprite_getPosition(map[MAP_X * y + x].sprite));
-                }
-                if(map[MAP_X * y + x].edge -> E == true)
-                {
-                    map[MAP_X * y + x].edge -> sprite[3] = sfSprite_create();
-                    sfSprite_setTexture(map[MAP_X * y + x].edge -> sprite[3], textureArray[0], sfTrue);
-                    sfSprite_setTextureRect(map[MAP_X * y + x].edge -> sprite[3], (sfIntRect){4*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-                    sfSprite_setPosition(map[MAP_X * y + x].edge -> sprite[3], sfSprite_getPosition(map[MAP_X * y + x].sprite));
-                }
+    rooms_number = 0;
+    Rect* temp_rect;
+    while(true){
+        makeBorders(0, 0, MAP_X, MAP_Y, "in"); // make map edge walls
+        rooms_number = 0;
+
+        for(int i = 0; i < MAX_ROOMS; i++){
+
+            int w = randInt(ROOM_MIN_SIZE, ROOM_MAX_SIZE);
+            int h = randInt(ROOM_MIN_SIZE, ROOM_MAX_SIZE);
+            int x = randInt(0, MAP_X - w - 1);
+            int y = randInt(0, MAP_Y - h - 1);
+
+            temp_rect = makeRect(x,y,w,h);
+
+            if(i == 0){
+                rooms[rooms_number++] = makeRoom(temp_rect);
             }
+            else{
+                boolean intersects = false;
+                for(int j = 0; j < rooms_number; j++){
+                    intersects = checkIntersection(temp_rect, rooms[j]);
+                    // printf("intersects: %i\n", intersects);
+                    if(intersects == true) break;
+                }
+                if(intersects == false)
+                    rooms[rooms_number++] = makeRoom(temp_rect);
+            }
+
+            delRect(temp_rect);
         }
+        if(rooms_number >= MIN_ROOMS) break;
+        else{
+            for(int i = 0; i < rooms_number; i++){
+                delRoom(rooms[i]);
+            }
+            // printf("Clearing the map\n");
+            clearMap();
+            #ifdef DEBUG
+            tries++;
+            #endif
+            // printf("Not enough rooms\n");
+        }
+    }
+
+    fillMap(); // fill the map with walls before carving out corridors
+
+    // connect the rooms with corridors
+    for(int i=0; i < rooms_number-1; i++){
+        sfVector2f one = roomCenter(rooms[i]);
+        sfVector2f two = roomCenter(rooms[i+1]);
+        // printf("one: x:%.0f, y:%.0f\n",one.x,one.y);
+        // printf("two: x:%.0f, y:%.0f\n",two.x,two.y);
+        if(randInt(0, 1) == 1){ // go horizontal, then vertical
+            makeCorridorH(one.x, two.x, one.y);
+            makeCorridorV(one.y, two.y, two.x);
+        }
+        else{
+            makeCorridorV(one.y, two.y, one.x);
+            makeCorridorH(one.x, two.x, two.y);
+        }
+    }
+
+    #ifdef DEBUG
+    printf("tries: %i, time:%llims\n", tries, sfClock_getElapsedTime(timer).microseconds/1000);
+    #endif
+
+    // when finished, render it all
+    makeMapSprites();
 }
 
 Edge* alloc_edge(void)
 {
     return (Edge*) calloc(1, sizeof(Edge) +1);
+}
+
+void delEdge(Edge* edge){
+    if(edge != NULL)
+        free(edge);
 }
 
 Edge* makeWall(int direction)
@@ -115,6 +159,8 @@ Edge* makeWall(int direction)
 void makeBorders(int point_x, int point_y, int w, int h, char* mod)
 {
     // printf("makeBorders() call strcmp(mod, in): %i\n", strcmp(mod, "in"));
+
+    // printf("makeBorders() call, x:%i, y:%i, w:%i, h:%i \n", point_x, point_y, w, h);
 
     int mode = 3; // mode flag - 0 for in, 1 of out, 2 for both
 
@@ -213,4 +259,172 @@ boolean isMap(int x, int y){
         return false;
     else
         return true;
+}
+
+// mapgen
+Rect* allocRect(void)
+{
+    return (Rect*) calloc(1, sizeof(Rect) +1);
+}
+
+void delRect(Rect* rect){
+    if(rect != NULL)
+        free(rect);
+}
+
+Rect* makeRect(int x, int y, int w, int h){
+    Rect * temp;
+
+    temp = allocRect();
+
+    temp -> x1 = x;
+    temp -> y1 = y;
+    temp -> x2 = x + w;
+    temp -> y2 = y + h;
+
+    return temp;
+}
+
+boolean checkIntersection(Rect* this, Room* other){
+    return (this -> x1 <= other -> x2 && this -> x2 >= other -> x1 && this -> y1 <= other -> y2 && this -> y2 >= other -> y1);
+}
+
+Room* allocRoom(void){
+    return (Room*) calloc(1, sizeof(Room) +1);
+}
+
+void delRoom(Room* room){
+    if (room != NULL)
+        free(room);
+}
+
+Room* makeRoom(Rect* rect){
+    Room* temp = allocRoom();
+
+    temp -> x1 = rect -> x1;
+    temp -> y1 = rect -> y1;
+    temp -> x2 = rect -> x2;
+    temp -> y2 = rect -> y2;
+
+    makeBorders(temp -> x1, temp -> y1, temp -> x2 - temp -> x1, temp -> y2 - temp -> y1, "both");
+
+    return temp;
+}
+
+sfVector2f roomCenter(Room* room){
+    float x = (room -> x1 + room -> x2) / 2;
+    float y = (room -> y1 + room -> y2) / 2;
+    return  (sfVector2f){x,y};
+}
+
+void clearMap(void){
+    // printf("Clear map\n--\n");
+    for(int x=0; x < MAP_X; x++)
+        for(int y=0; y < MAP_Y; y++) {
+            if(hasEdges(x,y)){
+                map[MAP_COORD(x,y)].edge -> N = false;
+                map[MAP_COORD(x,y)].edge -> E = false;
+                map[MAP_COORD(x,y)].edge -> S = false;
+                map[MAP_COORD(x,y)].edge -> W = false;
+            }
+            map[MAP_COORD(x,y)].corridor = false;
+            map[MAP_COORD(x,y)].corridor_end = false;
+            map[MAP_COORD(x,y)].light = false;
+        }
+}
+
+Room* isInRoom(int x, int y){   // return a pointer to a room if the point is in it, otherwise NULL
+    int i;
+    Room* temp = NULL;
+    for(i=0; i < rooms_number; i++){
+        temp = rooms[i];
+        if(temp -> x1 <= x && x < temp -> x2 && temp -> y1 <= y && y < temp -> y2) break;
+    }
+    if(i < rooms_number)
+        return temp;
+    else
+        return NULL;
+}
+
+void fillMap(void){
+    for(int x=0; x < MAP_X; x++)
+        for(int y=0; y < MAP_Y; y++) {
+            if(isInRoom(x,y) == NULL){
+                if(hasEdges(x,y)){
+                    map[MAP_COORD(x,y)].edge -> N = true;
+                    map[MAP_COORD(x,y)].edge -> E = true;
+                    map[MAP_COORD(x,y)].edge -> S = true;
+                    map[MAP_COORD(x,y)].edge -> W = true;
+                }
+                else{
+                    makeBorders(x,y,1,1,"in");
+                }
+            }
+        }
+}
+
+void makeCorridorH(int x1, int x2, int y){
+    // printf("makeCorridorH() x1:%i, x2:%i, y:%i\n", x1, x2, y);
+    Room* temp_room = NULL;
+    for(int x=min(x1,x2); x <= max(x1,x2); x++){
+        if((temp_room = isInRoom(x,y)) == NULL){
+            if(x == min(x1,x2)){
+                map[MAP_COORD(x,y)].edge -> E = false;
+            }
+            else if(x == max(x1,x2)){
+                map[MAP_COORD(x,y)].edge -> W = false;
+            }
+            else{
+                map[MAP_COORD(x,y)].edge -> W = false;
+                map[MAP_COORD(x,y)].edge -> E = false;
+            }
+
+            map[MAP_COORD(x,y)].corridor = true;
+            map[MAP_COORD(x,y)].light = false;
+        }
+        else{
+            if(x == temp_room -> x1 && x != min(x1,x2)){
+                map[MAP_COORD(x,y)].edge -> W = false;
+            }
+            else if(x == temp_room -> x2-1 && x != max(x1,x2)){
+                map[MAP_COORD(x,y)].edge -> E = false;
+            }
+        }
+        // if(x == min(x1,x2) || x == max(x1,x2)){
+        //     map[MAP_COORD(x,y)].corridor_end = true;
+        // }
+    }
+}
+
+void makeCorridorV(int y1, int y2, int x){
+    // printf("makeCorridorV() y1:%i, y2:%i, x:%i\n", y1, y2, x);
+    Room* temp_room = NULL;
+    for(int y=min(y1,y2); y <= max(y1,y2); y++){
+        temp_room = isInRoom(x,y);
+        if(temp_room == NULL){
+            if(y == min(y1,y2)){
+                map[MAP_COORD(x,y)].edge -> S = false;
+            }
+            else if(y == max(y1,y2)){
+                map[MAP_COORD(x,y)].edge -> N = false;
+            }
+            else{
+                map[MAP_COORD(x,y)].edge -> N = false;
+                map[MAP_COORD(x,y)].edge -> S = false;
+            }
+            map[MAP_COORD(x,y)].corridor = true;
+            map[MAP_COORD(x,y)].light = false;
+        }
+        else{
+            if(y == temp_room -> y1 && y != min(y1,y2)){
+                map[MAP_COORD(x,y)].edge -> N = false;
+            }
+            else if(y == temp_room -> y2-1 && y != max(y1,y2)){
+                map[MAP_COORD(x,y)].edge -> S = false;
+            }
+        }
+    //     if(y == min(y1,y2) || y == max(y1,y2)){
+    //         map[MAP_COORD(x,y)].corridor_end = true;
+    //     }
+    }
 }
