@@ -99,9 +99,9 @@ int main()
 
         // player_action = handleKeys();
 
-        // clearVisibility();
-        // doFOV();
-        showAll();
+        clearVisibility();
+        doFOV();
+        // showAll();
 
         /* Clear the screen */
         sfRenderWindow_clear(window, (sfColor){200, 200, 200});
@@ -112,8 +112,16 @@ int main()
         for(int x=0; x < MAP_X; x++)
             for(int y=0; y < MAP_Y; y++) {
                 // printf("x:%i,y:%i\n", x, y);
-                if(map[MAP_COORD(x,y)].visible == true)
-                {
+                if(map[MAP_COORD(x,y)].visible){
+                    sfSprite_setColor(map[MAP_COORD(x,y)].sprite, sfWhite);
+                    sfRenderWindow_drawSprite(window, map[MAP_X * y + x].sprite, NULL);
+                    if(map[MAP_X * y + x].edge != NULL)
+                        for(int i = 0; i < 4; i++)
+                            if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
+                                sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
+                }
+                else if(map[MAP_COORD(x,y)].explored){
+                    sfSprite_setColor(map[MAP_COORD(x,y)].sprite, (sfColor){100,100,125,255});
                     sfRenderWindow_drawSprite(window, map[MAP_X * y + x].sprite, NULL);
                     if(map[MAP_X * y + x].edge != NULL)
                         for(int i = 0; i < 4; i++)

@@ -106,6 +106,7 @@ typedef struct
     sfSprite* sprite;
     Edge* edge;
     boolean visible;
+    boolean explored;
     boolean light;          // if the tile is lit
     boolean corridor;
     boolean corridor_end;
