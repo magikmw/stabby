@@ -14,7 +14,7 @@ SRCFILES=src/StabbyMain.c \
 		 src/SpiralShadowcasting.c \
 		 src/Random.c
 
-LIBRARIES =-lcsfml-graphics-d -lcsfml-system-d -lcsfml-window-d
+LIBRARIES =-lcsfml-graphics -lcsfml-system -lcsfml-window
 
 all : bin/stabby
 
