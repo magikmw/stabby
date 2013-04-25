@@ -21,19 +21,19 @@
 
 int handleKeys(void)
 {
-    if(sfKeyboard_isKeyPressed(sfKeyNumpad8)){
+    if(sfKeyboard_isKeyPressed(sfKeyNumpad8) || sfKeyboard_isKeyPressed(sfKeyK)){
         player.move(N);
         return 1;
     }
-    else if(sfKeyboard_isKeyPressed(sfKeyNumpad2)){
+    else if(sfKeyboard_isKeyPressed(sfKeyNumpad2) || sfKeyboard_isKeyPressed(sfKeyJ)){
         player.move(S);
         return 1;
     }
-    else if(sfKeyboard_isKeyPressed(sfKeyNumpad4)){
+    else if(sfKeyboard_isKeyPressed(sfKeyNumpad4) || sfKeyboard_isKeyPressed(sfKeyH)){
         player.move(W);
         return 1;
     }
-    else if(sfKeyboard_isKeyPressed(sfKeyNumpad6)){
+    else if(sfKeyboard_isKeyPressed(sfKeyNumpad6) || sfKeyboard_isKeyPressed(sfKeyL)){
         player.move(E);
         return 1;
     }
