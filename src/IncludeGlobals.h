@@ -42,6 +42,7 @@ void makeMapSprites(void);
 
 // map properties checks
 boolean hasEdges(int x, int y);
+boolean hasAllEdges(int x, int y);
 boolean isMap(int x, int y);
 sfVector2f roomCenter(Room* room);
 

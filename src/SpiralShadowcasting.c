@@ -21,8 +21,10 @@
 
 void clearVisibility(void){
     for(int x=0; x < MAP_X; x++)
-        for(int y=0; y < MAP_Y; y++)
-            map[MAP_COORD(x, y)].visible = false;
+        for(int y=0; y < MAP_Y; y++){
+           map[MAP_COORD(x, y)].visible = false;
+           // map[MAP_COORD(x, y)].explored = false;
+       }
 }
 
 void showAll(void){
@@ -30,6 +32,9 @@ void showAll(void){
         for(int y=0; y < MAP_Y; y++)
             map[MAP_COORD(x, y)].visible = true;
 }
+
+// Following taken from source of Rook by Joshua Day, with my modifications
+// https://github.com/joshuaday/rook/blob/master/src/board.c
 
 typedef struct fovhead {
     int idx, len;
@@ -96,100 +101,32 @@ void doFOV(void) {
     dest = losbuf + 1;
     src->len = 0;
 
-    // check the player tile
-    src -> idx = 0; dest -> idx = 0;
-    fovhead_zoomto(dest, src, .25, hasEdges(player.x, player.y) && map[MAP_COORD(player.x, player.y)].edge -> N);
-    fovhead_zoomto(dest, src, .5, hasEdges(player.x, player.y) && map[MAP_COORD(player.x, player.y)].edge -> E);
-    fovhead_zoomto(dest, src, .75, hasEdges(player.x, player.y) && map[MAP_COORD(player.x, player.y)].edge -> S);
-    fovhead_zoomto(dest, src, 1.0, hasEdges(player.x, player.y) && map[MAP_COORD(player.x, player.y)].edge -> W);
-
-    fovhead *swap = src;
-    src = dest;
-    dest = swap;
-
-    // printf("1\n");
     for (z = 1; z < VIEW_DISTANCE; z += 1.0) {
         x = player.x - z;
         y = player.y - z;
 
         int side;
         double sidelength = 2.0 * z;
-        // double length = 4.0 * sidelength;
-        // double innerlenght = 8.0 * (z - 1.0);
-        double length = 8.0 * (z + .5);
-        double innerlenght = 8.0 * (z - .5);
+        double length = 4.0 * sidelength;
         double cellnumber = 0.0;
 
         src->idx = 0;
         dest->idx = 0;
 
-        // printf("2\n");
         for (side = 0; side < 4; side++) {
             if (side == 3.0) sidelength += 1.0;
-            // printf("3\n");
             for (t = 0.0; t < sidelength; t += 1.0) {
                 double close = (cellnumber + 0.5) / length;
-                double innerclose = ((cellnumber - side) + 0.5) / innerlenght;
 
                 int cell_x = x;
                 int cell_y = y;
 
-                // printf("4 cell_x:%i, cell_y:%i\n", cell_x, cell_y);
                 if (isMap(cell_x,cell_y)) {
-                    int cellisopaque;
-                    // printf("4.5\n");
-                    // printf("close == %.4f\n", close);
-                    switch(side){
-                        case 0:
-                        {
-                            if(close < .125)
-                                cellisopaque = hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> W;
-                            else if(close > .125)
-                                cellisopaque = hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> E;
-                            else
-                                cellisopaque = (hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> W) || (hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> E);
-                            break;
-                        }
-                        case 1:
-                        {
-                            if(close < .375)
-                                cellisopaque = hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> S;
-                            else if(close > .375)
-                                cellisopaque = hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> N;
-                            else
-                                cellisopaque = (hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> N) || (hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> S);
-                            break;
-                        }
-                        case 2:
-                        {
-                            if(close < .625)
-                                cellisopaque = hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> W;
-                            else if(close > .625)
-                                cellisopaque = hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> E;
-                            else
-                                cellisopaque = (hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> W) || (hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> E);
-                            break;
-                        }
-                        case 3:
-                        {
-                            if(close < .875)
-                                cellisopaque = hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> S;
-                            else if(close > .875)
-                                cellisopaque = hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> N;
-                            else
-                                cellisopaque = (hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> N) || (hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> S);
-                            break;
-                        }
-                    }
-
-                    // printf("5\n");
+                    int cellisopaque = hasEdges(cell_x, cell_y) && hasAllEdges(cell_x, cell_y);
                     int haslos = fovhead_zoomto(dest, src, close, cellisopaque);
                     map[MAP_COORD(cell_x,cell_y)].visible = haslos;
                     if(haslos && !map[MAP_COORD(cell_x,cell_y)].explored)
                         map[MAP_COORD(cell_x,cell_y)].explored = true;
-
-                    fovhead_zoomto(dest, src, innerclose, cellisopaque);
-                    fovhead_zoomto(dest, src, close, 0); // skip
                 }
                 else {
                     fovhead_zoomto(dest, src, close, 1);
@@ -201,10 +138,7 @@ void doFOV(void) {
                 if (side == 3) y--;
 
                 cellnumber += 1.0;
-
-                // printf("6\n");
             }
-            // printf("7\n");
         }
 
         dest->len = dest->idx;
@@ -213,77 +147,7 @@ void doFOV(void) {
         fovhead *swap = src;
         src = dest;
         dest = swap;
-
-        // second time
-
-        src->idx = 0;
-        dest->idx = 0;
-
-        // printf("2\n");
-        for (side = 0; side < 4; side++) {
-            if (side == 3.0) sidelength += 1.0;
-            // printf("3\n");
-            for (t = 0.0; t < sidelength; t += 1.0) {
-                double close = (cellnumber + 0.5) / length;
-
-                int cell_x = x;
-                int cell_y = y;
-
-                // printf("4 cell_x:%i, cell_y:%i\n", cell_x, cell_y);
-                if (isMap(cell_x,cell_y)) {
-                    int cellisopaque;
-                    // printf("4.5\n");
-                    // printf("close == %.4f\n", close);
-                    switch(side){
-                        case 0:
-                        {
-                            cellisopaque = hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> N;
-                            break;
-                        }
-                        case 1:
-                        {
-                            cellisopaque = hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> E;
-                            break;
-                        }
-                        case 2:
-                        {
-                            cellisopaque = hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> S;
-                            break;
-                        }
-                        case 3:
-                        {
-                            cellisopaque = (hasEdges(cell_x,cell_y) && map[MAP_COORD(cell_x,cell_y)].edge -> W);
-                            break;
-                        }
-                    }
-
-                    // printf("5\n");
-                    int haslos = fovhead_zoomto(dest, src, close, cellisopaque);
-                    map[MAP_COORD(cell_x,cell_y)].visible = haslos;
-                    if(haslos && !map[MAP_COORD(cell_x,cell_y)].explored)
-                        map[MAP_COORD(cell_x,cell_y)].explored = true;
-                }
-                else {
-                    fovhead_zoomto(dest, src, close, 1);
-                }
-                
-                if (side == 0) x++;
-                if (side == 1) y++;
-                if (side == 2) x--;
-                if (side == 3) y--;
-
-                cellnumber += 1.0;
-
-                // printf("6\n");
-            }
-            // printf("7\n");
-        }
-
-        dest->len = dest->idx;
-
-        // swap!
-        swap = src;
-        src = dest;
-        dest = swap;
     }
 }
+
+// End of Rook-butchered code.

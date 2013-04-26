@@ -254,6 +254,16 @@ boolean hasEdges(int x, int y){
         return true;
 }
 
+boolean hasAllEdges(int x, int y){
+    if(map[MAP_COORD(x,y)].edge -> N
+                && map[MAP_COORD(x,y)].edge -> S
+                    && map[MAP_COORD(x,y)].edge -> E
+                        && map[MAP_COORD(x,y)].edge -> W)
+        return true;
+    else
+        return false;  
+}
+
 boolean isMap(int x, int y){
     if(x < 0 || x >= MAP_X || y < 0 || y >= MAP_Y)
         return false;
