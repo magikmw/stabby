@@ -34,7 +34,7 @@
 
 // Version and title name
 #define WINDOW_NAME     "Stabby "
-#define VERSION         "0.2"
+#define VERSION         "Alpha"
 
 // Window dimensions in px
 #define WINDOW_X        960

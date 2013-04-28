@@ -1,5 +1,5 @@
 CFLAGS=-Isrc -Wall ${DEFINES} -std=c99
-RELEASENAME=stabby-0.1
+RELEASENAME=stabby-0.2
 
 %.o : %.c
 	gcc $(CFLAGS) -g -o $@ -c $< 
