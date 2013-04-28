@@ -133,7 +133,7 @@ int main()
                     sfRectangleShape_setSize(blank, (sfVector2f){TILE_SIZE, TILE_SIZE});
                     sfRectangleShape_setPosition(blank, (sfVector2f){x*TILE_SIZE+BORDER_OFFSET,y*TILE_SIZE+BORDER_OFFSET});
                     // FIX - Check the proper color that comes from mixing 200,200,200 and 100,100,125
-                    sfRectangleShape_setFillColor(blank, (sfColor){100,100,125,255});
+                    sfRectangleShape_setFillColor(blank, (sfColor){78,78,98,255});
                     sfRenderWindow_drawRectangleShape(window, blank, NULL);
                     sfRectangleShape_destroy(blank);
                 }
