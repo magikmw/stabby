@@ -29,6 +29,7 @@ Room* makeRoom(Rect* rect);
 void delRoom(Room* room);
 Rect* makeRect(int x, int y, int w, int h);
 void delRect(Rect* rect);
+void lightRooms(int lightness);
 
 boolean checkIntersection(Rect* this, Room* other);
 
@@ -107,6 +108,9 @@ void createMap(){
             makeCorridorH(one.x, two.x, two.y);
         }
     }
+
+    // Light rooms up
+    lightRooms(30);
 
     #ifdef DEBUG
     printf("tries: %i, time:%llims\n", tries, sfClock_getElapsedTime(timer).microseconds/1000);
@@ -282,6 +286,17 @@ void delRect(Rect* rect){
         free(rect);
 }
 
+void lightRooms(int lightness){
+    // iterates through all the rooms and sets lightness% of them to lit
+    for(int i=0; i < rooms_number; i++){
+        if(randInt(0,100) < lightness){
+            for(int x = rooms[i] -> x1; x < rooms[i] -> x2; x++)
+                for(int y = rooms[i] -> y1; y < rooms[i] -> y2; y++)
+                    map[MAP_COORD(x,y)].light = true;
+        }
+    }
+}
+
 Rect* makeRect(int x, int y, int w, int h){
     Rect * temp;
 
@@ -369,6 +384,7 @@ void fillMap(void){
                 else{
                     makeBorders(x,y,1,1,"in");
                 }
+                map[MAP_COORD(x,y)].light = true;
             }
         }
 }

@@ -84,7 +84,7 @@
 #define MAP_COORD(x, y) (MAP_X * (y) + (x))
 
 // FOV consts
-#define VIEW_DISTANCE 6
+#define VIEW_DISTANCE 3
 
 enum directions {NW, N, NE, W, E, SW, S, SE};
 
