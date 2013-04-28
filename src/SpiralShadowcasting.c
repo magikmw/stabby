@@ -124,9 +124,14 @@ void doFOV(void) {
                 if (isMap(cell_x,cell_y)) {
                     int cellisopaque = hasEdges(cell_x, cell_y) && hasAllEdges(cell_x, cell_y);
                     int haslos = fovhead_zoomto(dest, src, close, cellisopaque);
-                    map[MAP_COORD(cell_x,cell_y)].visible = haslos;
-                    if(haslos && !map[MAP_COORD(cell_x,cell_y)].explored)
-                        map[MAP_COORD(cell_x,cell_y)].explored = true;
+                    if(haslos && (distance(x,y,player.x, player.y) <= 2.5 || map[MAP_COORD(cell_x,cell_y)].light)){
+                        map[MAP_COORD(cell_x,cell_y)].visible = haslos;
+                        if(haslos && !map[MAP_COORD(cell_x,cell_y)].explored)
+                            map[MAP_COORD(cell_x,cell_y)].explored = true;
+                    }
+                    else{
+                        map[MAP_COORD(cell_x,cell_y)].visible = false;
+                    }
                 }
                 else {
                     fovhead_zoomto(dest, src, close, 1);

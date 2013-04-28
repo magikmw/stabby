@@ -21,6 +21,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h> // for srand, for now
+#include <math.h> // distance calculations
 
 // SFML includes
 #include <SFML/Graphics.h>
@@ -84,7 +85,7 @@
 #define MAP_COORD(x, y) (MAP_X * (y) + (x))
 
 // FOV consts
-#define VIEW_DISTANCE 3
+#define VIEW_DISTANCE 25
 
 enum directions {NW, N, NE, W, E, SW, S, SE};
 

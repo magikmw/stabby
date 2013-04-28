@@ -110,7 +110,7 @@ void createMap(){
     }
 
     // Light rooms up
-    lightRooms(30);
+    lightRooms(50);
 
     #ifdef DEBUG
     printf("tries: %i, time:%llims\n", tries, sfClock_getElapsedTime(timer).microseconds/1000);
@@ -290,6 +290,7 @@ void lightRooms(int lightness){
     // iterates through all the rooms and sets lightness% of them to lit
     for(int i=0; i < rooms_number; i++){
         if(randInt(0,100) < lightness){
+            // printf("Lit room\n");
             for(int x = rooms[i] -> x1; x < rooms[i] -> x2; x++)
                 for(int y = rooms[i] -> y1; y < rooms[i] -> y2; y++)
                     map[MAP_COORD(x,y)].light = true;
@@ -384,7 +385,6 @@ void fillMap(void){
                 else{
                     makeBorders(x,y,1,1,"in");
                 }
-                map[MAP_COORD(x,y)].light = true;
             }
         }
 }

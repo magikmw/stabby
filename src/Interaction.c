@@ -223,3 +223,11 @@ boolean checkCollision(sfVector2f origin, int direction)
     
     return true;
 }
+
+double distance(int x1, int y1, int x2, int y2){
+    int dx = x1 - x2;
+    int dy = y1 - y2;
+    double distance = sqrt(pow(dx,2) + pow(dy,2));
+
+    return distance;
+}

@@ -81,6 +81,12 @@ int main()
 
     int player_action = 0;
 
+    sfRectangleShape *map_background = sfRectangleShape_create();
+    sfRectangleShape_setSize(map_background, (sfVector2f){MAP_X*TILE_SIZE, MAP_Y*TILE_SIZE});
+    sfRectangleShape_setPosition(map_background, (sfVector2f){BORDER_OFFSET, BORDER_OFFSET});
+    sfRectangleShape_setFillColor(map_background, (sfColor){78, 78, 98, 255});
+
+
     /* Start the game loop */
     while (sfRenderWindow_isOpen(window))
     {
@@ -105,10 +111,12 @@ int main()
 
         /* Clear the screen */
         sfRenderWindow_clear(window, (sfColor){200, 200, 200});
+        sfRenderWindow_drawRectangleShape(window, map_background, NULL);
 
         for(int i=0; i < STATIC_UI_NO; i++)
             sfRenderWindow_drawSprite(window, staticUI[i], NULL);
         
+        // TODO Change into a function
         for(int x=0; x < MAP_X; x++)
             for(int y=0; y < MAP_Y; y++) {
                 // printf("x:%i,y:%i\n", x, y);
@@ -120,7 +128,7 @@ int main()
                             if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
                                 sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
                 }
-                else if(map[MAP_COORD(x,y)].explored && map[MAP_COORD(x,y)].light){
+                else if(map[MAP_COORD(x,y)].explored && (map[MAP_COORD(x,y)].light || hasAllEdges(x,y))){
                     sfSprite_setColor(map[MAP_COORD(x,y)].sprite, (sfColor){100,100,125,255});
                     sfRenderWindow_drawSprite(window, map[MAP_X * y + x].sprite, NULL);
                     if(map[MAP_X * y + x].edge != NULL)
@@ -132,6 +140,7 @@ int main()
                     sfRectangleShape *blank = sfRectangleShape_create();
                     sfRectangleShape_setSize(blank, (sfVector2f){TILE_SIZE, TILE_SIZE});
                     sfRectangleShape_setPosition(blank, (sfVector2f){x*TILE_SIZE+BORDER_OFFSET,y*TILE_SIZE+BORDER_OFFSET});
+                    // TODO use variables instead of colors, make that one computed instead of hardcoded
                     sfRectangleShape_setFillColor(blank, (sfColor){78,78,98,255});
                     sfRenderWindow_drawRectangleShape(window, blank, NULL);
                     sfRectangleShape_destroy(blank);
