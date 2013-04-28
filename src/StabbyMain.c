@@ -132,10 +132,13 @@ int main()
                     sfRectangleShape *blank = sfRectangleShape_create();
                     sfRectangleShape_setSize(blank, (sfVector2f){TILE_SIZE, TILE_SIZE});
                     sfRectangleShape_setPosition(blank, (sfVector2f){x*TILE_SIZE+BORDER_OFFSET,y*TILE_SIZE+BORDER_OFFSET});
-                    // FIX - Check the proper color that comes from mixing 200,200,200 and 100,100,125
                     sfRectangleShape_setFillColor(blank, (sfColor){78,78,98,255});
                     sfRenderWindow_drawRectangleShape(window, blank, NULL);
                     sfRectangleShape_destroy(blank);
+                    if(map[MAP_X * y + x].edge != NULL)
+                        for(int i = 0; i < 4; i++)
+                            if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
+                                sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
                 }
             }
 
