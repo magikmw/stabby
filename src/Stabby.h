@@ -129,11 +129,22 @@ typedef struct
     boolean light;          // true if the room is lit (tiles within permalit)
 } Room;
 
-// player character structure
+// Mob AI component structure
+typedef struct
+{
+    void (*standby)(void);
+    void (*alerted)(void);
+    void (*persuing)(void);
+    void (*active)(void);
+} AI;
+
+// Map entities
 typedef struct
 {
     int x, y;
     int direction;
     sfSprite* sprite;
     void (*move)(int);
-} Player;
+    AI* ai;
+} Entity;
+

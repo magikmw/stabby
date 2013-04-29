@@ -27,7 +27,7 @@ void loadTextures(sfTexture* textureArray[TEXTURE_NO]){
 
 // Variables
 sfClock* fpsClock;
-Player player;
+Entity player;
 int rooms_number;
 
 // Arrays

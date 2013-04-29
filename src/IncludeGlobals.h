@@ -22,7 +22,7 @@ extern sfTexture* textureArray[TEXTURE_NO];
 
 // Variables
 extern sfClock* fpsClock;
-extern Player player;
+extern Entity player;
 extern int rooms_number;
 
 // Arrays
