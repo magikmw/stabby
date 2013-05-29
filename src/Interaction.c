@@ -19,8 +19,6 @@
 #include "Stabby.h"
 #include "IncludeGlobals.h"
 
-boolean checkCollision(sfVector2f origin, int direction);
-
 void player_move(int direction)
 {
     switch(direction){

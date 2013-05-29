@@ -35,6 +35,7 @@ void createMap();
 void createStaticUI(sfSprite* staticUI[]);
 int handleKeys(void);
 void player_move(int);
+boolean checkCollision(sfVector2f origin, int direction);
 double distance(int x1, int y1, int x2, int y2);
 
 // graphics
