@@ -10,11 +10,10 @@ Stabby
 
 Building
 ---
-<p>Developed with 2013-04-25 git snapshot builds of SFML and CSFML.
-<br>(may work with release, untested)</p>
+<p>Developed with SFML2, current as of July 2013.</p>
 
 ### Scripts:
-* ./getAssets.sh to download the sprites and font and unpack them
+* ./getAssets.sh to download sprites, font and unpack them
 * ./bnrunStabby.sh to clean, build and run the game
 
 License
