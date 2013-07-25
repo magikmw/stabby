@@ -10,7 +10,7 @@ Stabby
 
 Building
 ---
-<p>Developed with SFML2, current as of July 2013.</p>
+<p>Developed with SFML2 and CSFML, packages current as of July 2013.</p>
 
 ### Scripts:
 * ./getAssets.sh to download sprites, font and unpack them
