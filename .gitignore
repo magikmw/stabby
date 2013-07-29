@@ -1,5 +1,8 @@
 TODO
 bin/assets
+bin/libs
+inc
 stabby
 log
 *.tar.gz
+temp

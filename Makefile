@@ -1,4 +1,4 @@
-CFLAGS=-Isrc -Wall ${DEFINES} -std=c99
+CFLAGS=-Isrc -Iinc -Lbin/libs -Wall ${DEFINES} -std=c99
 RELEASENAME=stabby-0.2
 
 %.o : %.c
@@ -14,7 +14,7 @@ SRCFILES=src/StabbyMain.c \
 		 src/SpiralShadowcasting.c \
 		 src/Random.c
 
-LIBRARIES =-lcsfml-graphics -lcsfml-system -lcsfml-window -lm
+LIBRARIES =-lcsfml-graphics -lcsfml-system -lcsfml-window -lm -lds
 
 all : bin/stabby
 
@@ -26,3 +26,5 @@ bin/stabby :
 
 clean : 
 	rm -f src/*.o bin/stabby
+
+# [TODO] Add included library building to the makefile/build script.

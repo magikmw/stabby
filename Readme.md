@@ -3,7 +3,7 @@ Stabby
 
 <p>Non-combat stealth roguelike.</p>
 
-<p>Originally a failed attempt at 7DRLC 2013 <http://7drl.org/>
+<p>Originally a failed attempt at [7DRLC 2013](http://7drl.org/)
 <br>Currently a side project.</p>
 
 <p>Stabby is written in C, using SFML2 via CSFML.</p>
@@ -21,3 +21,12 @@ License
 Released under GNU GPLv3 (included)
 
 Copyright (C) 2013 Michał Walczak
+
+Libraries
+---
+### [To be] Included:
+# [libds](https://github.com/zhemao/libds)
+
+### Not Included:
+# [SFML2](http://www.sfml-dev.org/)
+# [CSFML](http://www.sfml-dev.org/download/csfml/)
