@@ -37,8 +37,7 @@
 #define DEBUG
 
 // Version and title name
-#define WINDOW_NAME     "Stabby "
-#define VERSION         "Alpha"
+#define NAME_VERSION     "Stabby Alpha"
 
 // Window dimensions in px
 #define WINDOW_X        960
@@ -53,9 +52,9 @@
 
 // room properties
 #define MAX_ROOMS       30
-#define MIN_ROOMS       7
+#define MIN_ROOMS       6
 #define ROOM_MIN_SIZE   4
-#define ROOM_MAX_SIZE   8
+#define ROOM_MAX_SIZE   6
 
 // Number of textures
 #define TEXTURE_NO      2

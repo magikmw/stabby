@@ -30,7 +30,6 @@ int main()
     sfEvent event;
 
     /* Create the main window */
-    char NAME_VERSION[] = WINDOW_NAME; //strcat(NAME_VERSION, VERSION);
     window = sfRenderWindow_create(mode, NAME_VERSION, sfClose, NULL);
     sfRenderWindow_setVerticalSyncEnabled(window, true);
     // sfRenderWindow_setFramerateLimit(window, 120);
