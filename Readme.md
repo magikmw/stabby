@@ -25,8 +25,8 @@ Copyright (C) 2013 Michał Walczak
 Libraries
 ---
 ### [To be] Included:
-# [libds](https://github.com/zhemao/libds)
+* [libds](https://github.com/zhemao/libds)
 
 ### Not Included:
-# [SFML2](http://www.sfml-dev.org/)
-# [CSFML](http://www.sfml-dev.org/download/csfml/)
+* [SFML2](http://www.sfml-dev.org/)
+* [CSFML](http://www.sfml-dev.org/download/csfml/)
