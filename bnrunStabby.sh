@@ -9,7 +9,7 @@ if [ $? -eq 0 ]
         exit
 fi
 
-make > /dev/null
+make debug > /dev/null
 
 if [ $? -eq 0 ]
     then

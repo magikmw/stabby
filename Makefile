@@ -18,6 +18,9 @@ LIBRARIES =-lcsfml-graphics -lcsfml-system -lcsfml-window -lm
 
 all : bin/stabby
 
+debug :
+	gcc -o bin/stabby ${SRCFILES} ${CFLAGS} ${LIBRARIES} -Wl,-rpath,. -O0 -ggdb
+
 bin/stabby :
 	gcc -O3 -o bin/stabby ${SRCFILES} ${CFLAGS} ${LIBRARIES} -Wl,-rpath,.
 
