@@ -150,3 +150,12 @@ typedef struct
     void (*move)(int);
     AI* ai;
 } Entity;
+
+// Djikstra map struct
+typedef struct
+{
+    // [TODO] DMap struct
+    // value list
+    // value map
+    // frontier list
+} DMap;

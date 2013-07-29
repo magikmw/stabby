@@ -19,33 +19,26 @@
 #include "Stabby.h"
 #include "IncludeGlobals.h"
 
-// This function only accepts sfVector2i arguments - positions to be set as 0 in the dmap
-void createDMap(int dmap[MAP_X * MAP_Y], int npoints, ...){
-    for(int x = 0; x < MAP_X; x++)
-        for(int y = 0; y < MAP_Y; y++){
-            dmap[MAP_COORD(x,y)] = -1;
-        }
-
-    va_list pos_list;
-    va_start( pos_list, npoints );
-    for(int i = 0; i < npoints; i++){
-        sfVector2i point = va_arg( pos_list, sfVector2i);
-
-        dmap[MAP_COORD(point.x, point.y)] = 0;
-    }
+DMap DMapCreate(void){
+    // [TODO] Create an empty DMap with just data structures ready
 }
 
-void updateDMap(int dmap[MAP_X * MAP_Y]){
-    boolean done = false;
-    while(done == false){
-        done = true;
-        for(int x = 0; x < MAP_X; x++)
-            for(int y = 0; y < MAP_Y; y++){
-                if(hasAllEdges(x,y))
-                    dmap[MAP_COORD(x,y)] = -2;
-                else if(dmap[MAP_COORD(x,y)] >= 0){
+void DMapAddPOI(DMap dmap, int position){
+    // [TODO] Add given position to the value vector if it's not already in
+}
 
-                }
-            }
-    }
+void DMapRemPOI(DMap dmap, int position){
+    // [TODO] Search the value vector and remove the position given
+}
+
+void DMapUpdate(DMap dmap){
+    // [TODO] Function updates given DMap according to it's own POI vector
+}
+
+void DMapDestroy(DMap dmap){
+    // [TODO] Free all vectors up.
+}
+
+void addToFrontier(vector_p frontier, int* value_map, int position){
+    // [TODO] Function adds a tile position to the frontier, sorting it by value from lowest
 }

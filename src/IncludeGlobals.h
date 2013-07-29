@@ -56,3 +56,11 @@ void doFOV(void);
 // random
 void initRand(unsigned int seed);
 int randInt(int, int);
+
+// djikstra maps related
+DMap DMapCreate(void);
+void DMapAddPOI(DMap, int);
+void DMapRemPOI(DMap, int);
+void DMapUpdate(DMap);
+void DMapDestroy(DMap);
+void addToFrontier(vector_p, int*, int);
