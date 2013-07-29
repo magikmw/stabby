@@ -82,7 +82,7 @@ void makeMapSprites(void){
             map[MAP_X * y + x].y = y;
             map[MAP_X * y + x].sprite = sfSprite_create();
             sfSprite_setTexture(map[MAP_X * y + x].sprite, textureArray[0], sfTrue);
-            if(hasEdges(x,y) && hasAllEdges(x,y))
+            if(hasAllEdges(x,y))
                 sfSprite_setTextureRect(map[MAP_X * y + x].sprite, (sfIntRect){5*TILE_SIZE,1*TILE_SIZE,TILE_SIZE,TILE_SIZE});    
             else
                 sfSprite_setTextureRect(map[MAP_X * y + x].sprite, (sfIntRect){0*TILE_SIZE,1*TILE_SIZE,TILE_SIZE,TILE_SIZE});

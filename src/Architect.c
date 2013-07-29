@@ -259,7 +259,9 @@ boolean hasEdges(int x, int y){
 }
 
 boolean hasAllEdges(int x, int y){
-    if(map[MAP_COORD(x,y)].edge -> N
+
+    if(hasEdges(x,y)
+            && map[MAP_COORD(x,y)].edge -> N
                 && map[MAP_COORD(x,y)].edge -> S
                     && map[MAP_COORD(x,y)].edge -> E
                         && map[MAP_COORD(x,y)].edge -> W)
