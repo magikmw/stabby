@@ -50,9 +50,9 @@
 
 // room properties
 #define MAX_ROOMS       30
-#define MIN_ROOMS       8
+#define MIN_ROOMS       7
 #define ROOM_MIN_SIZE   4
-#define ROOM_MAX_SIZE   6
+#define ROOM_MAX_SIZE   8
 
 // Number of textures
 #define TEXTURE_NO      2
@@ -147,4 +147,3 @@ typedef struct
     void (*move)(int);
     AI* ai;
 } Entity;
-
