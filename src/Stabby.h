@@ -153,8 +153,7 @@ typedef struct
 // Djikstra map struct
 typedef struct
 {
-    // [TODO] DMap struct
-    // value list
-    // value map
-    // frontier list
+    list_p value_list;
+    int value_map[MAP_X * MAP_Y];
+    list_p frontier;
 } DMap;
