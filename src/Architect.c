@@ -113,7 +113,7 @@ void createMap(){
     lightRooms(50);
 
     #ifdef DEBUG
-    printf("tries: %i, time:%llims\n", tries, sfClock_getElapsedTime(timer).microseconds/1000);
+    printf("tries: %i, time: %llims, rooms created: %i\n", tries, sfClock_getElapsedTime(timer).microseconds/1000, rooms_number);
     #endif
 
     // when finished, render it all
