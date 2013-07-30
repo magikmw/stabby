@@ -58,7 +58,7 @@ void initRand(unsigned int seed);
 int randInt(int, int);
 
 // djikstra maps related
-DMap DMapCreate(void);
+void DMapCreate(DMap);
 void DMapAddPOI(DMap, int);
 void DMapRemPOI(DMap, int);
 void DMapUpdate(DMap);

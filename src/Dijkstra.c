@@ -19,8 +19,11 @@
 #include "Stabby.h"
 #include "IncludeGlobals.h"
 
-DMap DMapCreate(void){
-    // [TODO] Create an empty DMap with just data structures ready
+void DMapCreate(DMap dmap){
+    // Create an empty DMap with just data structures ready
+    dmap.poi_list = create_list();
+    dmap.poi_list_flag = false;
+    dmap.frontier = create_list();
 }
 
 void DMapAddPOI(DMap dmap, int position){
@@ -32,7 +35,7 @@ void DMapRemPOI(DMap dmap, int position){
 }
 
 void DMapUpdate(DMap dmap){
-    // [TODO] Function updates given DMap according to it's own POI vector
+    // [TODO] Function updates given DMap according to it's own POI vector and the wall map
 }
 
 void DMapDestroy(DMap dmap){
