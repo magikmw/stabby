@@ -39,7 +39,9 @@ void DMapUpdate(DMap dmap){
 }
 
 void DMapDestroy(DMap dmap){
-    // [TODO] Free all vectors up.
+    // Free all lists up.
+    destroy_list(dmap.poi_list);
+    destroy_list(dmap.frontier);
 }
 
 void addToFrontier(vector_p frontier, int* value_map, int position){
