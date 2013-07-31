@@ -57,7 +57,7 @@ void doFOV(void);
 void initRand(unsigned int seed);
 int randInt(int, int);
 
-// djikstra maps related
+// dijkstra maps related
 void DMapCreate(DMap);
 void DMapAddPOI(DMap, int);
 void DMapRemPOI(DMap, int);

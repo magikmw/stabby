@@ -12,7 +12,8 @@ SRCFILES=src/StabbyMain.c \
 		 src/Interaction.c \
 		 src/Graphics.c \
 		 src/SpiralShadowcasting.c \
-		 src/Random.c
+		 src/Random.c \
+		 src/Dijkstra.c
 
 LIBRARIES =-lcsfml-graphics -lcsfml-system -lcsfml-window -lm -lds
 

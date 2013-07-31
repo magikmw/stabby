@@ -89,6 +89,9 @@
 // FOV consts
 #define VIEW_DISTANCE 25
 
+// 'Safe' impossible travel distance
+#define INFINITE_DISTANCE MAP_X * MAP_Y + 1
+
 enum directions {NW, N, NE, W, E, SW, S, SE};
 
 // wall edge struct
@@ -150,10 +153,11 @@ typedef struct
     AI* ai;
 } Entity;
 
-// Djikstra map struct
+// Dijkstra map struct
 typedef struct
 {
-    list_p value_list;
-    int value_map[MAP_X * MAP_Y];
-    list_p frontier;
+    list_p poi_list;              // Holds the points with default values
+    boolean poi_list_flag;        // Set true if poi_list has been changed
+    int value_map[MAP_X * MAP_Y]; // Holds the calculated values
+    list_p frontier;              // Used for floodfill
 } DMap;

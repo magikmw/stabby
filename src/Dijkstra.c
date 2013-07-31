@@ -27,7 +27,32 @@ void DMapCreate(DMap dmap){
 }
 
 void DMapAddPOI(DMap dmap, int position){
-    // [TODO] Add given position to the value vector if it's not already in
+    // Add given position to the value list if it's not already in
+    list_iter_p iterator = list_iterator(dmap.poi_list, FRONT);
+    int* temp_position = (int*)list_current(iterator);
+    if(temp_position == NULL){ // list empty, add position
+        list_add(dmap.poi_list, &position, sizeof(int));
+    }
+    else{ // list not empty
+        boolean found = false;
+        while(temp_position != NULL && found == false){ // search for the position
+            temp_position = (int*)list_next(iterator);
+            if(temp_position != NULL){
+                if(*temp_position == position){
+                    found = true;
+                }
+            }
+        }
+        if(!found){ // not found in the list, add the position
+            list_add(dmap.poi_list, &position, sizeof(int));
+        }
+        #ifdef DEBUG
+        else{
+            printf("[WARNING] Trying to add a position to the DMap twice!\n");
+        }
+        #endif
+    }
+
 }
 
 void DMapRemPOI(DMap dmap, int position){
