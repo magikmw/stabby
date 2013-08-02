@@ -33,3 +33,31 @@ void list_insert(list_p list, lnode_p before, void *data, int size)
         list->length++;
     }
 }
+
+/* Remove an item from the list and return it's value */
+void* list_pluck(list_p list, lnode_p removed){
+    if(removed == NULL){
+        return NULL;
+    }
+    else if(list->first == removed && list->last == removed){
+        list->first = NULL;
+        list->last = NULL;
+    }
+    else if(list->first == removed){
+        list->first = removed->next;
+        removed->next->prev = NULL;
+    }
+    else if(list->last == removed){
+        list->last = removed->prev;
+        removed->prev->next = NULL;
+    }
+    else{
+        removed->prev->next = removed->next;
+        removed->next->prev = removed->prev;
+    }
+
+    void* data = removed->data;
+    free(removed);
+    list->length--;
+    return data;
+}
