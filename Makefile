@@ -1,6 +1,8 @@
-CFLAGS=-Isrc -Iinc -Lbin/libs -Wall ${DEFINES} -std=c99
+CFLAGS=  -Wall -std=c99 -Wl,-rpath,.
 RELEASENAME=\"Stabby\ Alpha\"
 
+INCLUDES = -Isrc -Iinc
+LINKS = -Lbin/libs
 DEFINES = -DNAME_VERSION=$(RELEASENAME)
 
 %.o : %.c
@@ -23,10 +25,10 @@ LIBRARIES =-lcsfml-graphics -lcsfml-system -lcsfml-window -lm -lds
 all : bin/stabby
 
 debug :
-	gcc -o bin/stabby ${SRCFILES} ${CFLAGS} ${LIBRARIES} -Wl,-rpath,. -O0 -ggdb -DDEBUG $(DEFINES)
+	gcc -o bin/stabby ${SRCFILES} ${CFLAGS} ${LIBRARIES} -O0 -ggdb -DDEBUG $(INCLUDES) $(LINKS) $(DEFINES)
 
 bin/stabby :
-	gcc -O3 -o bin/stabby ${SRCFILES} ${CFLAGS} ${LIBRARIES} -Wl,-rpath,. -O3 $(DEFINES)
+	gcc -O3 -o bin/stabby ${SRCFILES} ${CFLAGS} ${LIBRARIES} -O3 $(INCLUDES) $(LINKS) $(DEFINES)
 
 clean : 
 	rm -f src/*.o bin/stabby
