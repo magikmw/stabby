@@ -48,7 +48,7 @@ void DMapAddPOI(DMap dmap, int position){
         }
         #ifdef DEBUG
         else{
-            printf("[WARNING] Trying to add a position to the DMap twice!\n");
+            printf("[WARNING] Trying to add a POI to the DMap twice!\n");
         }
         #endif
     }
@@ -56,11 +56,38 @@ void DMapAddPOI(DMap dmap, int position){
 }
 
 void DMapRemPOI(DMap dmap, int position){
-    // [TODO] Search the value vector and remove the position given
+    // Search the value list and remove the position given
+    list_iter_p iterator = list_iterator(dmap.poi_list, FRONT);
+    int* temp_position = (int*)list_current(iterator);
+    if(temp_position == NULL){ // list empty, nothing to remove!
+        #ifdef DEBUG
+            printf("[WARNING] Trying to remove POI from an empty DMap list!\n");
+        #endif
+        return;
+    }
+    else{
+        boolean found = false;
+        while(temp_position != NULL && found == false){ // search for the position
+            temp_position = (int*)list_next(iterator);
+            if(temp_position != NULL){
+                if(*temp_position == position){
+                    found = true;
+                }
+            }
+        }
+        if(found){ // item found, removing
+            list_pluck(dmap.poi_list, iterator->current);
+        }
+        #ifdef DEBUG
+        else{
+            printf("[WARNING] Trying remove a POI that's not on the list!\n");
+        }
+        #endif
+    }
 }
 
 void DMapUpdate(DMap dmap){
-    // [TODO] Function updates given DMap according to it's own POI vector and the wall map
+    // [TODO] Function updates given DMap according to it's own POI list and the wall map
 }
 
 void DMapDestroy(DMap dmap){
