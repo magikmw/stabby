@@ -96,6 +96,25 @@ void DMapDestroy(DMap dmap){
     destroy_list(dmap.frontier);
 }
 
-void addToFrontier(vector_p frontier, int* value_map, int position){
-    // [TODO] Function adds a tile position to the frontier, sorting it by value from lowest
+void addToFrontier(list_p frontier, int* value_map, int position){
+    // Function adds a tile position to the frontier, sorting it by value from lowest
+    list_iter_p iterator = list_iterator(frontier, FRONT);
+    int* temp_position = (int*)list_current(iterator);
+
+    if(temp_position == NULL || frontier->first == frontier->last){
+    // list is empty or has only one element - adding to the end
+        list_add(frontier, &position, sizeof(int));
+    }
+    else{
+    // otherwise place it before any higher valued position already in
+        while(temp_position != NULL && *temp_position < position){
+            temp_position = (int*)list_next(iterator);
+        }
+        if(temp_position == NULL){ // reached the end of the frontier
+            list_add(frontier, &position, sizeof(int));
+        }
+        else{ // found a higher value, placing the item after it's previous one (syntax...)
+            list_insert(frontier, iterator->current->prev, &position, sizeof(int));
+        }
+    }
 }
