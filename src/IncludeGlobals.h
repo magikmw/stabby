@@ -30,6 +30,9 @@ extern Tile map[MAP_X * MAP_Y];
 extern sfSprite* staticUI[STATIC_UI_NO];
 extern Room* rooms[MAX_ROOMS];
 
+// Constants
+extern const int neighbours[8];
+
 // Functions
 void createMap();
 void createStaticUI(sfSprite* staticUI[]);

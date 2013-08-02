@@ -88,9 +88,6 @@
 
 enum directions {NW, N, NE, W, E, SW, S, SE};
 
-// Relative positions of 8 tiles around n in array[24*16]
-const int neighbours[8] = {-24. 1. 24. -1. -25, -23, 25, 23};
-
 // wall edge struct
 typedef struct
 {
