@@ -88,6 +88,11 @@ void DMapRemPOI(DMap dmap, int position){
 
 void DMapUpdate(DMap dmap){
     // [TODO] Function updates given DMap according to it's own POI list and the wall map
+    // 1   - set all walls to -INFINITE_DISTANCE and floors to INFINITE_DISTANCE
+    // 2   - add all POI to the value map [first with 0]
+    // 2.5 - add all POI to the frontier
+    // 3   - while the frontier is not empty do the magic
+    // 4   - display debug message about finishing the calculation (time it?)
 }
 
 void DMapDestroy(DMap dmap){
@@ -101,8 +106,8 @@ void addToFrontier(list_p frontier, int* value_map, int position){
     list_iter_p iterator = list_iterator(frontier, FRONT);
     int* temp_position = (int*)list_current(iterator);
 
-    if(temp_position == NULL || frontier->first == frontier->last){
-    // list is empty or has only one element - adding to the end
+    if(temp_position == NULL){
+    // frontier is empty - add to the end
         list_add(frontier, &position, sizeof(int));
     }
     else{
