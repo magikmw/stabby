@@ -1,5 +1,7 @@
 CFLAGS=-Isrc -Iinc -Lbin/libs -Wall ${DEFINES} -std=c99
-RELEASENAME=stabby-0.2
+RELEASENAME=\"Stabby\ Alpha\"
+
+DEFINES = -DNAME_VERSION=$(RELEASENAME)
 
 %.o : %.c
 	gcc $(CFLAGS) -g -o $@ -c $< 
@@ -21,12 +23,13 @@ LIBRARIES =-lcsfml-graphics -lcsfml-system -lcsfml-window -lm -lds
 all : bin/stabby
 
 debug :
-	gcc -o bin/stabby ${SRCFILES} ${CFLAGS} ${LIBRARIES} -Wl,-rpath,. -O0 -ggdb
+	gcc -o bin/stabby ${SRCFILES} ${CFLAGS} ${LIBRARIES} -Wl,-rpath,. -O0 -ggdb -DDEBUG $(DEFINES)
 
 bin/stabby :
-	gcc -O3 -o bin/stabby ${SRCFILES} ${CFLAGS} ${LIBRARIES} -Wl,-rpath,. -O3
+	gcc -O3 -o bin/stabby ${SRCFILES} ${CFLAGS} ${LIBRARIES} -Wl,-rpath,. -O3 $(DEFINES)
 
 clean : 
 	rm -f src/*.o bin/stabby
 
+# [TODO] Split .o file building and linking
 # [TODO] Add included library building to the makefile/build script.

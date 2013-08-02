@@ -33,12 +33,6 @@
 
 #include "icon.h"
 
-// Uncomment for debug mode
-#define DEBUG
-
-// Version and title name
-#define NAME_VERSION     "Stabby Alpha"
-
 // Window dimensions in px
 #define WINDOW_X        960
 #define WINDOW_Y        540

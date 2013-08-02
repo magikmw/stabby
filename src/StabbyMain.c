@@ -23,6 +23,10 @@ double draw_fps(int *);
 
 int main()
 {
+    #ifdef DEBUG
+        printf("[INFO] Debug mode ON\n");
+    #endif
+
     sfVideoMode mode = {WINDOW_X, WINDOW_Y, 32};
     sfRenderWindow* window;
     sfFont* font;
