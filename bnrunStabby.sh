@@ -9,14 +9,30 @@ if [ $? -eq 0 ]
         exit
 fi
 
-make debug > /dev/null
+if [ "$1" = "DEBUG" ]
+then
+    echo 'DEBUG BUILD'
+    make debug > /dev/null
 
-if [ $? -eq 0 ]
-    then
-        echo 'Build finished, running...'
-    else
-        echo 'Build fail.'
-        exit
+    if [ $? -eq 0 ]
+        then
+            echo 'Build finished, running...'
+        else
+            echo 'Build fail.'
+            exit
+    fi
+
+    cd bin && gdb ./stabby
+else
+    make > /dev/null
+
+    if [ $? -eq 0 ]
+        then
+            echo 'Build finished, running...'
+        else
+            echo 'Build fail.'
+            exit
+    fi
+
+    cd bin && ./stabby
 fi
-
-cd bin && ./stabby
