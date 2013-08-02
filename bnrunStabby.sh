@@ -22,7 +22,12 @@ then
             exit
     fi
 
-    cd bin && gdb ./stabby
+    if [ "$2" = "GDB" ]
+        then
+        cd bin && gdb ./stabby
+    else
+        cd bin && ./stabby
+    fi
 else
     make > /dev/null
 
