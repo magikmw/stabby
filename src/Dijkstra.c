@@ -90,12 +90,44 @@ void DMapRemPOI(DMap dmap, int position){
 }
 
 void DMapUpdate(DMap dmap){
-    // [TODO] Function updates given DMap according to it's own POI list and the wall map
-    // 1   - set all walls to -INFINITE_DISTANCE and floors to INFINITE_DISTANCE
-    // 2   - add all POI to the value map [first with 0]
-    // 2.5 - add all POI to the frontier
-    // 3   - while the frontier is not empty do the magic
-    // 4   - display debug message about finishing the calculation (time it?)
+    // Function updates given DMap according to it's own POI list and the wall map
+        for(int x = 0; x < MAP_X; x++){
+            for(int y = 0; y < MAP_Y; y++){
+                if(hasAllEdges(x,y)){ // fully walled off
+                    dmap.value_map[MAP_COORD(x,y)] = -INFINITE_DISTANCE;
+                }
+                else{ // free floor tiles
+                    dmap.value_map[MAP_COORD(x,y)] = INFINITE_DISTANCE;
+                }
+            }
+        }
+        list_iter_p iterator = list_iterator(dmap.poi_list, FRONT);
+        int* temp_position = (int*)list_current(iterator);
+        while(temp_position != NULL){
+            dmap.value_map[*temp_position] = 0;
+            addToFrontier(dmap.frontier, dmap.value_map, *temp_position);
+            temp_position = (int*)list_next(iterator);
+        }
+
+        temp_position = (int*)list_poll(dmap.frontier);
+        while(temp_position != NULL){
+            for(int n = 0; n < 8; n++){
+                if((*temp_position)+neighbours[n] >= 0 && (*temp_position)+neighbours[n] < MAP_X*MAP_Y
+                    && dmap.value_map[(*temp_position)+neighbours[n]] > dmap.value_map[*temp_position]){
+                        dmap.value_map[(*temp_position)+neighbours[n]] = dmap.value_map[*temp_position] + 1;
+                        addToFrontier(dmap.frontier, dmap.value_map, (*temp_position)+neighbours[n]);
+                }
+            }            
+            temp_position = (int*)list_poll(dmap.frontier);
+        }
+        free(iterator);
+        free(temp_position);
+    }
+    #ifdef DEBUG
+    else{
+        printf("[INFO] DMap flag not set, not updating.\n");
+    }
+    #endif
 }
 
 void DMapDestroy(DMap dmap){
