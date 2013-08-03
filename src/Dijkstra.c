@@ -32,6 +32,7 @@ void DMapAddPOI(DMap dmap, int position){
     int* temp_position = (int*)list_current(iterator);
     if(temp_position == NULL){ // list empty, add position
         list_add(dmap.poi_list, &position, sizeof(int));
+        dmap.poi_list_flag = true;
     }
     else{ // list not empty
         boolean found = false;
@@ -45,6 +46,7 @@ void DMapAddPOI(DMap dmap, int position){
         }
         if(!found){ // not found in the list, add the position
             list_add(dmap.poi_list, &position, sizeof(int));
+            dmap.poi_list_flag = true;
         }
         #ifdef DEBUG
         else{
@@ -77,6 +79,7 @@ void DMapRemPOI(DMap dmap, int position){
         }
         if(found){ // item found, removing
             list_pluck(dmap.poi_list, iterator->current);
+            dmap.poi_list_flag = true;
         }
         #ifdef DEBUG
         else{
