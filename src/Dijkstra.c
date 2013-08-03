@@ -91,6 +91,7 @@ void DMapRemPOI(DMap dmap, int position){
 
 void DMapUpdate(DMap dmap){
     // Function updates given DMap according to it's own POI list and the wall map
+    if(dmap.poi_list_flag){
         for(int x = 0; x < MAP_X; x++){
             for(int y = 0; y < MAP_Y; y++){
                 if(hasAllEdges(x,y)){ // fully walled off
