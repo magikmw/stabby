@@ -86,7 +86,7 @@
 // 'Safe' impossible travel distance
 #define INFINITE_DISTANCE MAP_X * MAP_Y + 1
 
-// enum directions {NW, N, NE, W, E, SW, S, SE};
+// Don't change the enum values below - some loops depend on them
 enum directions {N=0, E=1, S=2, W=3, NW=4, NE=5, SE=6, SW=7};
 
 // wall edge struct
