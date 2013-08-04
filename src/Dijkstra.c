@@ -113,7 +113,7 @@ void DMapUpdate(DMap dmap){
         temp_position = (int*)list_poll(dmap.frontier);
         while(temp_position != NULL){
             for(int n = 0; n < 8; n++){
-                if((*temp_position)+neighbours[n] >= 0 && (*temp_position)+neighbours[n] < MAP_X*MAP_Y
+                if(checkCollision((sfVector2f){map[*temp_position].x, map[*temp_position].y}, n)
                     && dmap.value_map[(*temp_position)+neighbours[n]] > dmap.value_map[*temp_position]){
                         dmap.value_map[(*temp_position)+neighbours[n]] = dmap.value_map[*temp_position] + 1;
                         addToFrontier(dmap.frontier, dmap.value_map, (*temp_position)+neighbours[n]);
