@@ -1,6 +1,7 @@
 TODO
 bin/assets
 bin/libs
+obj
 inc
 stabby
 log

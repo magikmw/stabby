@@ -1,37 +1,62 @@
-CFLAGS=  -Wall -std=c99 -Wl,-rpath,.
-RELEASENAME=\"Stabby\ Alpha\"
+TARGET			:=	stabby
+RELEASENAME 	:=	Stabby\ Alpha
 
-INCLUDES = -Isrc -Iinc
-LINKS = -Lbin/libs
-DEFINES = -DNAME_VERSION=$(RELEASENAME)
+CFLAGS			:=	-Wall -std=c99
 
-%.o : %.c
-	gcc $(CFLAGS) -g -o $@ -c $< 
+LD_FLAGS		:=	-Wl,-rpath,. -O3
+LD_FLAGS_DEBUG	:=	-Wl,-rpath,. -O0 -ggdb
 
-SRCFILES=src/StabbyMain.c \
-		 src/Globals.c \
-		 src/Architect.c \
-		 src/UI.c \
-		 src/Keyboard.c \
-		 src/Interaction.c \
-		 src/Graphics.c \
-		 src/SpiralShadowcasting.c \
-		 src/Random.c \
-		 src/Dijkstra.c \
-		 src/dse.c
+DEFINES			:= 	-DNAME_VERSION=\"$(RELEASENAME)\"
+DEFINES_DEBUG	:=	-DNAME_VERSION=\"$(RELEASENAME)\ DEBUG\" -DDEBUG
 
-LIBRARIES =-lcsfml-graphics -lcsfml-system -lcsfml-window -lm -lds
+INCLUDES		:=	-Isrc -Iinc
 
-all : bin/stabby
+LINKS			:= 	-Lbin/libs
+LIBRARIES 		:=	-lcsfml-graphics -lcsfml-system -lcsfml-window -lm -lds
 
-debug :
-	gcc -o bin/stabby ${SRCFILES} ${CFLAGS} ${LIBRARIES} -O0 -ggdb -DDEBUG $(INCLUDES) $(LINKS) $(DEFINES)
+SRC_FILES		:= 	StabbyMain.c \
+			 		Globals.c \
+			 		Architect.c \
+			 		UI.c \
+			 		Keyboard.c \
+			 		Interaction.c \
+			 		Graphics.c \
+			 		SpiralShadowcasting.c \
+			 		Random.c \
+			 		Dijkstra.c \
+			 		dse.c
 
-bin/stabby :
-	gcc -O3 -o bin/stabby ${SRCFILES} ${CFLAGS} ${LIBRARIES} -O3 $(INCLUDES) $(LINKS) $(DEFINES)
+OBJ_DIR			:= 	obj/
+SRC_DIR			:= 	src/
+BIN_DIR			:=	bin/
 
-clean : 
-	rm -f src/*.o bin/stabby
+OBJ_FILES		:=	$(addsuffix .o, $(basename $(SRC_FILES)))
+OBJ_FILES		:=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
-# [TODO] Split .o file building and linking
-# [TODO] Add included library building to the makefile/build script.
+all: $(BIN_DIR)$(TARGET)
+
+debug: LD_FLAGS	:= $(LD_FLAGS_DEBUG)
+debug: DEFINES 	:= $(DEFINES_DEBUG)
+debug: $(BIN_DIR)$(TARGET)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	gcc $(CFLAGS) $(INCLUDES) $(DEFINES) -g -o $@ -c $< 
+
+$(BIN_DIR)$(TARGET): _makedirs $(OBJ_FILES)
+	gcc -o $(BIN_DIR)$(TARGET) $(OBJ_FILES) $(LIBRARIES) $(LINKS) $(LD_FLAGS)
+
+_makedirs:
+	mkdir -p $(OBJ_DIR)
+
+clean: 
+	rm -fr $(OBJ_DIR) $(BIN_DIR)$(TARGET)
+
+run:
+	cd $(BIN_DIR) && ./$(TARGET)
+
+info:
+	@echo "TARGET:		$(BIN_DIR)$(TARGET)"
+	@echo "SRC_FILES:	$(SRC_FILES)"
+	@echo "OBJ_FILES:	$(OBJ_FILES)"
+	@echo "LINKS:		$(LINKS)"
+	@echo "LIBRARIES:	$(LIBRARIES)"
