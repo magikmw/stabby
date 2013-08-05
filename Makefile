@@ -82,8 +82,12 @@ _makedirs:
 clean: 
 	rm -fr $(OBJ_DIR) $(BIN_DIR)$(TARGET)
 
-run:
+run: all
 	cd $(BIN_DIR) && ./$(TARGET)
+
+# Runs the debugger, requires debug build
+run_gdb: debug
+	cd $(BIN_DIR) && gdb ./$(TARGET)
 
 info:
 	@echo "TARGET:		$(BIN_DIR)$(TARGET)"

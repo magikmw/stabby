@@ -24,9 +24,9 @@ then
 
     if [ "$2" = "GDB" ]
         then
-        cd bin && gdb ./stabby
+        make run_gdb
     else
-        cd bin && ./stabby
+        make run
     fi
 else
     make > /dev/null
@@ -39,5 +39,5 @@ else
             exit
     fi
 
-    cd bin && ./stabby
+    make run
 fi
