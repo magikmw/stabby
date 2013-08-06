@@ -162,7 +162,9 @@ int main()
 
         /* Draw the text */
         sfRenderWindow_drawText(window, text, NULL);
+        #ifdef DEBUG
         sfRenderWindow_drawText(window, debug_text, NULL);
+        #endif
 
         /* Update the window */
         sfRenderWindow_display(window);
