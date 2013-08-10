@@ -26,8 +26,10 @@ void player_move(int direction)
         {
             player.direction = N;
             if(checkCollision((sfVector2f){player.x, player.y}, N)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
                 player.x += 0;
                 player.y += -1;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
             }
             break;
         }
@@ -35,8 +37,10 @@ void player_move(int direction)
         {
             player.direction = S;
             if(checkCollision((sfVector2f){player.x, player.y}, S)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
                 player.x += 0;
                 player.y += 1;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
             }
             break;
         }
@@ -44,8 +48,10 @@ void player_move(int direction)
         {
             player.direction = W;
             if(checkCollision((sfVector2f){player.x, player.y}, W)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
                 player.x += -1;
                 player.y += 0;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
             }
             break;
         }
@@ -53,8 +59,10 @@ void player_move(int direction)
         {
             player.direction = E;
             if(checkCollision((sfVector2f){player.x, player.y}, E)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
                 player.x += 1;
                 player.y += 0;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
             }
             break;
         }
@@ -62,8 +70,10 @@ void player_move(int direction)
         {
             player.direction = NW;
             if(checkCollision((sfVector2f){player.x, player.y}, NW)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
                 player.x += -1;
                 player.y += -1;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
             }
             break;
         }
@@ -71,8 +81,10 @@ void player_move(int direction)
         {
             player.direction = NE;
             if(checkCollision((sfVector2f){player.x, player.y}, NE)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
                 player.x += 1;
                 player.y += -1;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
             }
             break;
         }
@@ -80,18 +92,21 @@ void player_move(int direction)
         {
             player.direction = SW;
             if(checkCollision((sfVector2f){player.x, player.y}, SW)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
                 player.x += -1;
                 player.y += 1;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
             }
             break;
         }
         case SE:
         {
             player.direction = SE;
-            // printf("collision: %i\n", checkCollision((sfVector2f){player.x, player.y}, SE));
             if(checkCollision((sfVector2f){player.x, player.y}, SE)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
                 player.x += 1;
                 player.y += 1;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
             }
             break;
         }

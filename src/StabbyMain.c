@@ -47,6 +47,7 @@ int main()
     //mapgen
     createMap();
 
+    // player creation
     player.x = roomCenter(rooms[0]).x;
     player.y = roomCenter(rooms[0]).y;
     player.direction = N;
@@ -58,10 +59,16 @@ int main()
     player.move = player_move;
     updatePlayerSprite();
 
+    // spawn mobs
     sfSprite* mob = sfSprite_create();
     sfSprite_setTexture(mob, textureArray[0], sfTrue);
     sfSprite_setTextureRect(mob, (sfIntRect){1*TILE_SIZE, 0*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-    sfSprite_setPosition(mob, (sfVector2f){4*TILE_SIZE + BORDER_OFFSET, 2*TILE_SIZE + BORDER_OFFSET});    
+    sfSprite_setPosition(mob, (sfVector2f){4*TILE_SIZE + BORDER_OFFSET, 2*TILE_SIZE + BORDER_OFFSET});
+
+    // Create DMaps
+    DMapCreate(&DMap_PlayerChase);
+    DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+    DMapUpdate(&DMap_PlayerChase);
 
     /* Create a graphical text to display */
     font = sfFont_createFromFile("assets/mandrill.ttf");
@@ -73,6 +80,12 @@ int main()
     sfText_setPosition(text, (sfVector2f){(PANEL_ZERO_X + (WINDOW_X+BORDER_OFFSET - PANEL_ZERO_X)/2) - (sfText_getCharacterSize(text) * strlen(sfText_getString(text))/4), BORDER_OFFSET});
     // sfText_setPosition(text, (sfVector2f){PANEL_ZERO_X + (WINDOW_X - PANEL_ZERO_X)/2 - , BORDER_OFFSET});
     sfText_setColor(text, sfBlack);
+
+    // DMap debug text object
+    sfText* text_dmap_value = sfText_create();
+    sfText_setFont(text_dmap_value, font);
+    sfText_setCharacterSize(text_dmap_value, 12);
+    sfText_setColor(text_dmap_value, sfMagenta);
 
     fpsClock = sfClock_create();
     int frame = 0;
@@ -107,11 +120,11 @@ int main()
                 player_action = handleKeys();
         }
 
-        // player_action = handleKeys();
+        DMapUpdate(&DMap_PlayerChase);
 
         clearVisibility();
-        doFOV();
-        // showAll();
+        // doFOV();
+        showAll();
 
         /* Clear the screen */
         sfRenderWindow_clear(window, (sfColor){200, 200, 200});
@@ -153,6 +166,13 @@ int main()
                             if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
                                 sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
                 }
+
+                // [TODO add this text drawing to be toggle-able in debug mode with a keystroke]
+                char str_value[5];
+                sprintf(str_value, "%d", DMap_PlayerChase.value_map[MAP_COORD(x,y)]);
+                sfText_setString(text_dmap_value, str_value);
+                sfText_setPosition(text_dmap_value, (sfVector2f){BORDER_OFFSET + TILE_SIZE * x + TILE_SIZE/2 - (sfText_getCharacterSize(text_dmap_value) * strlen(sfText_getString(text_dmap_value))/5), BORDER_OFFSET + TILE_SIZE * y + TILE_SIZE/4});
+                sfRenderWindow_drawText(window, text_dmap_value, NULL);
             }
 
         /* Draw the sprite */
