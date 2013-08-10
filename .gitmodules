@@ -1,0 +1,3 @@
+[submodule "lib/libds"]
+	path = lib/libds
+	url = git@github.com:magikmw/libds.git
