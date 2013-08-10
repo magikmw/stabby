@@ -25,6 +25,9 @@ extern sfClock* fpsClock;
 extern Entity player;
 extern int rooms_number;
 
+// Dijkstra maps
+DMap DMap_PlayerChase;
+
 // Arrays
 extern Tile map[MAP_X * MAP_Y];
 extern sfSprite* staticUI[STATIC_UI_NO];
@@ -61,11 +64,11 @@ void initRand(unsigned int seed);
 int randInt(int, int);
 
 // dijkstra maps related
-void DMapCreate(DMap);
-void DMapAddPOI(DMap, int);
-void DMapRemPOI(DMap, int);
-void DMapUpdate(DMap);
-void DMapDestroy(DMap);
+void DMapCreate(DMap*);
+void DMapAddPOI(DMap*, int);
+void DMapRemPOI(DMap*, int);
+void DMapUpdate(DMap*);
+void DMapDestroy(DMap*);
 void addToFrontier(list_p, int*, int);
 
 // ds extended

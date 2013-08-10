@@ -19,34 +19,40 @@
 #include "Stabby.h"
 #include "IncludeGlobals.h"
 
-void DMapCreate(DMap dmap){
+void DMapCreate(DMap* dmap){
     // Create an empty DMap with just data structures ready
-    dmap.poi_list = create_list();
-    dmap.poi_list_flag = false;
-    dmap.frontier = create_list();
+    dmap->poi_list = create_list();
+    dmap->poi_list_flag = false;
+    dmap->frontier = create_list();
 }
 
-void DMapAddPOI(DMap dmap, int position){
+void DMapAddPOI(DMap* dmap, int position){
     // Add given position to the value list if it's not already in
-    list_iter_p iterator = list_iterator(dmap.poi_list, FRONT);
-    int* temp_position = (int*)list_current(iterator);
+    list_iter_p iterator = list_iterator(dmap->poi_list, FRONT);
+
+    int* temp_position = NULL;
+    if(dmap->poi_list->first != NULL){
+        temp_position = (int*)dmap->poi_list->first->data;
+    }
+    
     if(temp_position == NULL){ // list empty, add position
-        list_add(dmap.poi_list, &position, sizeof(int));
-        dmap.poi_list_flag = true;
+        list_add(dmap->poi_list, &position, sizeof(int));
+        dmap->poi_list_flag = true;
     }
     else{ // list not empty
         boolean found = false;
         while(temp_position != NULL && found == false){ // search for the position
             temp_position = (int*)list_next(iterator);
             if(temp_position != NULL){
+                printf("Iter: %i\n", *temp_position);
                 if(*temp_position == position){
                     found = true;
                 }
             }
         }
         if(!found){ // not found in the list, add the position
-            list_add(dmap.poi_list, &position, sizeof(int));
-            dmap.poi_list_flag = true;
+            list_add(dmap->poi_list, &position, sizeof(int));
+            dmap->poi_list_flag = true;
         }
         #ifdef DEBUG
         else{
@@ -57,14 +63,20 @@ void DMapAddPOI(DMap dmap, int position){
 
 }
 
-void DMapRemPOI(DMap dmap, int position){
+void DMapRemPOI(DMap* dmap, int position){
     // Search the value list and remove the position given
-    list_iter_p iterator = list_iterator(dmap.poi_list, FRONT);
-    int* temp_position = (int*)list_current(iterator);
+    list_iter_p iterator = list_iterator(dmap->poi_list, FRONT);
+
+    int* temp_position = NULL;
+    if(dmap->poi_list->first != NULL){
+        temp_position = (int*)dmap->poi_list->first->data;
+    }
+
     if(temp_position == NULL){ // list empty, nothing to remove!
         #ifdef DEBUG
             printf("[WARNING] Trying to remove POI from an empty DMap list!\n");
         #endif
+        printf("%p\n", dmap->poi_list->first);
         return;
     }
     else{
@@ -78,8 +90,8 @@ void DMapRemPOI(DMap dmap, int position){
             }
         }
         if(found){ // item found, removing
-            list_pluck(dmap.poi_list, iterator->current);
-            dmap.poi_list_flag = true;
+            list_pluck(dmap->poi_list, iterator->current);
+            dmap->poi_list_flag = true;
         }
         #ifdef DEBUG
         else{
@@ -89,67 +101,83 @@ void DMapRemPOI(DMap dmap, int position){
     }
 }
 
-void DMapUpdate(DMap dmap){
+void DMapUpdate(DMap* dmap){
     // Function updates given DMap according to it's own POI list and the wall map
-    if(dmap.poi_list_flag){
+    if(dmap->poi_list_flag){
+        dmap->poi_list_flag = false;
         for(int x = 0; x < MAP_X; x++){
             for(int y = 0; y < MAP_Y; y++){
                 if(hasAllEdges(x,y)){ // fully walled off
-                    dmap.value_map[MAP_COORD(x,y)] = -INFINITE_DISTANCE;
+                    dmap->value_map[MAP_COORD(x,y)] = -(INFINITE_DISTANCE);
                 }
                 else{ // free floor tiles
-                    dmap.value_map[MAP_COORD(x,y)] = INFINITE_DISTANCE;
+                    dmap->value_map[MAP_COORD(x,y)] = INFINITE_DISTANCE;
                 }
             }
         }
-        list_iter_p iterator = list_iterator(dmap.poi_list, FRONT);
-        int* temp_position = (int*)list_current(iterator);
+        list_iter_p iterator = list_iterator(dmap->poi_list, FRONT);
+    
+        int* temp_position = NULL;
+        if(dmap->poi_list->first != NULL){
+            temp_position = (int*)dmap->poi_list->first->data;
+        }
+
         while(temp_position != NULL){
-            dmap.value_map[*temp_position] = 0;
-            addToFrontier(dmap.frontier, dmap.value_map, *temp_position);
+            dmap->value_map[*temp_position] = 0;
+            addToFrontier(dmap->frontier, dmap->value_map, *temp_position);
             temp_position = (int*)list_next(iterator);
         }
 
-        temp_position = (int*)list_poll(dmap.frontier);
+        temp_position = (int*)list_poll(dmap->frontier);
         while(temp_position != NULL){
-            for(int n = N; n < SW; n++){
+            for(int n = N; n <= SW; n++){
                 if(checkCollision((sfVector2f){map[*temp_position].x, map[*temp_position].y}, n) // n points to directions enum
-                    && dmap.value_map[(*temp_position)+neighbours[n]] > dmap.value_map[*temp_position]){
-                        dmap.value_map[(*temp_position)+neighbours[n]] = dmap.value_map[*temp_position] + 1;
-                        addToFrontier(dmap.frontier, dmap.value_map, (*temp_position)+neighbours[n]);
+                    && dmap->value_map[(*temp_position)+neighbours[n]] > dmap->value_map[*temp_position]){
+                        dmap->value_map[(*temp_position)+neighbours[n]] = dmap->value_map[*temp_position] + 1;
+                        addToFrontier(dmap->frontier, dmap->value_map, (*temp_position)+neighbours[n]);
                 }
             }            
-            temp_position = (int*)list_poll(dmap.frontier);
+            temp_position = (int*)list_poll(dmap->frontier);
         }
         free(iterator);
         free(temp_position);
     }
-    #ifdef DEBUG
-    else{
-        printf("[INFO] DMap flag not set, not updating.\n");
-    }
-    #endif
+    // #ifdef DEBUG
+    // else{
+    //     printf("[INFO] DMap flag not set, not updating.\n");
+    // }
+    // #endif
 }
 
-void DMapDestroy(DMap dmap){
+void DMapDestroy(DMap* dmap){
     // Free all lists up.
-    destroy_list(dmap.poi_list);
-    destroy_list(dmap.frontier);
+    destroy_list(dmap->poi_list);
+    destroy_list(dmap->frontier);
 }
 
 void addToFrontier(list_p frontier, int* value_map, int position){
     // Function adds a tile position to the frontier, sorting it by value from lowest
     list_iter_p iterator = list_iterator(frontier, FRONT);
-    int* temp_position = (int*)list_current(iterator);
+
+    int* temp_position = NULL;
+    if(frontier->first != NULL){
+        temp_position = (int*)frontier->first->data;
+    }
 
     if(temp_position == NULL){
     // frontier is empty - add to the end
         list_add(frontier, &position, sizeof(int));
     }
+    else if(*temp_position == position){
+        return;
+    }
     else{
     // otherwise place it before any higher valued position already in
-        while(temp_position != NULL && *temp_position < position){
+        while(temp_position != NULL && value_map[*temp_position] <= value_map[position]){
             temp_position = (int*)list_next(iterator);
+            if(temp_position != NULL && *temp_position == position){
+                return;
+            }
         }
         if(temp_position == NULL){ // reached the end of the frontier
             list_add(frontier, &position, sizeof(int));

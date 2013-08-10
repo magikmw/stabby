@@ -30,6 +30,9 @@ sfClock* fpsClock;
 Entity player;
 int rooms_number;
 
+// Dijkstra maps
+DMap DMap_PlayerChase;
+
 // Arrays
 Tile map[MAP_X * MAP_Y];
 Room* rooms[MAX_ROOMS];
