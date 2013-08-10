@@ -70,9 +70,3 @@ void DMapRemPOI(DMap*, int);
 void DMapUpdate(DMap*);
 void DMapDestroy(DMap*);
 void addToFrontier(list_p, int*, int);
-
-// ds extended
-// Add an item with given value (size - sizeof(something)) after the node 'before'
-void list_insert(list_p list, lnode_p before, void *data, int size);
-// Remove an item from the list and return it's value
-void* list_pluck(list_p list, lnode_p removed);
