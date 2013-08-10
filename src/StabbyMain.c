@@ -81,12 +81,6 @@ int main()
     // sfText_setPosition(text, (sfVector2f){PANEL_ZERO_X + (WINDOW_X - PANEL_ZERO_X)/2 - , BORDER_OFFSET});
     sfText_setColor(text, sfBlack);
 
-    // DMap debug text object
-    sfText* text_dmap_value = sfText_create();
-    sfText_setFont(text_dmap_value, font);
-    sfText_setCharacterSize(text_dmap_value, 12);
-    sfText_setColor(text_dmap_value, sfMagenta);
-
     fpsClock = sfClock_create();
     int frame = 0;
     sfText* debug_text = sfText_create();
@@ -101,8 +95,18 @@ int main()
     sfRectangleShape *map_background = sfRectangleShape_create();
     sfRectangleShape_setSize(map_background, (sfVector2f){MAP_X*TILE_SIZE, MAP_Y*TILE_SIZE});
     sfRectangleShape_setPosition(map_background, (sfVector2f){BORDER_OFFSET, BORDER_OFFSET});
-    sfRectangleShape_setFillColor(map_background, (sfColor){78, 78, 98, 255});
+    sfRectangleShape_setFillColor(map_background, (sfColor){78, 78, 98, 255}); // [TODO] Change this color into variable
 
+    #ifdef DEBUG
+    // DMap debug text object
+    sfText* text_dmap_value = sfText_create();
+    sfText_setFont(text_dmap_value, font);
+    sfText_setCharacterSize(text_dmap_value, 12);
+    sfText_setColor(text_dmap_value, sfMagenta);
+    
+    // Debug variables
+    boolean debug_dmap_view = false;
+    #endif
 
     /* Start the game loop */
     while (sfRenderWindow_isOpen(window))
@@ -120,11 +124,18 @@ int main()
                 player_action = handleKeys();
         }
 
+        #ifdef DEBUG
+        if(player_action == -1 && debug_dmap_view == false)
+            debug_dmap_view = true;
+        else if(player_action == -1 && debug_dmap_view == true)
+            debug_dmap_view = false;
+        #endif
+
         DMapUpdate(&DMap_PlayerChase);
 
         clearVisibility();
-        // doFOV();
-        showAll();
+        doFOV();
+        // showAll();
 
         /* Clear the screen */
         sfRenderWindow_clear(window, (sfColor){200, 200, 200});
@@ -167,12 +178,17 @@ int main()
                                 sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
                 }
 
-                // [TODO add this text drawing to be toggle-able in debug mode with a keystroke]
-                char str_value[5];
-                sprintf(str_value, "%d", DMap_PlayerChase.value_map[MAP_COORD(x,y)]);
-                sfText_setString(text_dmap_value, str_value);
-                sfText_setPosition(text_dmap_value, (sfVector2f){BORDER_OFFSET + TILE_SIZE * x + TILE_SIZE/2 - (sfText_getCharacterSize(text_dmap_value) * strlen(sfText_getString(text_dmap_value))/5), BORDER_OFFSET + TILE_SIZE * y + TILE_SIZE/4});
-                sfRenderWindow_drawText(window, text_dmap_value, NULL);
+
+                #ifdef DEBUG // debug printing of the DMap_PlayerChase values
+                if(debug_dmap_view == true)
+                {
+                    char str_value[5];
+                    sprintf(str_value, "%d", DMap_PlayerChase.value_map[MAP_COORD(x,y)]);
+                    sfText_setString(text_dmap_value, str_value);
+                    sfText_setPosition(text_dmap_value, (sfVector2f){BORDER_OFFSET + TILE_SIZE * x + TILE_SIZE/2 - (sfText_getCharacterSize(text_dmap_value) * strlen(sfText_getString(text_dmap_value))/5), BORDER_OFFSET + TILE_SIZE * y + TILE_SIZE/4});
+                    sfRenderWindow_drawText(window, text_dmap_value, NULL);
+                }
+                #endif
             }
 
         /* Draw the sprite */
@@ -193,6 +209,9 @@ int main()
         // printf("Frames: %i\n", frame);
     }
 
+    #ifdef DEBUG
+    printf("[INFO] Have a nice day.\n");
+    #endif
     return 0;
 }
 
