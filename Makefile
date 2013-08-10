@@ -96,6 +96,7 @@ info:
 	@echo "LIBRARIES:	$(LIBRARIES)"
 
 libds:
-	cd lib/libds && make && make ds.h
+	mkdir -p $(BIN_DIR)libs inc
+	cd lib/libds && make clean libds.a ds.h
 	cp lib/libds/libds.a $(BIN_DIR)libs/libds.a
 	cp lib/libds/ds.h inc/ds.h
