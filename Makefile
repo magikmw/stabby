@@ -94,3 +94,8 @@ info:
 	@echo "OBJ_FILES:	$(OBJ_FILES)"
 	@echo "LINKS:		$(LINKS)"
 	@echo "LIBRARIES:	$(LIBRARIES)"
+
+libds:
+	cd lib/libds && make && make ds.h
+	cp lib/libds/libds.a $(BIN_DIR)libs/libds.a
+	cp lib/libds/ds.h inc/ds.h
