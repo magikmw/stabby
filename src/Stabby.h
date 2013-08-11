@@ -31,8 +31,6 @@
 // libds
 #include "ds.h"
 
-#include "icon.h"
-
 // Window dimensions in px
 #define WINDOW_X        960
 #define WINDOW_Y        540

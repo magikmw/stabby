@@ -19,6 +19,9 @@
 #include "Stabby.h"
 #include "IncludeGlobals.h"
 
+// Include the icon data
+#include "icon.h"
+
 double draw_fps(int *);
 
 int main()
