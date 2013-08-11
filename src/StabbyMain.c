@@ -208,7 +208,6 @@ int main()
         sfRenderWindow_display(window);
 
         frame++;
-        // printf("Frames: %i\n", frame);
     }
 
     #ifdef DEBUG
@@ -224,9 +223,9 @@ int draw_fps(int *frames_in){
     signed long long mili_t = elapsed_t.microseconds / 1000;
     if (mili_t >= 1000){
         sfClock_restart(fpsClock);
-        int fps = ((*frames_in)/(mili_t/1000+1));
+        int fps = ((*frames_in)/(mili_t/1000));
         *frames_in = 0;
-        // printf("FPS: %.0f\n", fps);
+        // printf("FPS: %i\n", fps);
         last_fps = fps;
         return fps;
     }
