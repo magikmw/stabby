@@ -22,7 +22,7 @@
 // Include the icon data
 #include "icon.h"
 
-double draw_fps(int *);
+int draw_fps(int *);
 
 int main()
 {
@@ -39,7 +39,6 @@ int main()
     /* Create the main window */
     window = sfRenderWindow_create(mode, NAME_VERSION, sfClose, NULL);
     sfRenderWindow_setVerticalSyncEnabled(window, true);
-    // sfRenderWindow_setFramerateLimit(window, 120);
     sfRenderWindow_setIcon(window, window_icon.width, window_icon.height, window_icon.pixel_data);
 
     initRand(time(NULL));
@@ -114,7 +113,7 @@ int main()
     /* Start the game loop */
     while (sfRenderWindow_isOpen(window))
     {
-        sprintf(fps_text, "%.0f", draw_fps(&frame));
+        sprintf(fps_text, "%i", draw_fps(&frame));
         sfText_setString(debug_text, fps_text);
 
         /* Process events */
@@ -218,14 +217,14 @@ int main()
     return 0;
 }
 
-double draw_fps(int *frames_in){
+int draw_fps(int *frames_in){
     // printf("draw_fps() call\n");
-    static double last_fps = 0;
+    static int last_fps = 0;
     sfTime elapsed_t = sfClock_getElapsedTime(fpsClock);
     signed long long mili_t = elapsed_t.microseconds / 1000;
     if (mili_t >= 1000){
         sfClock_restart(fpsClock);
-        double fps = ((*frames_in)/(mili_t/1000+1));
+        int fps = ((*frames_in)/(mili_t/1000+1));
         *frames_in = 0;
         // printf("FPS: %.0f\n", fps);
         last_fps = fps;
