@@ -40,6 +40,8 @@ Building
 Running
 
 You can run the game with:
+    $ ./stabby.sh
+    OR
     $ make run
 or copy & rename the bin folder anywhere, cd inside and just run:
     $ ./stabby
