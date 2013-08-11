@@ -36,8 +36,6 @@ boolean checkIntersection(Rect* this, Room* other);
 void makeCorridorH(int x1, int x2, int y);
 void makeCorridorV(int y1, int y2, int x);
 
-sfVector2f roomCenter(Room* room);
-
 void createMap(){
     #ifdef DEBUG
     sfClock* timer = sfClock_create();
@@ -95,8 +93,8 @@ void createMap(){
 
     // connect the rooms with corridors
     for(int i=0; i < rooms_number-1; i++){
-        sfVector2f one = roomCenter(rooms[i]);
-        sfVector2f two = roomCenter(rooms[i+1]);
+        sfVector2i one = roomCenter(rooms[i]);
+        sfVector2i two = roomCenter(rooms[i+1]);
         // printf("one: x:%.0f, y:%.0f\n",one.x,one.y);
         // printf("two: x:%.0f, y:%.0f\n",two.x,two.y);
         if(randInt(0, 1) == 1){ // go horizontal, then vertical
@@ -339,10 +337,10 @@ Room* makeRoom(Rect* rect){
     return temp;
 }
 
-sfVector2f roomCenter(Room* room){
-    float x = (room -> x1 + room -> x2) / 2;
-    float y = (room -> y1 + room -> y2) / 2;
-    return  (sfVector2f){x,y};
+sfVector2i roomCenter(Room* room){
+    int x = (room -> x1 + room -> x2) / 2;
+    int y = (room -> y1 + room -> y2) / 2;
+    return  (sfVector2i){x,y};
 }
 
 void clearMap(void){

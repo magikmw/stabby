@@ -52,7 +52,7 @@ void makeMapSprites(void);
 boolean hasEdges(int x, int y);
 boolean hasAllEdges(int x, int y);
 boolean isMap(int x, int y);
-sfVector2f roomCenter(Room* room);
+sfVector2i roomCenter(Room* room);
 
 // fov functions
 void showAll(void);
