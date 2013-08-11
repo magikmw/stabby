@@ -24,6 +24,7 @@ extern sfTexture* textureArray[TEXTURE_NO];
 extern sfClock* fpsClock;
 extern Entity player;
 extern int rooms_number;
+extern int mobs_number;
 
 // Dijkstra maps
 DMap DMap_PlayerChase;
@@ -70,3 +71,7 @@ void DMapRemPOI(DMap*, int);
 void DMapUpdate(DMap*);
 void DMapDestroy(DMap*);
 void addToFrontier(list_p, int*, int);
+
+// demographics
+void spawnPlayer(void);
+void createMob(int type, Tile map_tile);

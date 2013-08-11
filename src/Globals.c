@@ -29,6 +29,7 @@ void loadTextures(sfTexture* textureArray[TEXTURE_NO]){
 sfClock* fpsClock;
 Entity player;
 int rooms_number;
+int mobs_number;
 
 // Dijkstra maps
 DMap DMap_PlayerChase;

@@ -87,6 +87,8 @@
 // Don't change the enum values below - some loops depend on them
 enum directions {N=0, E=1, S=2, W=3, NW=4, NE=5, SE=6, SW=7};
 
+enum mob_types {Plain=0};
+
 // wall edge struct
 typedef struct
 {
@@ -128,6 +130,7 @@ typedef struct
     boolean light;          // if the tile is lit
     boolean corridor;
     boolean corridor_end;
+    Entity* entity;
 } Tile;
 
 // mapgen

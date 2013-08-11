@@ -48,7 +48,8 @@ SRC_FILES		:= 	StabbyMain.c \
 			 		Graphics.c \
 			 		SpiralShadowcasting.c \
 			 		Random.c \
-			 		Dijkstra.c
+			 		Dijkstra.c \
+			 		Demographics.c
 
 # Directory pathnames
 OBJ_DIR			:= 	obj/

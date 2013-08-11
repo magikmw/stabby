@@ -46,26 +46,17 @@ int main()
     loadTextures(textureArray);
     createStaticUI(staticUI);
 
-    //mapgen
+    // mapgen
     createMap();
 
     // player creation
-    player.x = roomCenter(rooms[0]).x;
-    player.y = roomCenter(rooms[0]).y;
-    player.direction = N;
-    player.sprite = sfSprite_create();
-    sfSprite_setTexture(player.sprite, textureArray[0], sfTrue);
-    sfSprite_setOrigin(player.sprite, (sfVector2f){TILE_SIZE/2, TILE_SIZE/2});
-    sfSprite_setTextureRect(player.sprite, (sfIntRect){0*TILE_SIZE, 0*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-    sfSprite_setPosition(player.sprite, (sfVector2f){player.x*TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET, player.y*TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET});
-    player.move = player_move;
-    updatePlayerSprite();
+    spawnPlayer();
 
     // spawn mobs
-    sfSprite* mob = sfSprite_create();
-    sfSprite_setTexture(mob, textureArray[0], sfTrue);
-    sfSprite_setTextureRect(mob, (sfIntRect){1*TILE_SIZE, 0*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-    sfSprite_setPosition(mob, (sfVector2f){4*TILE_SIZE + BORDER_OFFSET, 2*TILE_SIZE + BORDER_OFFSET});
+    mobs_number = 0;
+    map[MAP_COORD(roomCenter(rooms[rooms_number-1]).x, roomCenter(rooms[rooms_number-1]).y)].entity = (Entity*)malloc(sizeof(Entity));
+    createMob(Plain, map[MAP_COORD(roomCenter(rooms[rooms_number-1]).x, roomCenter(rooms[rooms_number-1]).y)]);
+    mobs_number++;
 
     // Create DMaps
     DMapCreate(&DMap_PlayerChase);
@@ -126,7 +117,7 @@ int main()
                 player_action = handleKeys();
         }
 
-        #ifdef DEBUG
+        #ifdef DEBUG // Various debug key toggles
         if(player_action == -1 && debug_dmap_view == false)
             debug_dmap_view = true;
         else if(player_action == -1 && debug_dmap_view == true)
@@ -136,8 +127,8 @@ int main()
         DMapUpdate(&DMap_PlayerChase);
 
         clearVisibility();
-        doFOV();
-        // showAll();
+        // doFOV();
+        showAll();
 
         /* Clear the screen */
         sfRenderWindow_clear(window, (sfColor){200, 200, 200});
@@ -157,6 +148,9 @@ int main()
                         for(int i = 0; i < 4; i++)
                             if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
                                 sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
+                    if(map[MAP_COORD(x,y)].entity){
+                        sfRenderWindow_drawSprite(window, map[MAP_COORD(x,y)].entity->sprite, NULL);
+                    }
                 }
                 else if(map[MAP_COORD(x,y)].explored && (map[MAP_COORD(x,y)].light || hasAllEdges(x,y))){
                     sfSprite_setColor(map[MAP_COORD(x,y)].sprite, (sfColor){100,100,125,255});
@@ -192,11 +186,6 @@ int main()
                 }
                 #endif
             }
-
-        /* Draw the sprite */
-        // sfRenderWindow_drawSprite(window, mob, NULL);
-
-        sfRenderWindow_drawSprite(window, player.sprite, NULL);
 
         /* Draw the text */
         sfRenderWindow_drawText(window, text, NULL);
