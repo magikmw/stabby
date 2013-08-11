@@ -97,6 +97,25 @@ typedef struct
     sfSprite* sprite[4];
 } Edge;
 
+// Mob AI component structure
+typedef struct
+{
+    void (*standby)(void);
+    void (*alerted)(void);
+    void (*pursue)(void);
+    void (*active)(void);
+} AI;
+
+// Map entities
+typedef struct
+{
+    int x, y;
+    int direction;
+    sfSprite* sprite;
+    void (*move)(int);
+    AI* ai;
+} Entity;
+
 // basic tile struct
 typedef struct
 {
@@ -126,25 +145,6 @@ typedef struct
     sfVector2f* doors[20];  // holds positions of entrances
     boolean light;          // true if the room is lit (tiles within permalit)
 } Room;
-
-// Mob AI component structure
-typedef struct
-{
-    void (*standby)(void);
-    void (*alerted)(void);
-    void (*persuing)(void);
-    void (*active)(void);
-} AI;
-
-// Map entities
-typedef struct
-{
-    int x, y;
-    int direction;
-    sfSprite* sprite;
-    void (*move)(int);
-    AI* ai;
-} Entity;
 
 // Dijkstra map struct
 typedef struct
