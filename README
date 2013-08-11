@@ -1,0 +1,56 @@
+-----
+Stabby - Non-combat stealth roguelike.
+-----
+Copyright (C) 2013 Michał Walczak <mw@michalwalczak.eu>
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+Art Assets (.png files) - All Rights Reserved (c) 2013 Michał Walczak
+-----
+
+Originally a failed attempt at 7DRL 2013 <http://7drl.org/>
+Currently one of my projects.
+
+Stabby is written in C, using SFML2 via CSFML.
+
+-----
+Dependencies
+
+    * SFML2 <http://www.sfml-dev.org/>
+    * CSFML <http://www.sfml-dev.org/download/csfml/>
+    * libds (included in the repo; my fork of <https://github.com/zhemao/libds>)
+
+    For libds run:
+
+        $ git submodule update --init
+
+    Then using the Stabby Makefile:
+
+        $ make libds
+
+    to build and copy files where they belong.
+
+-----
+Building
+
+    1. Download the assets using:
+        $ ./getAssets.sh
+    2. Run make:
+        $ make [all, debug]
+
+-----
+Running
+
+You can run the game with:
+    $ make run
+or copy & rename the bin folder anywhere, cd inside and just run:
+    $ ./stabby
+
+-----
+Suggestions, complaints, hate-mail, bug reports, love letters:
+Michał Walczak <mw@michalwalczak.eu>
+or
+magikmw on #rgrd@irc.quakenet.org
+
+-----
+Mandrill font by Tommy Ettinger
+Link: <http://fontstruct.com/fontstructions/show/mandrill_2>
+Licensed under CC Attribution Share Alike
