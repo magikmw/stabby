@@ -89,37 +89,47 @@ enum directions {N=0, E=1, S=2, W=3, NW=4, NE=5, SE=6, SW=7};
 
 enum mob_types {Plain=0};
 
+enum ai_states {standby = 0, alerted = 1, pursue = 2};
+
+typedef struct Entity Entity;
+typedef struct Edge Edge;
+typedef struct AI AI;
+typedef struct Tile Tile;
+typedef struct Rect Rect;
+typedef struct Room Room;
+typedef struct DMap DMap;
+
 // wall edge struct
-typedef struct
+struct Edge
 {
     boolean N;
     boolean S;
     boolean W;
     boolean E;
     sfSprite* sprite[4];
-} Edge;
+};
 
 // Mob AI component structure
-typedef struct
+struct AI
 {
-    void (*standby)(void);
-    void (*alerted)(void);
-    void (*pursue)(void);
-    void (*active)(void);
-} AI;
+    void (*standby)(Entity* mob);
+    void (*alerted)(Entity* mob);
+    void (*pursue)(Entity* mob);
+};
 
 // Map entities
-typedef struct
+struct Entity
 {
     int x, y;
     int direction;
     sfSprite* sprite;
     void (*move)(int);
+    int ai_state;
     AI* ai;
-} Entity;
+};
 
 // basic tile struct
-typedef struct
+struct Tile
 {
     int x;
     int y;
@@ -131,29 +141,29 @@ typedef struct
     boolean corridor;
     boolean corridor_end;
     Entity* entity;
-} Tile;
+};
 
 // mapgen
-typedef struct
+struct Rect
 {
     int x1;
     int y1;
     int x2;
     int y2;
-} Rect;
+};
 
-typedef struct
+struct Room
 {
     int x1, y1, x2, y2;
     sfVector2f* doors[20];  // holds positions of entrances
     boolean light;          // true if the room is lit (tiles within permalit)
-} Room;
+};
 
 // Dijkstra map struct
-typedef struct
+struct DMap
 {
     list_p poi_list;              // Holds the points with default values
     boolean poi_list_flag;        // Set true if poi_list has been changed
     int value_map[MAP_X * MAP_Y]; // Holds the calculated values
     list_p frontier;              // Used for floodfill
-} DMap;
+};
