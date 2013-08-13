@@ -35,7 +35,7 @@ void spawnPlayer(void){
     sfSprite_setTextureRect(player.sprite, (sfIntRect){0*TILE_SIZE, 0*TILE_SIZE, TILE_SIZE, TILE_SIZE});
     sfSprite_setPosition(player.sprite, (sfVector2f){player.x*TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET, player.y*TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET});
     player.move = player_move;
-    updatePlayerSprite();
+    updateEntitySprite(&player);
 
     map[MAP_COORD(player.x, player.y)].entity = &player;
 }
@@ -49,11 +49,14 @@ void createMob(int type, Tile map_tile){
             map_tile.entity->direction = N;
             map_tile.entity->sprite = sfSprite_create();
             sfSprite_setTexture(map_tile.entity->sprite, textureArray[0], sfTrue);
+            sfSprite_setOrigin(map_tile.entity->sprite, (sfVector2f){TILE_SIZE/2, TILE_SIZE/2});
             sfSprite_setTextureRect(map_tile.entity->sprite, (sfIntRect){1*TILE_SIZE, 0*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-            sfSprite_setPosition(map_tile.entity->sprite, (sfVector2f){map_tile.entity->x*TILE_SIZE + BORDER_OFFSET, map_tile.entity->y*TILE_SIZE + BORDER_OFFSET});
+            sfSprite_setPosition(map_tile.entity->sprite, (sfVector2f){map_tile.entity->x*TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET, map_tile.entity->y * TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET});
 
             map_tile.entity->move = NULL; // [TODO] mob_move() - copy of the player_move
             map_tile.entity->ai = NULL; // shared AI for each type
+
+            updateEntitySprite(map_tile.entity);
             break;
         }
         default:

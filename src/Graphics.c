@@ -19,57 +19,53 @@
 #include "Stabby.h"
 #include "IncludeGlobals.h"
 
-void updatePlayerSprite(void)
+void updateEntitySprite(Entity* entity)
 {
-    static int last_direction;
-    if(last_direction != player.direction)
-    {
-        switch(player.direction)
+    switch(entity->direction)
         {
             case N:
             {
-                sfSprite_setRotation(player.sprite, 0);
+                sfSprite_setRotation(entity->sprite, 0);
                 break;
             }
             case S:
             {
-                sfSprite_setRotation(player.sprite, 180);
+                sfSprite_setRotation(entity->sprite, 180);
                 break;
             }
             case W:
             {
-                sfSprite_setRotation(player.sprite, 270);
+                sfSprite_setRotation(entity->sprite, 270);
                 break;
             }
             case E:
             {
-                sfSprite_setRotation(player.sprite, 90);
+                sfSprite_setRotation(entity->sprite, 90);
                 break;
             }
             case NW:
             {
-                sfSprite_setRotation(player.sprite, 315);
+                sfSprite_setRotation(entity->sprite, 315);
                 break;
             }
             case NE:
             {
-                sfSprite_setRotation(player.sprite, 45);
+                sfSprite_setRotation(entity->sprite, 45);
                 break;
             }
             case SW:
             {
-                sfSprite_setRotation(player.sprite, 225);
+                sfSprite_setRotation(entity->sprite, 225);
                 break;
             }
             case SE:
             {
-                sfSprite_setRotation(player.sprite, 135);
+                sfSprite_setRotation(entity->sprite, 135);
                 break;
             }
         }
-    }
-    last_direction = player.direction;
-    sfSprite_setPosition(player.sprite, (sfVector2f){player.x*TILE_SIZE + TILE_SIZE/2 +BORDER_OFFSET, player.y*TILE_SIZE + TILE_SIZE/2 +BORDER_OFFSET});
+
+    sfSprite_setPosition(entity->sprite, (sfVector2f){entity->x * TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET, entity->y * TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET});
 }
 
 Room* isInRoom(int x, int y);

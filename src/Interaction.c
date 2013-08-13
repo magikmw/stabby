@@ -121,7 +121,7 @@ void player_move(int direction)
     }
 
     map[MAP_COORD(player.x,player.y)].entity = &player;
-    updatePlayerSprite();
+    updateEntitySprite(&player);
 }
 
 // Basic monster move function, similiar to player's

@@ -49,7 +49,7 @@ void mob_move(int direction, Entity* mob);
 boolean checkCollision(sfVector2f origin, int direction);
 
 // graphics
-void updatePlayerSprite(void);
+void updateEntitySprite(Entity* entity);
 void makeMapSprites(void);
 
 // map properties checks
