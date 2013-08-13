@@ -19,6 +19,11 @@
 #include "Stabby.h"
 #include "IncludeGlobals.h"
 
+// AI function prototypes
+void Plain_Standby(Entity* mob);
+void Plain_Alerted(Entity* mob);
+void Plain_Pursue(Entity* mob);
+
 void spawnPlayer(void){
     sfVector2i position = roomCenter(rooms[0]);
     player.x = position.x;
@@ -47,8 +52,8 @@ void createMob(int type, Tile map_tile){
             sfSprite_setTextureRect(map_tile.entity->sprite, (sfIntRect){1*TILE_SIZE, 0*TILE_SIZE, TILE_SIZE, TILE_SIZE});
             sfSprite_setPosition(map_tile.entity->sprite, (sfVector2f){map_tile.entity->x*TILE_SIZE + BORDER_OFFSET, map_tile.entity->y*TILE_SIZE + BORDER_OFFSET});
 
-            map_tile.entity->move = NULL;
-            map_tile.entity->ai = NULL;
+            map_tile.entity->move = NULL; // [TODO] mob_move() - copy of the player_move
+            map_tile.entity->ai = NULL; // shared AI for each type
             break;
         }
         default:

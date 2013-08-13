@@ -49,7 +49,8 @@ SRC_FILES		:= 	StabbyMain.c \
 			 		SpiralShadowcasting.c \
 			 		Random.c \
 			 		Dijkstra.c \
-			 		Demographics.c
+			 		Demographics.c \
+			 		AI.c
 
 # Directory pathnames
 OBJ_DIR			:= 	obj/

@@ -124,6 +124,14 @@ void player_move(int direction)
     updatePlayerSprite();
 }
 
+// Basic monster move function, similiar to player's
+// Monsters first turn, then move forward
+void mob_move(int direction, Entity* mob)
+{
+
+    // [TODO] Rewrite updatePlayerSprite() to work with any entity and allow sprite changing per states
+}
+
 // returns true if you can move in the direction from origin
 boolean checkCollision(sfVector2f origin, int direction)
 {

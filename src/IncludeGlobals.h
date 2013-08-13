@@ -41,9 +41,12 @@ extern const int neighbours[8];
 void createMap();
 void createStaticUI(sfSprite* staticUI[]);
 int handleKeys(void);
-void player_move(int);
-boolean checkCollision(sfVector2f origin, int direction);
 double distance(int x1, int y1, int x2, int y2);
+
+// Interaction
+void player_move(int);
+void mob_move(int direction, Entity* mob);
+boolean checkCollision(sfVector2f origin, int direction);
 
 // graphics
 void updatePlayerSprite(void);
@@ -75,3 +78,5 @@ void addToFrontier(list_p, int*, int);
 // demographics
 void spawnPlayer(void);
 void createMob(int type, Tile map_tile);
+
+// [TODO] Sort the function prototypes properly by files
