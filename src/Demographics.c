@@ -53,7 +53,7 @@ void createMob(int type, Tile map_tile){
             sfSprite_setTextureRect(map_tile.entity->sprite, (sfIntRect){1*TILE_SIZE, 0*TILE_SIZE, TILE_SIZE, TILE_SIZE});
             sfSprite_setPosition(map_tile.entity->sprite, (sfVector2f){map_tile.entity->x*TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET, map_tile.entity->y * TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET});
 
-            map_tile.entity->move = NULL; // [TODO] mob_move() - copy of the player_move
+            map_tile.entity->move = mob_move;
             map_tile.entity->ai = NULL; // shared AI for each type
 
             updateEntitySprite(map_tile.entity);

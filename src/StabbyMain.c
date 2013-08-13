@@ -126,6 +126,16 @@ int main()
 
         DMapUpdate(&DMap_PlayerChase);
 
+        if(player_action == 1){
+            for(int x=0; x < MAP_X; x++){
+                for(int y=0; y < MAP_Y; y++) {
+                    if(map[MAP_COORD(x,y)].entity != NULL && map[MAP_COORD(x,y)].entity != &player){
+                        map[MAP_COORD(x,y)].entity->move(randInt(N,SW), map[MAP_COORD(x,y)].entity);
+                    }
+                }
+            }
+        }
+
         clearVisibility();
         // doFOV();
         showAll();

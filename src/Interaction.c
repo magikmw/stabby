@@ -136,10 +136,519 @@ boolean player_move(int direction, Entity* nul)
 
 // Basic monster move function, similiar to player's
 // Monsters first turn, then move forward
-void mob_move(int direction, Entity* mob)
+boolean mob_move(int direction, Entity* mob)
 {
+    switch(direction){
+        case N:
+        {
+            switch(mob->direction){
+                case N:
+                {
+                    if(checkCollision((sfVector2f){mob->x, mob->y}, N)){
+                        map[MAP_COORD(mob->x,mob->y)].entity = NULL;
+                        mob->x += 0;
+                        mob->y += -1;
+                    }
 
-    // [TODO] Rewrite updatePlayerSprite() to work with any entity and allow sprite changing per states
+                    break;  
+                }
+                case S:
+                {
+                    if(randInt(0,1) == 0){
+                        mob->direction = SE;
+                    }
+                    else{
+                        mob->direction = SW;
+                    }
+
+                    break;
+                }
+                case W:
+                {
+                    mob->direction = NW;
+
+                    break;
+                }
+                case E:
+                {
+                    mob->direction = NE;
+                    
+                    break;
+                }
+                case NW:
+                {
+                    mob->direction = N;
+
+                    break;
+                }
+                case NE:
+                {
+                    mob->direction = N;
+
+                    break;
+                }
+                case SW:
+                {
+                    mob->direction = W;
+
+                    break;
+                }
+                case SE:
+                {
+                    mob->direction = E;
+                    
+                    break;
+                }
+            }
+            break;
+        }
+        case S:
+        {
+            switch(mob->direction){
+                case N:
+                {
+                    if(randInt(0,1) == 0){
+                        mob->direction = NW;
+                    }
+                    else{
+                        mob->direction = NE;
+                    }
+
+                    break;  
+                }
+                case S:
+                {
+                    if(checkCollision((sfVector2f){mob->x, mob->y}, S)){
+                        map[MAP_COORD(mob->x,mob->y)].entity = NULL;
+                        mob->x += 0;
+                        mob->y += 1;
+                    }
+
+                    break;
+                }
+                case W:
+                {
+                    mob->direction = SW;
+
+                    break;
+                }
+                case E:
+                {
+                    mob->direction = SE;
+                    
+                    break;
+                }
+                case NW:
+                {
+                    mob->direction = W;
+                    
+                    break;
+                }
+                case NE:
+                {
+                    mob->direction = E;
+                    
+                    break;
+                }
+                case SW:
+                {
+                    mob->direction = S;
+                    
+                    break;
+                }
+                case SE:
+                {
+                    mob->direction = S;
+                    
+                    break;
+                }
+            }
+            break;
+        }
+        case W:
+        {
+            switch(mob->direction){
+                case N:
+                {
+                    mob->direction = NW;
+
+                    break;  
+                }
+                case S:
+                {
+                    mob->direction = SW;
+
+                    break;
+                }
+                case W:
+                {
+                    if(checkCollision((sfVector2f){mob->x, mob->y}, W)){
+                        map[MAP_COORD(mob->x,mob->y)].entity = NULL;
+                        mob->x += -1;
+                        mob->y += 0;
+                    }
+
+                    break;
+                }
+                case E:
+                {
+                    if(randInt(0,1) == 0){
+                        mob->direction = NE;
+                    }
+                    else{
+                        mob->direction = SE;
+                    }
+                    
+                    break;
+                }
+                case NW:
+                {
+                    mob->direction = W;
+                    
+                    break;
+                }
+                case NE:
+                {
+                    mob->direction = N;
+                    
+                    break;
+                }
+                case SW:
+                {
+                    mob->direction = W;
+                    
+                    break;
+                }
+                case SE:
+                {
+                    mob->direction = S;
+                    
+                    break;
+                }
+            }
+            break;
+        }
+        case E:
+        {
+            switch(mob->direction){
+                case N:
+                {
+                    mob->direction = NE;
+
+                    break;  
+                }
+                case S:
+                {
+                    mob->direction = SE;
+
+                    break;
+                }
+                case W:
+                {
+                    if(randInt(0,1) == 0){
+                        mob->direction = SW;
+                    }
+                    else{
+                        mob->direction = NW;
+                    }
+
+                    break;
+                }
+                case E:
+                {
+                    if(checkCollision((sfVector2f){mob->x, mob->y}, E)){
+                        map[MAP_COORD(mob->x,mob->y)].entity = NULL;
+                        mob->x += 1;
+                        mob->y += 0;
+                    }
+                    
+                    break;
+                }
+                case NW:
+                {
+                    mob->direction = N;
+                    
+                    break;
+                }
+                case NE:
+                {
+                    mob->direction = E;
+                    
+                    break;
+                }
+                case SW:
+                {
+                    mob->direction = S;
+                    
+                    break;
+                }
+                case SE:
+                {
+                    mob->direction = E;
+                    
+                    break;
+                }
+            }
+            break;
+        }
+        case NW:
+        {
+            switch(mob->direction){
+                case N:
+                {
+                    mob->direction = NW;
+
+                    break;  
+                }
+                case S:
+                {
+                    mob->direction = SW;
+
+                    break;
+                }
+                case W:
+                {
+                    mob->direction = NW;
+
+                    break;
+                }
+                case E:
+                {
+                    mob->direction = NE;
+                    
+                    break;
+                }
+                case NW:
+                {
+                    if(checkCollision((sfVector2f){mob->x, mob->y}, NW)){
+                        map[MAP_COORD(mob->x,mob->y)].entity = NULL;
+                        mob->x += -1;
+                        mob->y += -1;
+                    }
+                    
+                    break;
+                }
+                case NE:
+                {
+                    mob->direction = N;
+                    
+                    break;
+                }
+                case SW:
+                {
+                    mob->direction = W;
+                    
+                    break;
+                }
+                case SE:
+                {
+                    if(randInt(0,1) == 0){
+                        mob->direction = E;
+                    }
+                    else{
+                        mob->direction = S;
+                    }
+                    
+                    break;
+                }
+            }
+            break;
+        }
+        case NE:
+        {
+            switch(mob->direction){
+                case N:
+                {
+                    mob->direction = NE;
+
+                    break;  
+                }
+                case S:
+                {
+                    mob->direction = SE;
+
+                    break;
+                }
+                case W:
+                {
+                    mob->direction = NW;
+
+                    break;
+                }
+                case E:
+                {
+                    mob->direction = NE;
+                    
+                    break;
+                }
+                case NW:
+                {
+                    mob->direction = N;
+                    
+                    break;
+                }
+                case NE:
+                {
+                    if(checkCollision((sfVector2f){mob->x, mob->y}, NE)){
+                        map[MAP_COORD(mob->x,mob->y)].entity = NULL;
+                        mob->x += 1;
+                        mob->y += -1;
+                    }
+                    
+                    break;
+                }
+                case SW:
+                {
+                    if(randInt(0,1) == 0){
+                        mob->direction = S;
+                    }
+                    else{
+                        mob->direction = W;
+                    }
+                    
+                    break;
+                }
+                case SE:
+                {
+                    mob->direction = E;
+                    
+                    break;
+                }
+            }
+            break;
+        }
+        case SW:
+        {
+            switch(mob->direction){
+                case N:
+                {
+                    mob->direction = NW;
+
+                    break;  
+                }
+                case S:
+                {
+                    mob->direction = SW;
+
+                    break;
+                }
+                case W:
+                {
+                    mob->direction = SW;
+
+                    break;
+                }
+                case E:
+                {
+                    mob->direction = SE;
+                    
+                    break;
+                }
+                case NW:
+                {
+                    mob->direction = W;
+                    
+                    break;
+                }
+                case NE:
+                {
+                    if(randInt(0,1) == 0){
+                        mob->direction = N;
+                    }
+                    else{
+                        mob->direction = E;
+                    }
+                    
+                    break;
+                }
+                case SW:
+                {
+                    if(checkCollision((sfVector2f){mob->x, mob->y}, SW)){
+                        map[MAP_COORD(mob->x,mob->y)].entity = NULL;
+                        mob->x += -1;
+                        mob->y += 1;
+                    }
+                    
+                    break;
+                }
+                case SE:
+                {
+                    mob->direction = S;
+                    
+                    break;
+                }
+            }
+            break;
+        }
+        case SE:
+        {
+            switch(mob->direction){
+                case N:
+                {
+                    mob->direction = NE;
+
+                    break;  
+                }
+                case S:
+                {
+                    mob->direction = SE;
+
+                    break;
+                }
+                case W:
+                {
+                    mob->direction = SW;
+
+                    break;
+                }
+                case E:
+                {
+                    mob->direction = SE;
+                    
+                    break;
+                }
+                case NW:
+                {
+                    if(randInt(0,1) == 0){
+                        mob->direction = W;
+                    }
+                    else{
+                        mob->direction = N;
+                    }
+                    
+                    break;
+                }
+                case NE:
+                {
+                    mob->direction = E;
+                    
+                    break;
+                }
+                case SW:
+                {
+                    mob->direction = S;
+                    
+                    break;
+                }
+                case SE:
+                {
+                    if(checkCollision((sfVector2f){mob->x, mob->y}, SE)){
+                        map[MAP_COORD(mob->x,mob->y)].entity = NULL;
+                        mob->x += 1;
+                        mob->y += 1;
+                    }
+
+                    break;
+                }
+            }
+            break;
+        }
+    }
+
+    map[MAP_COORD(mob->x,mob->y)].entity = mob;
+    updateEntitySprite(mob);
+
+    return true;
 }
 
 // returns true if you can move in the direction from origin
