@@ -44,8 +44,8 @@ int handleKeys(void);
 double distance(int x1, int y1, int x2, int y2);
 
 // Interaction
-void player_move(int);
-void mob_move(int direction, Entity* mob);
+boolean player_move(int direction, Entity* nul);
+boolean mob_move(int direction, Entity* mob);
 boolean checkCollision(sfVector2f origin, int direction);
 
 // graphics
@@ -79,4 +79,4 @@ void addToFrontier(list_p, int*, int);
 void spawnPlayer(void);
 void createMob(int type, Tile map_tile);
 
-// [TODO] Sort the function prototypes properly by files
+// [TODO] Sort the function prototypes properly by files + re add the variable names

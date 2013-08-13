@@ -123,7 +123,7 @@ struct Entity
     int x, y;
     int direction;
     sfSprite* sprite;
-    void (*move)(int);
+    boolean (*move)(int, Entity*);
     int ai_state;
     AI* ai;
 };

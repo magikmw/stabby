@@ -19,8 +19,9 @@
 #include "Stabby.h"
 #include "IncludeGlobals.h"
 
-void player_move(int direction)
+boolean player_move(int direction, Entity* nul)
 {
+    boolean moved = false;
     switch(direction){
         case N:
         {
@@ -31,6 +32,7 @@ void player_move(int direction)
                 player.x += 0;
                 player.y += -1;
                 DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+                moved = true;
             }
             break;
         }
@@ -43,6 +45,7 @@ void player_move(int direction)
                 player.x += 0;
                 player.y += 1;
                 DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+                moved = true;
             }
             break;
         }
@@ -55,6 +58,7 @@ void player_move(int direction)
                 player.x += -1;
                 player.y += 0;
                 DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+                moved = true;
             }
             break;
         }
@@ -67,6 +71,7 @@ void player_move(int direction)
                 player.x += 1;
                 player.y += 0;
                 DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+                moved = true;
             }
             break;
         }
@@ -79,6 +84,7 @@ void player_move(int direction)
                 player.x += -1;
                 player.y += -1;
                 DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+                moved = true;
             }
             break;
         }
@@ -91,6 +97,7 @@ void player_move(int direction)
                 player.x += 1;
                 player.y += -1;
                 DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+                moved = true;
             }
             break;
         }
@@ -103,6 +110,7 @@ void player_move(int direction)
                 player.x += -1;
                 player.y += 1;
                 DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+                moved = true;
             }
             break;
         }
@@ -115,6 +123,7 @@ void player_move(int direction)
                 player.x += 1;
                 player.y += 1;
                 DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+                moved = true;
             }
             break;
         }
@@ -122,6 +131,7 @@ void player_move(int direction)
 
     map[MAP_COORD(player.x,player.y)].entity = &player;
     updateEntitySprite(&player);
+    return moved;
 }
 
 // Basic monster move function, similiar to player's

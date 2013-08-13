@@ -197,6 +197,7 @@ int main()
         sfRenderWindow_display(window);
 
         frame++;
+        player_action = 0;
     }
 
     #ifdef DEBUG
