@@ -158,9 +158,6 @@ int main()
                         for(int i = 0; i < 4; i++)
                             if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
                                 sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
-                    if(map[MAP_COORD(x,y)].entity){
-                        sfRenderWindow_drawSprite(window, map[MAP_COORD(x,y)].entity->sprite, NULL);
-                    }
                 }
                 else if(map[MAP_COORD(x,y)].explored && (map[MAP_COORD(x,y)].light || hasAllEdges(x,y))){
                     sfSprite_setColor(map[MAP_COORD(x,y)].sprite, (sfColor){100,100,125,255});
@@ -183,6 +180,10 @@ int main()
                             if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
                                 sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
                 }
+
+                if(map[MAP_COORD(x,y)].visible && map[MAP_COORD(x,y)].entity)
+                    sfRenderWindow_drawSprite(window, map[MAP_COORD(x,y)].entity->sprite, NULL);
+
 
 
                 #ifdef DEBUG // debug printing of the DMap_PlayerChase values
