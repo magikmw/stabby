@@ -87,6 +87,8 @@
 // Don't change the enum values below - some loops depend on them
 enum directions {N=0, E=1, S=2, W=3, NW=4, NE=5, SE=6, SW=7};
 
+enum player_actions {no_turn=0, turn=1, quit=2};
+
 enum mob_types {Plain=0};
 
 enum ai_states {standby = 0, alerted = 1, pursue = 2};

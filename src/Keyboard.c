@@ -55,7 +55,7 @@ int handleKeys(void)
         return game_action;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyEscape)){
-        return 2;
+        return quit;
     }
     
     #ifdef DEBUG
@@ -66,29 +66,29 @@ int handleKeys(void)
         if(map[MAP_X * player.y + player.x].edge != NULL)
             printf("Edges: N:%i, S:%i, W:%i, E:%i\n", map[MAP_X * player.y + player.x].edge -> N, map[MAP_X * player.y + player.x].edge -> S, map[MAP_X * player.y + player.x].edge -> W, map[MAP_X * player.y + player.x].edge -> E);
 
-        return 0;
+        return no_turn;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyS)){
         printf("---\nClearing up vision map.\n");
         clearVisibility();
 
-        return 0;
+        return no_turn;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyD)){
         printf("---\nShow all.\n");
         showAll();
 
-        return 0;
+        return no_turn;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyA)){
         printf("---\nDo FOV.\n");
         doFOV();
         printf("End\n");
-        return 0;
+        return no_turn;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyR)){
         printf("---\nRandom int: %i\n", randInt(ROOM_MIN_SIZE, ROOM_MAX_SIZE));
-        return 0;
+        return no_turn;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyF)){
         return -1;
@@ -97,5 +97,5 @@ int handleKeys(void)
 
     // No keys from the list above, skip
     else
-        return 0;
+        return no_turn;
 }

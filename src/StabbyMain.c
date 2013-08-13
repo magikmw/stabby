@@ -83,7 +83,7 @@ int main()
     sfText_setPosition(debug_text, (sfVector2f){WINDOW_X-BORDER_OFFSET*2-1, BORDER_OFFSET});
     char fps_text[5];
 
-    int player_action = 0;
+    int player_action = no_turn;
 
     sfRectangleShape *map_background = sfRectangleShape_create();
     sfRectangleShape_setSize(map_background, (sfVector2f){MAP_X*TILE_SIZE, MAP_Y*TILE_SIZE});
@@ -126,7 +126,7 @@ int main()
 
         DMapUpdate(&DMap_PlayerChase);
 
-        if(player_action == 1){
+        if(player_action == turn){
             for(int x=0; x < MAP_X; x++){
                 for(int y=0; y < MAP_Y; y++) {
                     if(map[MAP_COORD(x,y)].entity != NULL && map[MAP_COORD(x,y)].entity != &player){
@@ -208,7 +208,7 @@ int main()
         sfRenderWindow_display(window);
 
         frame++;
-        player_action = 0;
+        player_action = no_turn; // reset
     }
 
     #ifdef DEBUG
