@@ -56,8 +56,8 @@ void createMob(int type, Tile map_tile){
             map_tile.entity->move = mob_move;
             map_tile.entity->moved = false;
 
-            // [TODO] Create Plain_AI;
-            map_tile.entity->ai = NULL; // shared AI for each type
+            AI ai_struct = {Plain_Standby, Plain_Alerted, Plain_Pursue, ai_standby, 0};
+            map_tile.entity->ai = ai_struct; // shared AI for each type
 
             updateEntitySprite(map_tile.entity);
             break;

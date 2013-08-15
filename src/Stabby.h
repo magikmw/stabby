@@ -91,7 +91,7 @@ enum player_actions {no_turn=0, turn=1, quit=2};
 
 enum mob_types {Plain=0};
 
-enum ai_states {standby = 0, alerted = 1, pursue = 2};
+enum ai_states {ai_standby = 0, ai_alerted = 1, ai_pursue = 2};
 
 typedef struct Entity Entity;
 typedef struct Edge Edge;
@@ -117,6 +117,8 @@ struct AI
     void (*standby)(Entity* mob);
     void (*alerted)(Entity* mob);
     void (*pursue)(Entity* mob);
+    int state;
+    int timer;
 };
 
 // Map entities
@@ -127,8 +129,7 @@ struct Entity
     sfSprite* sprite;
     boolean (*move)(int, Entity*);
     boolean moved;
-    int ai_state;
-    AI* ai;
+    AI ai;
 };
 
 // basic tile struct
