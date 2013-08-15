@@ -35,6 +35,7 @@ void Plain_Standby(Entity* mob)
     // Wander about
         // Get back to light if in darkness
         // Move about randomly -> patrol
+    mob->move(randInt(N,SW), mob);
 
     // Run FOV, add positions to a position list
 }

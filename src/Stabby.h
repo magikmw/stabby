@@ -128,7 +128,7 @@ struct Entity
     int direction;
     sfSprite* sprite;
     boolean (*move)(int, Entity*);
-    boolean moved;
+    boolean took_turn;
     AI ai;
 };
 

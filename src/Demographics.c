@@ -54,10 +54,9 @@ void createMob(int type, Tile map_tile){
             sfSprite_setPosition(map_tile.entity->sprite, (sfVector2f){map_tile.entity->x*TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET, map_tile.entity->y * TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET});
 
             map_tile.entity->move = mob_move;
-            map_tile.entity->moved = false;
+            map_tile.entity->took_turn = false;
 
-            AI ai_struct = {Plain_Standby, Plain_Alerted, Plain_Pursue, ai_standby, 0};
-            map_tile.entity->ai = ai_struct; // shared AI for each type
+            map_tile.entity->ai = {Plain_Standby, Plain_Alerted, Plain_Pursue, ai_standby, 0};
 
             updateEntitySprite(map_tile.entity);
             break;
