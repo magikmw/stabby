@@ -74,6 +74,7 @@ void DMapRemPOI(DMap*, int);
 void DMapUpdate(DMap*);
 void DMapDestroy(DMap*);
 void addToFrontier(list_p, int*, int);
+int DMapFollow(DMap* dmap, int current);
 
 // demographics
 void spawnPlayer(void);

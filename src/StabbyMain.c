@@ -134,6 +134,7 @@ int main()
                         // printf("moved:%i, mob.x: %i, mob.y: %i\n", map[MAP_COORD(x,y)].entity->moved, map[MAP_COORD(x,y)].entity->x, map[MAP_COORD(x,y)].entity->y);
                         // map[MAP_COORD(x,y)].entity->move(randInt(N,SW), map[MAP_COORD(x,y)].entity);
                         if(!map[MAP_COORD(x,y)].entity->took_turn){
+                            map[MAP_COORD(x,y)].entity->took_turn = true;
                             switch(map[MAP_COORD(x,y)].entity->ai.state){
                                 case ai_standby:
                                 {

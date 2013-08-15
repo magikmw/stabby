@@ -139,6 +139,7 @@ boolean player_move(int direction, Entity* nul)
 boolean mob_move(int direction, Entity* mob)
 {
     boolean moved = false;
+    printf("was: mob.x: %i, mob.y: %i\n", mob->x, mob->y);
     switch(direction){
         case N:
         {
@@ -654,9 +655,10 @@ boolean mob_move(int direction, Entity* mob)
         }
     }
 
-    if(moved){
-        map[MAP_COORD(mob->x,mob->y)].entity = mob;
-    }
+    map[MAP_COORD(mob->x,mob->y)].entity = mob;
+
+    printf("is: mob.x: %i, mob.y: %i\n", mob->x, mob->y);
+
     updateEntitySprite(mob);
 
     return moved;

@@ -155,6 +155,50 @@ void DMapDestroy(DMap* dmap){
     destroy_list(dmap->frontier);
 }
 
+int DMapFollow(DMap* dmap, int current){
+    // Return the next direction to move 'downhill' to from current - random if there is a choice
+    int next = -1;
+
+    int neighbour_values[8] = { [N...SW] = INFINITE_DISTANCE };
+    int lowest = INFINITE_DISTANCE;
+
+    for(int n = N; n <= SW; n++){
+        neighbour_values[n] = dmap->value_map[current+neighbours[n]];
+        if(neighbour_values[n] != -(INFINITE_DISTANCE) && neighbour_values[n] < lowest){
+            lowest = neighbour_values[n];
+        }
+    }
+
+    int n_lowest = 0;
+
+    for(int n = N; n <= SW; n++){
+        if(neighbour_values[n] == lowest){
+            n_lowest++;
+        }
+    }
+
+    if(n_lowest > 1){ // more than one lowest value tile
+        int random = randInt(1,n_lowest);
+        for(int n = N; n <= SW; n++){
+            if(neighbour_values[n] == lowest && --random == 0){
+                next = n;
+                break;
+            }
+        }
+    }
+    else{
+        for(int n = N; n <= SW; n++){
+            if(neighbour_values[n] == lowest){
+                next = n;
+                break;
+            }
+        }   
+    }
+
+    // printf("lowest: %i, -INFINITE_DISTANCE: %i\n", lowest, -(INFINITE_DISTANCE));
+    return next;
+}
+
 void addToFrontier(list_p frontier, int* value_map, int position){
     // Function adds a tile position to the frontier, sorting it by value from lowest
     list_iter_p iterator = list_iterator(frontier, FRONT);
