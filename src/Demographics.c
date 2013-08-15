@@ -46,7 +46,7 @@ void createMob(int type, Tile map_tile){
         {
             map_tile.entity->x = map_tile.x;
             map_tile.entity->y = map_tile.y;
-            map_tile.entity->direction = N;
+            map_tile.entity->direction = randInt(N, SW);
             map_tile.entity->sprite = sfSprite_create();
             sfSprite_setTexture(map_tile.entity->sprite, textureArray[0], sfTrue);
             sfSprite_setOrigin(map_tile.entity->sprite, (sfVector2f){TILE_SIZE/2, TILE_SIZE/2});
@@ -54,6 +54,9 @@ void createMob(int type, Tile map_tile){
             sfSprite_setPosition(map_tile.entity->sprite, (sfVector2f){map_tile.entity->x*TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET, map_tile.entity->y * TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET});
 
             map_tile.entity->move = mob_move;
+            map_tile.entity->moved = false;
+
+            // [TODO] Create Plain_AI;
             map_tile.entity->ai = NULL; // shared AI for each type
 
             updateEntitySprite(map_tile.entity);

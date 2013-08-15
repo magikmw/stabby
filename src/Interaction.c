@@ -138,6 +138,7 @@ boolean player_move(int direction, Entity* nul)
 // Monsters first turn, then move forward
 boolean mob_move(int direction, Entity* mob)
 {
+    boolean moved = false;
     switch(direction){
         case N:
         {
@@ -148,6 +149,7 @@ boolean mob_move(int direction, Entity* mob)
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += 0;
                         mob->y += -1;
+                        moved = true;
                     }
 
                     break;  
@@ -222,6 +224,7 @@ boolean mob_move(int direction, Entity* mob)
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += 0;
                         mob->y += 1;
+                        moved = true;
                     }
 
                     break;
@@ -286,6 +289,7 @@ boolean mob_move(int direction, Entity* mob)
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += -1;
                         mob->y += 0;
+                        moved = true;
                     }
 
                     break;
@@ -360,6 +364,7 @@ boolean mob_move(int direction, Entity* mob)
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += 1;
                         mob->y += 0;
+                        moved = true;
                     }
                     
                     break;
@@ -424,6 +429,7 @@ boolean mob_move(int direction, Entity* mob)
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += -1;
                         mob->y += -1;
+                        moved = true;
                     }
                     
                     break;
@@ -493,6 +499,7 @@ boolean mob_move(int direction, Entity* mob)
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += 1;
                         mob->y += -1;
+                        moved = true;
                     }
                     
                     break;
@@ -567,6 +574,7 @@ boolean mob_move(int direction, Entity* mob)
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += -1;
                         mob->y += 1;
+                        moved = true;
                     }
                     
                     break;
@@ -636,6 +644,7 @@ boolean mob_move(int direction, Entity* mob)
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += 1;
                         mob->y += 1;
+                        moved = true;
                     }
 
                     break;
@@ -645,10 +654,12 @@ boolean mob_move(int direction, Entity* mob)
         }
     }
 
-    map[MAP_COORD(mob->x,mob->y)].entity = mob;
+    if(moved){
+        map[MAP_COORD(mob->x,mob->y)].entity = mob;
+    }
     updateEntitySprite(mob);
 
-    return true;
+    return moved;
 }
 
 // returns true if you can move in the direction from origin
