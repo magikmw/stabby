@@ -28,6 +28,12 @@ extern int mobs_number;
 
 // Dijkstra maps
 DMap DMap_PlayerChase;
+/*
+    [TODO] DMap DMap_PlayerSuspected;
+    [TODO] DMap DMap_Light;
+    [TODO] DMap DMap_Patrol;
+    [TODO] DMap DMap_Flee;
+*/
 
 // Arrays
 extern Tile map[MAP_X * MAP_Y];

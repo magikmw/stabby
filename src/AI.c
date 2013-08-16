@@ -27,6 +27,7 @@
 
 void Plain_Standby(Entity* mob)
 {
+    // [TODO] Plain_Standby()
     // Check previously calculated FOV if present [position list]
         // Act on things found in FOV
             // if something strange happens? - change to alerted, set counter, run alerted, return;
@@ -43,6 +44,7 @@ void Plain_Standby(Entity* mob)
 
 void Plain_Alerted(Entity* mob)
 {
+    // [TODO] Plain_Alerted()
     // Check previously calculated FOV if present [position list]
         // Act on things found in FOV
             // no player? -- the counter, if it's 0, change to standby, run standby, return;
@@ -57,6 +59,7 @@ void Plain_Alerted(Entity* mob)
 
 void Plain_Pursue(Entity* mob)
 {
+    // [TODO] Plain_Pursue()
     // Check previously calculated FOV if present [position list]
         // Act on things found in FOV
             // if the player is detected - reset counter

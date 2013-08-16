@@ -26,6 +26,8 @@ void DMapCreate(DMap* dmap){
     dmap->frontier = create_list();
 }
 
+// [TODO] Allow for POI with value different than 0
+
 void DMapAddPOI(DMap* dmap, int position){
     // Add given position to the value list if it's not already in
     list_iter_p iterator = list_iterator(dmap->poi_list, FRONT);
@@ -103,6 +105,7 @@ void DMapRemPOI(DMap* dmap, int position){
 
 void DMapUpdate(DMap* dmap){
     // Function updates given DMap according to it's own POI list and the wall map
+    // [TODO] Consider monsters when assigning value to tiles, reference TODO file
     if(dmap->poi_list_flag){
         dmap->poi_list_flag = false;
         for(int x = 0; x < MAP_X; x++){
