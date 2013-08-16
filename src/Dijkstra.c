@@ -163,7 +163,9 @@ int DMapFollow(DMap* dmap, int current){
     int lowest = INFINITE_DISTANCE;
 
     for(int n = N; n <= SW; n++){
-        neighbour_values[n] = dmap->value_map[current+neighbours[n]];
+        if(checkCollision((sfVector2f){map[current].x, map[current].y}, n)){
+            neighbour_values[n] = dmap->value_map[current+neighbours[n]];
+        }
         if(neighbour_values[n] != -(INFINITE_DISTANCE) && neighbour_values[n] < lowest){
             lowest = neighbour_values[n];
         }
@@ -195,7 +197,6 @@ int DMapFollow(DMap* dmap, int current){
         }   
     }
 
-    // printf("lowest: %i, -INFINITE_DISTANCE: %i\n", lowest, -(INFINITE_DISTANCE));
     return next;
 }
 
