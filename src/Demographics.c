@@ -69,3 +69,29 @@ void createMob(int type, Tile map_tile){
         }
     }
 }
+
+void spawnMobs(void){
+    // Spawns all the initial denzines of a level
+
+    mobs_number = 0;
+
+    map[MAP_COORD(roomCenter(rooms[rooms_number-1]).x, roomCenter(rooms[rooms_number-1]).y)].entity = (Entity*)malloc(sizeof(Entity));
+    createMob(Plain, map[MAP_COORD(roomCenter(rooms[rooms_number-1]).x, roomCenter(rooms[rooms_number-1]).y)]);
+    mobs_number++;
+
+    map[MAP_COORD(roomCenter(rooms[rooms_number-2]).x, roomCenter(rooms[rooms_number-2]).y)].entity = (Entity*)malloc(sizeof(Entity));
+    createMob(Plain, map[MAP_COORD(roomCenter(rooms[rooms_number-2]).x, roomCenter(rooms[rooms_number-2]).y)]);
+    mobs_number++;
+
+    map[MAP_COORD(roomCenter(rooms[rooms_number-3]).x, roomCenter(rooms[rooms_number-3]).y)].entity = (Entity*)malloc(sizeof(Entity));
+    createMob(Plain, map[MAP_COORD(roomCenter(rooms[rooms_number-3]).x, roomCenter(rooms[rooms_number-3]).y)]);
+    mobs_number++;
+
+    map[MAP_COORD(roomCenter(rooms[rooms_number-4]).x, roomCenter(rooms[rooms_number-4]).y)].entity = (Entity*)malloc(sizeof(Entity));
+    createMob(Plain, map[MAP_COORD(roomCenter(rooms[rooms_number-4]).x, roomCenter(rooms[rooms_number-4]).y)]);
+    mobs_number++;
+
+    map[MAP_COORD(roomCenter(rooms[rooms_number-5]).x, roomCenter(rooms[rooms_number-5]).y)].entity = (Entity*)malloc(sizeof(Entity));
+    createMob(Plain, map[MAP_COORD(roomCenter(rooms[rooms_number-5]).x, roomCenter(rooms[rooms_number-5]).y)]);
+    mobs_number++;
+}

@@ -80,5 +80,6 @@ int DMapFollow(DMap* dmap, int current);
 // demographics
 void spawnPlayer(void);
 void createMob(int type, Tile map_tile);
+void spawnMobs(void);
 
 // [TODO] Sort the function prototypes properly by files + re add the variable names

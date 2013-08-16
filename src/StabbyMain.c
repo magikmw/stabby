@@ -53,10 +53,7 @@ int main()
     spawnPlayer();
 
     // spawn mobs
-    mobs_number = 0;
-    map[MAP_COORD(roomCenter(rooms[rooms_number-1]).x, roomCenter(rooms[rooms_number-1]).y)].entity = (Entity*)malloc(sizeof(Entity));
-    createMob(Plain, map[MAP_COORD(roomCenter(rooms[rooms_number-1]).x, roomCenter(rooms[rooms_number-1]).y)]);
-    mobs_number++;
+    spawnMobs();
 
     // Create DMaps
     DMapCreate(&DMap_PlayerChase);
