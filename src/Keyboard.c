@@ -54,6 +54,10 @@ int handleKeys(void)
         game_action = player.move(SE, NULL);
         return game_action;
     }
+    else if(sfKeyboard_isKeyPressed(sfKeyNumpad5) || sfKeyboard_isKeyPressed(sfKeyPeriod)){
+        // wait/pass
+        return turn;
+    }
     else if(sfKeyboard_isKeyPressed(sfKeyEscape)){
         return quit;
     }
