@@ -112,6 +112,7 @@ void createMap(){
 
     #ifdef DEBUG
         printf("[INFO] Mapgen tries: %i, time: %llims, rooms created: %i\n", tries, sfClock_getElapsedTime(timer).microseconds/1000, rooms_number);
+        sfClock_destroy(timer);
     #endif
 
     // when finished, render it all

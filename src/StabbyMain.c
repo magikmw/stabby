@@ -241,7 +241,16 @@ int main(void)
     }
 
     // [TODO] Cleanup
+    #ifdef DEBUG
+    sfText_destroy(text_dmap_value);
+    sfText_destroy(debug_text);
+    sfClock_destroy(fpsClock);
+    #endif
+
     sfRenderWindow_destroy(window);
+    sfText_destroy(text);
+    sfFont_destroy(font);
+    DMapDestroy(&DMap_PlayerChase);
 
     #ifdef DEBUG
     printf("[INFO] Have a nice day.\n");

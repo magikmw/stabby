@@ -62,7 +62,7 @@ void DMapAddPOI(DMap* dmap, int position){
         }
         #endif
     }
-
+    free(iterator);
 }
 
 void DMapRemPOI(DMap* dmap, int position){
@@ -91,7 +91,8 @@ void DMapRemPOI(DMap* dmap, int position){
             }
         }
         if(found){ // item found, removing
-            list_pluck(dmap->poi_list, iterator->current);
+            void* temp = list_pluck(dmap->poi_list, iterator->current);
+            free(temp);
             dmap->poi_list_flag = true;
         }
         #ifdef DEBUG
@@ -100,6 +101,7 @@ void DMapRemPOI(DMap* dmap, int position){
         }
         #endif
     }
+    free(iterator);
 }
 
 void DMapUpdate(DMap* dmap){
@@ -138,11 +140,11 @@ void DMapUpdate(DMap* dmap){
                         dmap->value_map[(*temp_position)+neighbours[n]] = dmap->value_map[*temp_position] + 1;
                         addToFrontier(dmap->frontier, dmap->value_map, (*temp_position)+neighbours[n]);
                 }
-            }            
+            }
+            free(temp_position);
             temp_position = (int*)list_poll(dmap->frontier);
         }
         free(iterator);
-        free(temp_position);
     }
     // #ifdef DEBUG
     // else{
@@ -154,7 +156,9 @@ void DMapUpdate(DMap* dmap){
 void DMapDestroy(DMap* dmap){
     // Free all lists up.
     destroy_list(dmap->poi_list);
+    // dmap->poi_list = NULL;
     destroy_list(dmap->frontier);
+    // dmap->frontier = NULL;
 }
 
 int DMapFollow(DMap* dmap, int current){
@@ -216,6 +220,7 @@ void addToFrontier(list_p frontier, int* value_map, int position){
         list_add(frontier, &position, sizeof(int));
     }
     else if(*temp_position == position){
+        free(iterator);
         return;
     }
     else{
@@ -223,6 +228,7 @@ void addToFrontier(list_p frontier, int* value_map, int position){
         while(temp_position != NULL && value_map[*temp_position] <= value_map[position]){
             temp_position = (int*)list_next(iterator);
             if(temp_position != NULL && *temp_position == position){
+                free(iterator);
                 return;
             }
         }
@@ -233,4 +239,5 @@ void addToFrontier(list_p frontier, int* value_map, int position){
             list_insert(frontier, iterator->current->prev, &position, sizeof(int));
         }
     }
+    free(iterator);
 }
