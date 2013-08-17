@@ -20,7 +20,7 @@ TARGET			:=	stabby
 RELEASENAME 	:=	Stabby\ Alpha
 
 # Compiler flags
-CFLAGS			:=	-Wall -std=c99
+CFLAGS			:=	-Wall -Wextra -ansi -pedantic -std=c99
 
 # Linker flags for both release and debug builds
 LD_FLAGS		:=	-Wl,-rpath,. -O3

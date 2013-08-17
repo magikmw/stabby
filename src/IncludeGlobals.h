@@ -17,7 +17,7 @@
 */
 
 // Textures
-void loadTextures(sfTexture* [TEXTURE_NO]);
+void loadTextures(void);
 extern sfTexture* textureArray[TEXTURE_NO];
 
 // Variables
@@ -45,7 +45,7 @@ extern const int neighbours[8];
 
 // Functions
 void createMap();
-void createStaticUI(sfSprite* staticUI[]);
+void createStaticUI(void);
 int handleKeys(void);
 double distance(int x1, int y1, int x2, int y2);
 

@@ -78,7 +78,6 @@ void DMapRemPOI(DMap* dmap, int position){
         #ifdef DEBUG
             printf("[WARNING] Trying to remove POI from an empty DMap list!\n");
         #endif
-        printf("%p\n", dmap->poi_list->first);
         return;
     }
     else{
@@ -162,7 +161,7 @@ int DMapFollow(DMap* dmap, int current){
     // Return the next direction to move 'downhill' to from current - random if there is a choice
     int next = -1;
 
-    int neighbour_values[8] = { [N...SW] = INFINITE_DISTANCE };
+    int neighbour_values[8] = { INFINITE_DISTANCE, INFINITE_DISTANCE, INFINITE_DISTANCE, INFINITE_DISTANCE, INFINITE_DISTANCE, INFINITE_DISTANCE, INFINITE_DISTANCE, INFINITE_DISTANCE };
     int lowest = INFINITE_DISTANCE;
 
     for(int n = N; n <= SW; n++){

@@ -392,12 +392,12 @@ void fillMap(void){
 void makeCorridorH(int x1, int x2, int y){
     // printf("makeCorridorH() x1:%i, x2:%i, y:%i\n", x1, x2, y);
     Room* temp_room = NULL;
-    for(int x=min(x1,x2); x <= max(x1,x2); x++){
+    for(int x=MIN(x1,x2); x <= MAX(x1,x2); x++){
         if((temp_room = isInRoom(x,y)) == NULL){
-            if(x == min(x1,x2)){
+            if(x == MIN(x1,x2)){
                 map[MAP_COORD(x,y)].edge -> E = false;
             }
-            else if(x == max(x1,x2)){
+            else if(x == MAX(x1,x2)){
                 map[MAP_COORD(x,y)].edge -> W = false;
             }
             else{
@@ -409,14 +409,14 @@ void makeCorridorH(int x1, int x2, int y){
             map[MAP_COORD(x,y)].light = false;
         }
         else{
-            if(x == temp_room -> x1 && x != min(x1,x2)){
+            if(x == temp_room -> x1 && x != MIN(x1,x2)){
                 map[MAP_COORD(x,y)].edge -> W = false;
             }
-            else if(x == temp_room -> x2-1 && x != max(x1,x2)){
+            else if(x == temp_room -> x2-1 && x != MAX(x1,x2)){
                 map[MAP_COORD(x,y)].edge -> E = false;
             }
         }
-        // if(x == min(x1,x2) || x == max(x1,x2)){
+        // if(x == MIN(x1,x2) || x == MAX(x1,x2)){
         //     map[MAP_COORD(x,y)].corridor_end = true;
         // }
     }
@@ -425,13 +425,13 @@ void makeCorridorH(int x1, int x2, int y){
 void makeCorridorV(int y1, int y2, int x){
     // printf("makeCorridorV() y1:%i, y2:%i, x:%i\n", y1, y2, x);
     Room* temp_room = NULL;
-    for(int y=min(y1,y2); y <= max(y1,y2); y++){
+    for(int y=MIN(y1,y2); y <= MAX(y1,y2); y++){
         temp_room = isInRoom(x,y);
         if(temp_room == NULL){
-            if(y == min(y1,y2)){
+            if(y == MIN(y1,y2)){
                 map[MAP_COORD(x,y)].edge -> S = false;
             }
-            else if(y == max(y1,y2)){
+            else if(y == MAX(y1,y2)){
                 map[MAP_COORD(x,y)].edge -> N = false;
             }
             else{
@@ -442,14 +442,14 @@ void makeCorridorV(int y1, int y2, int x){
             map[MAP_COORD(x,y)].light = false;
         }
         else{
-            if(y == temp_room -> y1 && y != min(y1,y2)){
+            if(y == temp_room -> y1 && y != MIN(y1,y2)){
                 map[MAP_COORD(x,y)].edge -> N = false;
             }
-            else if(y == temp_room -> y2-1 && y != max(y1,y2)){
+            else if(y == temp_room -> y2-1 && y != MAX(y1,y2)){
                 map[MAP_COORD(x,y)].edge -> S = false;
             }
         }
-    //     if(y == min(y1,y2) || y == max(y1,y2)){
+    //     if(y == MIN(y1,y2) || y == MAX(y1,y2)){
     //         map[MAP_COORD(x,y)].corridor_end = true;
     //     }
     }

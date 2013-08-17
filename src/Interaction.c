@@ -21,6 +21,7 @@
 
 boolean player_move(int direction, Entity* nul)
 {
+    // [TODO] Refactor to use the actual pointer instead of a global
     boolean moved = false;
     switch(direction){
         case N:

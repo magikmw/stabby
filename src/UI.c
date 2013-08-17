@@ -19,7 +19,7 @@
 #include "Stabby.h"
 #include "IncludeGlobals.h"
 
-void createStaticUI(sfSprite* staticUI[])
+void createStaticUI(void)
 {
     staticUI[0] = sfSprite_create();
     sfSprite_setTexture(staticUI[0], textureArray[1], sfTrue);

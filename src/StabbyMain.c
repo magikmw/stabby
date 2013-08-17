@@ -43,8 +43,8 @@ int main()
 
     initRand(time(NULL));
 
-    loadTextures(textureArray);
-    createStaticUI(staticUI);
+    loadTextures();
+    createStaticUI();
 
     // mapgen
     createMap();
@@ -168,7 +168,7 @@ int main()
         showAll();
 
         /* Clear the screen */
-        sfRenderWindow_clear(window, (sfColor){200, 200, 200});
+        sfRenderWindow_clear(window, (sfColor){200, 200, 200, 0});
         sfRenderWindow_drawRectangleShape(window, map_background, NULL);
 
         for(int i=0; i < STATIC_UI_NO; i++)
