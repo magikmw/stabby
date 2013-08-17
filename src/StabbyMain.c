@@ -183,7 +183,7 @@ int main(void)
             sfRenderWindow_drawSprite(window, staticUI[i], NULL);
         
         // Render the map and entities
-        // [TODO] Change into a function
+        // [TODO] Change map/entity rendering into a Graphics.c function
         for(int x=0; x < MAP_X; x++)
             for(int y=0; y < MAP_Y; y++) {
                 if(map[MAP_COORD(x,y)].visible){

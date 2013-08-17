@@ -102,7 +102,6 @@ void DMapRemPOI(DMap* dmap, int position){
 
 void DMapUpdate(DMap* dmap){
     // Function updates given DMap according to it's own POI list and the wall map
-    // [TODO] Consider monsters when assigning value to tiles, reference TODO file
     for(int x = 0; x < MAP_X; x++){
         for(int y = 0; y < MAP_Y; y++){
             if(hasAllEdges(x,y)){ // fully walled off
@@ -155,9 +154,9 @@ void DMapUpdate(DMap* dmap){
 void DMapDestroy(DMap* dmap){
     // Free all lists up.
     destroy_list(dmap->poi_list);
-    // dmap->poi_list = NULL;
+    dmap->poi_list = NULL;
     destroy_list(dmap->frontier);
-    // dmap->frontier = NULL;
+    dmap->frontier = NULL;
 }
 
 int DMapFollow(DMap* dmap, int current){
