@@ -22,28 +22,33 @@
 // Include the icon data
 #include "icon.h"
 
+#ifdef DEBUG
 int draw_fps(int *);
+#endif
 
-int main()
+int main(void)
 {
     #ifdef DEBUG
         printf("[INFO] Debug mode ON\n");
     #endif
 
-    sfVideoMode mode = {WINDOW_X, WINDOW_Y, 32};
-    sfRenderWindow* window;
-    sfFont* font;
-    sfText* text;
-    sfEvent event;
-
     /* Create the main window */
-    window = sfRenderWindow_create(mode, NAME_VERSION, sfClose, NULL);
+    sfRenderWindow* window = sfRenderWindow_create( \
+        (sfVideoMode){WINDOW_X, WINDOW_Y, 32}, NAME_VERSION, sfClose, NULL);
     sfRenderWindow_setVerticalSyncEnabled(window, true);
     sfRenderWindow_setIcon(window, window_icon.width, window_icon.height, window_icon.pixel_data);
 
+    // Initialize the pseudorandom generator
     initRand(time(NULL));
 
+    // Initialize graphics
     loadTextures();
+    sfRectangleShape *map_background = sfRectangleShape_create();
+    sfRectangleShape_setSize(map_background, (sfVector2f){MAP_X*TILE_SIZE, MAP_Y*TILE_SIZE});
+    sfRectangleShape_setPosition(map_background, (sfVector2f){BORDER_OFFSET, BORDER_OFFSET});
+    sfRectangleShape_setFillColor(map_background, COLOR_MAP_BACKGROUND);
+
+    // Initialize static UI elements
     createStaticUI();
 
     // mapgen
@@ -61,6 +66,8 @@ int main()
     DMapUpdate(&DMap_PlayerChase);
 
     /* Create a graphical text to display */
+    sfFont* font;
+    sfText* text;
     font = sfFont_createFromFile("assets/mandrill.ttf");
     text = sfText_create();
     sfText_setString(text, "Panel Title!");
@@ -69,8 +76,16 @@ int main()
     // printf("strlen: %lu\n",  strlen(sfText_getString(text)));
     sfText_setPosition(text, (sfVector2f){(PANEL_ZERO_X + (WINDOW_X+BORDER_OFFSET - PANEL_ZERO_X)/2) - (sfText_getCharacterSize(text) * strlen(sfText_getString(text))/4), BORDER_OFFSET});
     // sfText_setPosition(text, (sfVector2f){PANEL_ZERO_X + (WINDOW_X - PANEL_ZERO_X)/2 - , BORDER_OFFSET});
-    sfText_setColor(text, sfBlack);
+    sfText_setColor(text, sfBlack);    
 
+    #ifdef DEBUG
+    // DMap debug text object
+    sfText* text_dmap_value = sfText_create();
+    sfText_setFont(text_dmap_value, font);
+    sfText_setCharacterSize(text_dmap_value, 12);
+    sfText_setColor(text_dmap_value, sfMagenta);
+
+    // fps counter
     fpsClock = sfClock_create();
     int frame = 0;
     sfText* debug_text = sfText_create();
@@ -79,30 +94,21 @@ int main()
     sfText_setColor(debug_text, sfBlack);
     sfText_setPosition(debug_text, (sfVector2f){WINDOW_X-BORDER_OFFSET*2-1, BORDER_OFFSET});
     char fps_text[5];
-
-    int player_action = no_turn;
-
-    sfRectangleShape *map_background = sfRectangleShape_create();
-    sfRectangleShape_setSize(map_background, (sfVector2f){MAP_X*TILE_SIZE, MAP_Y*TILE_SIZE});
-    sfRectangleShape_setPosition(map_background, (sfVector2f){BORDER_OFFSET, BORDER_OFFSET});
-    sfRectangleShape_setFillColor(map_background, (sfColor){78, 78, 98, 255}); // [TODO] Change this color into variable
-
-    #ifdef DEBUG
-    // DMap debug text object
-    sfText* text_dmap_value = sfText_create();
-    sfText_setFont(text_dmap_value, font);
-    sfText_setCharacterSize(text_dmap_value, 12);
-    sfText_setColor(text_dmap_value, sfMagenta);
     
     // Debug variables
     boolean debug_dmap_view = false;
     #endif
 
+    sfEvent event;
+    int player_action = no_turn;
+
     /* Start the game loop */
     while (sfRenderWindow_isOpen(window))
     {
+        #ifdef DEBUG
         sprintf(fps_text, "%i", draw_fps(&frame));
         sfText_setString(debug_text, fps_text);
+        #endif
 
         /* Process events */
         while (sfRenderWindow_pollEvent(window, &event))
@@ -121,6 +127,7 @@ int main()
             debug_dmap_view = false;
         #endif
 
+        // Update DMaps
         DMapUpdate(&DMap_PlayerChase);
 
         if(player_action == turn){
@@ -163,21 +170,23 @@ int main()
             }
         }
 
+        // FOV control
         clearVisibility();
         // doFOV();
         showAll();
 
         /* Clear the screen */
-        sfRenderWindow_clear(window, (sfColor){200, 200, 200, 0});
+        sfRenderWindow_clear(window, COLOR_BACKGROUND);
         sfRenderWindow_drawRectangleShape(window, map_background, NULL);
 
+        // Draw static UI
         for(int i=0; i < STATIC_UI_NO; i++)
             sfRenderWindow_drawSprite(window, staticUI[i], NULL);
         
-        // TODO Change into a function
+        // Render the map and entities
+        // [TODO] Change into a function
         for(int x=0; x < MAP_X; x++)
             for(int y=0; y < MAP_Y; y++) {
-                // printf("x:%i,y:%i\n", x, y);
                 if(map[MAP_COORD(x,y)].visible){
                     sfSprite_setColor(map[MAP_COORD(x,y)].sprite, sfWhite);
                     sfRenderWindow_drawSprite(window, map[MAP_X * y + x].sprite, NULL);
@@ -187,7 +196,7 @@ int main()
                                 sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
                 }
                 else if(map[MAP_COORD(x,y)].explored && (map[MAP_COORD(x,y)].light || hasAllEdges(x,y))){
-                    sfSprite_setColor(map[MAP_COORD(x,y)].sprite, (sfColor){100,100,125,255});
+                    sfSprite_setColor(map[MAP_COORD(x,y)].sprite, COLOR_EXPLORED_LIGHT);
                     sfRenderWindow_drawSprite(window, map[MAP_X * y + x].sprite, NULL);
                     if(map[MAP_X * y + x].edge != NULL)
                         for(int i = 0; i < 4; i++)
@@ -198,8 +207,7 @@ int main()
                     sfRectangleShape *blank = sfRectangleShape_create();
                     sfRectangleShape_setSize(blank, (sfVector2f){TILE_SIZE, TILE_SIZE});
                     sfRectangleShape_setPosition(blank, (sfVector2f){x*TILE_SIZE+BORDER_OFFSET,y*TILE_SIZE+BORDER_OFFSET});
-                    // TODO use variables instead of colors, make that one computed instead of hardcoded
-                    sfRectangleShape_setFillColor(blank, (sfColor){78,78,98,255});
+                    sfRectangleShape_setFillColor(blank, COLOR_MAP_BACKGROUND);
                     sfRenderWindow_drawRectangleShape(window, blank, NULL);
                     sfRectangleShape_destroy(blank);
                     if(map[MAP_X * y + x].edge != NULL)
@@ -227,25 +235,27 @@ int main()
 
         /* Draw the text */
         sfRenderWindow_drawText(window, text, NULL);
-        #ifdef DEBUG
+
+        #ifdef DEBUG // FPS counter
         sfRenderWindow_drawText(window, debug_text, NULL);
+        frame++;
         #endif
 
         /* Update the window */
         sfRenderWindow_display(window);
 
-        frame++;
         player_action = no_turn; // reset
     }
 
     #ifdef DEBUG
     printf("[INFO] Have a nice day.\n");
     #endif
+
     return 0;
 }
 
+#ifdef DEBUG
 int draw_fps(int *frames_in){
-    // printf("draw_fps() call\n");
     static int last_fps = 0;
     sfTime elapsed_t = sfClock_getElapsedTime(fpsClock);
     signed long long mili_t = elapsed_t.microseconds / 1000;
@@ -253,9 +263,9 @@ int draw_fps(int *frames_in){
         sfClock_restart(fpsClock);
         int fps = ((*frames_in)/(mili_t/1000));
         *frames_in = 0;
-        // printf("FPS: %i\n", fps);
         last_fps = fps;
         return fps;
     }
     return last_fps;
 }
+#endif
