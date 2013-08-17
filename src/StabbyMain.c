@@ -43,10 +43,7 @@ int main(void)
 
     // Initialize graphics
     loadTextures();
-    sfRectangleShape *map_background = sfRectangleShape_create();
-    sfRectangleShape_setSize(map_background, (sfVector2f){MAP_X*TILE_SIZE, MAP_Y*TILE_SIZE});
-    sfRectangleShape_setPosition(map_background, (sfVector2f){BORDER_OFFSET, BORDER_OFFSET});
-    sfRectangleShape_setFillColor(map_background, COLOR_MAP_BACKGROUND);
+    makeShapes();
 
     // Initialize static UI elements
     createStaticUI();
@@ -177,7 +174,7 @@ int main(void)
 
         /* Clear the screen */
         sfRenderWindow_clear(window, COLOR_BACKGROUND);
-        sfRenderWindow_drawRectangleShape(window, map_background, NULL);
+        sfRenderWindow_drawRectangleShape(window, shapeArray[0], NULL);
 
         // Draw static UI
         for(int i=0; i < STATIC_UI_NO; i++)
@@ -204,12 +201,8 @@ int main(void)
                                 sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
                 }
                 else if(map[MAP_COORD(x,y)].explored && !map[MAP_COORD(x,y)].light){
-                    sfRectangleShape *blank = sfRectangleShape_create();
-                    sfRectangleShape_setSize(blank, (sfVector2f){TILE_SIZE, TILE_SIZE});
-                    sfRectangleShape_setPosition(blank, (sfVector2f){x*TILE_SIZE+BORDER_OFFSET,y*TILE_SIZE+BORDER_OFFSET});
-                    sfRectangleShape_setFillColor(blank, COLOR_MAP_BACKGROUND);
-                    sfRenderWindow_drawRectangleShape(window, blank, NULL);
-                    sfRectangleShape_destroy(blank);
+                    sfRectangleShape_setPosition(shapeArray[1], (sfVector2f){x*TILE_SIZE+BORDER_OFFSET,y*TILE_SIZE+BORDER_OFFSET});
+                    sfRenderWindow_drawRectangleShape(window, shapeArray[1], NULL);
                     if(map[MAP_X * y + x].edge != NULL)
                         for(int i = 0; i < 4; i++)
                             if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
@@ -246,6 +239,9 @@ int main(void)
 
         player_action = no_turn; // reset
     }
+
+    // [TODO] Cleanup
+    sfRenderWindow_destroy(window);
 
     #ifdef DEBUG
     printf("[INFO] Have a nice day.\n");

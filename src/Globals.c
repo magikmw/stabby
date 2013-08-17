@@ -18,12 +18,9 @@
 
 #include "Stabby.h"
 
-// Textures
+// Graphics
 sfTexture* textureArray[TEXTURE_NO];
-void loadTextures(void){
-    textureArray[0] = sfTexture_createFromFile("assets/sprites.png", NULL);
-    textureArray[1] = sfTexture_createFromFile("assets/border.png", NULL);
-}
+sfRectangleShape* shapeArray[SHAPE_NO];
 
 // Variables
 sfClock* fpsClock;

@@ -48,13 +48,14 @@
 #define ROOM_MIN_SIZE   4
 #define ROOM_MAX_SIZE   6
 
-// Number of textures
+// Graphics consts
 #define TEXTURE_NO      2
+#define SHAPE_NO        2
 
 // Colors
 #define COLOR_BACKGROUND        (sfColor){200, 200, 200, 0}
 #define COLOR_MAP_BACKGROUND    (sfColor){78, 78, 98, 255}
-#define COLOR_EXPLORED_LIGHT    (sfColor){100,100,125,255}
+#define COLOR_EXPLORED_LIGHT    (sfColor){100, 100, 125, 255}
 
 // Number of static UI elements
 #define STATIC_UI_NO    5

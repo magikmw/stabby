@@ -19,6 +19,22 @@
 #include "Stabby.h"
 #include "IncludeGlobals.h"
 
+void loadTextures(void){
+    textureArray[0] = sfTexture_createFromFile("assets/sprites.png", NULL);
+    textureArray[1] = sfTexture_createFromFile("assets/border.png", NULL);
+}
+
+void makeShapes(void){
+    shapeArray[0] = sfRectangleShape_create();
+    sfRectangleShape_setSize(shapeArray[0], (sfVector2f){MAP_X*TILE_SIZE, MAP_Y*TILE_SIZE});
+    sfRectangleShape_setPosition(shapeArray[0], (sfVector2f){BORDER_OFFSET, BORDER_OFFSET});
+    sfRectangleShape_setFillColor(shapeArray[0], COLOR_MAP_BACKGROUND);
+
+    shapeArray[1] = sfRectangleShape_create();
+    sfRectangleShape_setSize(shapeArray[1], (sfVector2f){TILE_SIZE, TILE_SIZE});
+    sfRectangleShape_setFillColor(shapeArray[1], COLOR_MAP_BACKGROUND);
+}
+
 void updateEntitySprite(Entity* entity)
 {
     switch(entity->direction)

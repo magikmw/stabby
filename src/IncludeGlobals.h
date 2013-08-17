@@ -16,9 +16,11 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 
-// Textures
+// Graphics
 void loadTextures(void);
+void makeShapes(void);
 extern sfTexture* textureArray[TEXTURE_NO];
+extern sfRectangleShape* shapeArray[SHAPE_NO];
 
 // Variables
 extern sfClock* fpsClock;
