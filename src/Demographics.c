@@ -55,6 +55,7 @@ void createMob(int type, Tile map_tile){
 
             map_tile.entity->move = mob_move;
             map_tile.entity->took_turn = false;
+            map_tile.entity->idle_counter = 0;
 
             map_tile.entity->ai = (AI){Plain_Standby, Plain_Alerted, Plain_Pursue, ai_standby, 0};
 

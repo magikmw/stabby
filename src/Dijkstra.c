@@ -22,7 +22,6 @@
 void DMapCreate(DMap* dmap){
     // Create an empty DMap with just data structures ready
     dmap->poi_list = create_list();
-    dmap->poi_list_flag = false;
     dmap->frontier = create_list();
 }
 
@@ -39,7 +38,6 @@ void DMapAddPOI(DMap* dmap, int position){
     
     if(temp_position == NULL){ // list empty, add position
         list_add(dmap->poi_list, &position, sizeof(int));
-        dmap->poi_list_flag = true;
     }
     else{ // list not empty
         boolean found = false;
@@ -54,7 +52,6 @@ void DMapAddPOI(DMap* dmap, int position){
         }
         if(!found){ // not found in the list, add the position
             list_add(dmap->poi_list, &position, sizeof(int));
-            dmap->poi_list_flag = true;
         }
         #ifdef DEBUG
         else{
@@ -93,7 +90,6 @@ void DMapRemPOI(DMap* dmap, int position){
         if(found){ // item found, removing
             void* temp = list_pluck(dmap->poi_list, iterator->current);
             free(temp);
-            dmap->poi_list_flag = true;
         }
         #ifdef DEBUG
         else{
@@ -107,45 +103,48 @@ void DMapRemPOI(DMap* dmap, int position){
 void DMapUpdate(DMap* dmap){
     // Function updates given DMap according to it's own POI list and the wall map
     // [TODO] Consider monsters when assigning value to tiles, reference TODO file
-    if(dmap->poi_list_flag){
-        dmap->poi_list_flag = false;
-        for(int x = 0; x < MAP_X; x++){
-            for(int y = 0; y < MAP_Y; y++){
-                if(hasAllEdges(x,y)){ // fully walled off
-                    dmap->value_map[MAP_COORD(x,y)] = -(INFINITE_DISTANCE);
-                }
-                else{ // free floor tiles
-                    dmap->value_map[MAP_COORD(x,y)] = INFINITE_DISTANCE;
-                }
+    for(int x = 0; x < MAP_X; x++){
+        for(int y = 0; y < MAP_Y; y++){
+            if(hasAllEdges(x,y)){ // fully walled off
+                dmap->value_map[MAP_COORD(x,y)] = -(INFINITE_DISTANCE);
+            }
+            else{ // free floor tiles
+                dmap->value_map[MAP_COORD(x,y)] = INFINITE_DISTANCE;
             }
         }
-        list_iter_p iterator = list_iterator(dmap->poi_list, FRONT);
-    
-        int* temp_position = NULL;
-        if(dmap->poi_list->first != NULL){
-            temp_position = (int*)dmap->poi_list->first->data;
-        }
-
-        while(temp_position != NULL){
-            dmap->value_map[*temp_position] = 0;
-            addToFrontier(dmap->frontier, dmap->value_map, *temp_position);
-            temp_position = (int*)list_next(iterator);
-        }
-
-        temp_position = (int*)list_poll(dmap->frontier);
-        while(temp_position != NULL){
-            for(int n = N; n <= SW; n++){
-                if(checkCollision((sfVector2f){map[*temp_position].x, map[*temp_position].y}, n) // n points to directions enum
-                    && dmap->value_map[(*temp_position)+neighbours[n]] > dmap->value_map[*temp_position]){
-                        dmap->value_map[(*temp_position)+neighbours[n]] = dmap->value_map[*temp_position] + 1;
-                        addToFrontier(dmap->frontier, dmap->value_map, (*temp_position)+neighbours[n]);
-                }
-            }
-            free(temp_position);
-            temp_position = (int*)list_poll(dmap->frontier);
-        }
-        free(iterator);
     }
+    list_iter_p iterator = list_iterator(dmap->poi_list, FRONT);
+
+    int* temp_position = NULL;
+    if(dmap->poi_list->first != NULL){
+        temp_position = (int*)dmap->poi_list->first->data;
+    }
+
+    while(temp_position != NULL){
+        dmap->value_map[*temp_position] = 0;
+        addToFrontier(dmap->frontier, dmap->value_map, *temp_position);
+        temp_position = (int*)list_next(iterator);
+    }
+
+    temp_position = (int*)list_poll(dmap->frontier);
+    while(temp_position != NULL){
+        for(int n = N; n <= SW; n++){
+            if(checkCollision((sfVector2f){map[*temp_position].x, map[*temp_position].y}, n) // n points to directions enum
+                && dmap->value_map[(*temp_position)+neighbours[n]] > dmap->value_map[*temp_position]){
+
+                if(checkEntityCollision((sfVector2i){map[*temp_position].x, map[*temp_position].y}, n)){
+                    dmap->value_map[(*temp_position)+neighbours[n]] = dmap->value_map[*temp_position] + 1;
+                }
+                else{ // entity found in a given dir
+                    dmap->value_map[(*temp_position)+neighbours[n]] = dmap->value_map[*temp_position] + 1 + (map[(*temp_position)+neighbours[n]].entity->idle_counter * 1);
+                }
+                addToFrontier(dmap->frontier, dmap->value_map, (*temp_position)+neighbours[n]);
+            }
+        }
+        free(temp_position);
+        temp_position = (int*)list_poll(dmap->frontier);
+    }
+    free(iterator);
     // #ifdef DEBUG
     // else{
     //     printf("[INFO] DMap flag not set, not updating.\n");

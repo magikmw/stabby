@@ -128,6 +128,7 @@ struct Entity
     sfSprite* sprite;
     boolean (*move)(int, Entity*);
     boolean took_turn;
+    int idle_counter;
     AI ai;
 };
 
@@ -166,7 +167,6 @@ struct Room
 struct DMap
 {
     list_p poi_list;              // Holds the points with default values
-    boolean poi_list_flag;        // Set true if poi_list has been changed
     int value_map[MAP_X * MAP_Y]; // Holds the calculated values
     list_p frontier;              // Used for floodfill
 };

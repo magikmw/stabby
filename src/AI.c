@@ -36,7 +36,12 @@ void Plain_Standby(Entity* mob)
     // Wander about
         // Get back to light if in darkness
         // Move about randomly -> patrol
-    mob->move(randInt(N,SW), mob);
+    if(mob->move(randInt(N,SW), mob)){
+        mob->idle_counter = 0;
+    }
+    else{
+        mob->idle_counter++;
+    }
     mob->ai.state = ai_pursue;
 
     // Run FOV, add positions to a position list
@@ -69,7 +74,12 @@ void Plain_Pursue(Entity* mob)
         // -> perhaps allow moving without turning for <= 90 turns [running, right]?
     int next_dir = DMapFollow(&DMap_PlayerChase, MAP_COORD(mob->x, mob->y));
     // printf("next_dir: %i\n", next_dir);
-    mob->move(next_dir, mob);
+    if(mob->move(next_dir, mob)){
+        mob->idle_counter = 0;
+    }
+    else{
+        mob->idle_counter++;
+    }
 
     // Run FOV, add positions to a position list
 }

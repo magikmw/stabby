@@ -125,6 +125,7 @@ int main(void)
         #endif
 
         // Update DMaps
+        // [TODO] Wrap DMapUpdate calls into a single function?
         DMapUpdate(&DMap_PlayerChase);
 
         if(player_action == turn){
@@ -133,6 +134,7 @@ int main(void)
                 for(int y=0; y < MAP_Y; y++) {
                     if(map[MAP_COORD(x,y)].entity != NULL && map[MAP_COORD(x,y)].entity != &player){
                         if(!map[MAP_COORD(x,y)].entity->took_turn){
+                            DMapUpdate(&DMap_PlayerChase);
                             map[MAP_COORD(x,y)].entity->took_turn = true;
                             switch(map[MAP_COORD(x,y)].entity->ai.state){
                                 case ai_standby:
@@ -211,7 +213,6 @@ int main(void)
 
                 if(map[MAP_COORD(x,y)].visible && map[MAP_COORD(x,y)].entity)
                     sfRenderWindow_drawSprite(window, map[MAP_COORD(x,y)].entity->sprite, NULL);
-
 
 
                 #ifdef DEBUG // debug printing of the DMap_PlayerChase values
