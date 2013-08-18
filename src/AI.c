@@ -42,7 +42,7 @@ void Plain_Standby(Entity* mob)
     else{
         mob->idle_counter++;
     }
-    mob->ai.state = ai_pursue;
+    mob->ai.state = ai_alerted;
 
     // Run FOV, add positions to a position list
 }
@@ -54,10 +54,21 @@ void Plain_Alerted(Entity* mob)
         // Act on things found in FOV
             // no player? -- the counter, if it's 0, change to standby, run standby, return;
             // if something strange happens? - reset the counter
+            // Update DMap_PlayerSuspected if something happens?
+            DMapRemPOI(&DMap_PlayerSuspected, -1);
+            DMapAddPOI(&DMap_PlayerSuspected, MAP_COORD(player.x, player.y));
+            DMapUpdate(&DMap_PlayerSuspected);
             // if the player is detected - change to pursue, set counter, run pursue, return;
 
-    // Move using DMap_PlayerLastSeen -> if in tunnel, continue until you exit
+    // Move using DMap_PlayerSuspected -> if in tunnel, continue until you exit
         // -> perhaps allow moving without turning for <= 45 turns [searching, right]?
+    int next_dir = DMapFollow(&DMap_PlayerSuspected, MAP_COORD(mob->x, mob->y));
+    if(mob->move(next_dir, mob)){
+        mob->idle_counter = 0;
+    }
+    else{
+        mob->idle_counter++;
+    }
 
     // Run FOV, add positions to a position list
 }
@@ -68,12 +79,15 @@ void Plain_Pursue(Entity* mob)
     // Check previously calculated FOV if present [position list]
         // Act on things found in FOV
             // if the player is detected - reset counter
+            // Update DMap_PlayerSuspected with current player location if detected
+            DMapRemPOI(&DMap_PlayerSuspected, -1);
+            DMapAddPOI(&DMap_PlayerSuspected, MAP_COORD(player.x, player.y));
+            DMapUpdate(&DMap_PlayerSuspected);
             // no player? -- the counter, if it's 0, change to alerted, set counter, run alerted, return;
 
     // Move using DMap_PlayerChase -> if in tunnel, continue until you exit
         // -> perhaps allow moving without turning for <= 90 turns [running, right]?
     int next_dir = DMapFollow(&DMap_PlayerChase, MAP_COORD(mob->x, mob->y));
-    // printf("next_dir: %i\n", next_dir);
     if(mob->move(next_dir, mob)){
         mob->idle_counter = 0;
     }

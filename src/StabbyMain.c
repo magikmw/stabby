@@ -62,6 +62,10 @@ int main(void)
     DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
     DMapUpdate(&DMap_PlayerChase);
 
+    DMapCreate(&DMap_PlayerSuspected);
+    DMapAddPOI(&DMap_PlayerSuspected, MAP_COORD(player.x, player.y));
+    DMapUpdate(&DMap_PlayerSuspected);
+
     /* Create a graphical text to display */
     sfFont* font;
     sfText* text;

@@ -30,6 +30,7 @@ int mobs_number;
 
 // Dijkstra maps
 DMap DMap_PlayerChase;
+DMap DMap_PlayerSuspected;
 
 // Arrays
 Tile map[MAP_X * MAP_Y];

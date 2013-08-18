@@ -64,40 +64,49 @@ void DMapAddPOI(DMap* dmap, int position){
 
 void DMapRemPOI(DMap* dmap, int position){
     // Search the value list and remove the position given
-    list_iter_p iterator = list_iterator(dmap->poi_list, FRONT);
+    // If the position is set to -1; remove all list items
 
-    int* temp_position = NULL;
-    if(dmap->poi_list->first != NULL){
-        temp_position = (int*)dmap->poi_list->first->data;
-    }
+    if(position != -1){
+        list_iter_p iterator = list_iterator(dmap->poi_list, FRONT);
 
-    if(temp_position == NULL){ // list empty, nothing to remove!
-        #ifdef DEBUG
-            printf("[WARNING] Trying to remove POI from an empty DMap list!\n");
-        #endif
-        return;
-    }
-    else{
-        boolean found = false;
-        while(temp_position != NULL && found == false){ // search for the position
-            temp_position = (int*)list_next(iterator);
-            if(temp_position != NULL){
-                if(*temp_position == position){
-                    found = true;
+        int* temp_position = NULL;
+        if(dmap->poi_list->first != NULL){
+            temp_position = (int*)dmap->poi_list->first->data;
+        }
+
+        if(temp_position == NULL){ // list empty, nothing to remove!
+            #ifdef DEBUG
+                printf("[WARNING] Trying to remove POI from an empty DMap list!\n");
+            #endif
+            return;
+        }
+        else{
+            boolean found = false;
+            while(temp_position != NULL && found == false){ // search for the position
+                temp_position = (int*)list_next(iterator);
+                if(temp_position != NULL){
+                    if(*temp_position == position){
+                        found = true;
+                    }
                 }
             }
+            if(found){ // item found, removing
+                void* temp = list_pluck(dmap->poi_list, iterator->current);
+                free(temp);
+            }
+            #ifdef DEBUG
+            else{
+                printf("[WARNING] Trying remove a POI that's not on the list!\n");
+            }
+            #endif
         }
-        if(found){ // item found, removing
-            void* temp = list_pluck(dmap->poi_list, iterator->current);
-            free(temp);
-        }
-        #ifdef DEBUG
-        else{
-            printf("[WARNING] Trying remove a POI that's not on the list!\n");
-        }
-        #endif
+        free(iterator);
     }
-    free(iterator);
+    else{
+        while(dmap->poi_list->length != 0){
+            list_remove(dmap->poi_list, BACK);
+        }
+    }
 }
 
 void DMapUpdate(DMap* dmap){
