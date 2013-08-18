@@ -36,13 +36,24 @@ void Plain_Standby(Entity* mob)
     // Wander about
         // Get back to light if in darkness
         // Move about randomly -> patrol
-    if(mob->move(randInt(N,SW), mob)){
-        mob->idle_counter = 0;
+    if(!map[MAP_COORD(mob->x, mob->y)].light){
+        int next_dir = DMapFollow(&DMap_Light, MAP_COORD(mob->x, mob->y));
+        if(mob->move(next_dir, mob)){
+            mob->idle_counter = 0;
+        }
+        else{
+            mob->idle_counter++;
+        }
     }
     else{
-        mob->idle_counter++;
+        if(mob->move(randInt(N,SW), mob)){
+            mob->idle_counter = 0;
+        }
+        else{
+            mob->idle_counter++;
+        }
     }
-    mob->ai.state = ai_alerted;
+    // mob->ai.state = ai_alerted;
 
     // Run FOV, add positions to a position list
 }

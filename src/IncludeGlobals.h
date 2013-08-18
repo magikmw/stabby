@@ -31,8 +31,8 @@ extern int mobs_number;
 // Dijkstra maps
 extern DMap DMap_PlayerChase;
 extern DMap DMap_PlayerSuspected;
+extern DMap DMap_Light;
 /*
-    [TODO] DMap DMap_Light;
     [TODO] DMap DMap_Patrol;
     [TODO] DMap DMap_Flee;
 */

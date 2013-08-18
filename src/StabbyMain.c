@@ -66,6 +66,16 @@ int main(void)
     DMapAddPOI(&DMap_PlayerSuspected, MAP_COORD(player.x, player.y));
     DMapUpdate(&DMap_PlayerSuspected);
 
+    DMapCreate(&DMap_Light);
+    for(int x = 0; x < MAP_X; x++){
+        for(int y = 0; y < MAP_Y; y++){
+            if(map[MAP_COORD(x,y)].light){
+                DMapAddPOI(&DMap_Light, MAP_COORD(x,y));
+            }
+        }
+    }
+    DMapUpdate(&DMap_Light);
+
     /* Create a graphical text to display */
     sfFont* font;
     sfText* text;
@@ -130,7 +140,6 @@ int main(void)
 
         // Update DMaps
         // [TODO] Wrap DMapUpdate calls into a single function?
-        DMapUpdate(&DMap_PlayerChase);
 
         if(player_action == turn){
             // AI take turn
@@ -139,6 +148,7 @@ int main(void)
                     if(map[MAP_COORD(x,y)].entity != NULL && map[MAP_COORD(x,y)].entity != &player){
                         if(!map[MAP_COORD(x,y)].entity->took_turn){
                             DMapUpdate(&DMap_PlayerChase);
+                            DMapUpdate(&DMap_Light);
                             map[MAP_COORD(x,y)].entity->took_turn = true;
                             switch(map[MAP_COORD(x,y)].entity->ai.state){
                                 case ai_standby:
@@ -223,7 +233,7 @@ int main(void)
                 if(debug_dmap_view == true)
                 {
                     char str_value[5];
-                    sprintf(str_value, "%d", DMap_PlayerChase.value_map[MAP_COORD(x,y)]);
+                    sprintf(str_value, "%d", DMap_Light.value_map[MAP_COORD(x,y)]);
                     sfText_setString(text_dmap_value, str_value);
                     sfText_setPosition(text_dmap_value, (sfVector2f){BORDER_OFFSET + TILE_SIZE * x + TILE_SIZE/2 - (sfText_getCharacterSize(text_dmap_value) * strlen(sfText_getString(text_dmap_value))/5), BORDER_OFFSET + TILE_SIZE * y + TILE_SIZE/4});
                     sfRenderWindow_drawText(window, text_dmap_value, NULL);
@@ -256,6 +266,8 @@ int main(void)
     sfText_destroy(text);
     sfFont_destroy(font);
     DMapDestroy(&DMap_PlayerChase);
+    DMapDestroy(&DMap_PlayerSuspected);
+    DMapDestroy(&DMap_Light);
 
     #ifdef DEBUG
     printf("[INFO] Have a nice day.\n");
