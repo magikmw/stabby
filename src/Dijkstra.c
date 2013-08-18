@@ -44,7 +44,6 @@ void DMapAddPOI(DMap* dmap, int position){
         while(temp_position != NULL && found == false){ // search for the position
             temp_position = (int*)list_next(iterator);
             if(temp_position != NULL){
-                printf("Iter: %i\n", *temp_position);
                 if(*temp_position == position){
                     found = true;
                 }
