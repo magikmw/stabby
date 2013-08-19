@@ -52,7 +52,7 @@ static void fovhead_rewind(fovhead *src) {
 
 static int fovhead_zoomto(fovhead *dest, fovhead *src, double close, int block) {
     // do not try to make sense of this -- only a few hours to go --
-    // lots of thrashing -- not good code -- 
+    // lots of thrashing -- not good code --
     double endangle = 0.0;
     double open = src->open;
 
@@ -199,7 +199,7 @@ void doFOV(void) {
             int side;
             for (side = 0; side < 4; side++) {
                 for (t = 0; t < sidelength; t++) {
-                    int strutside; 
+                    int strutside;
 
                     double close = side + (t + 1) * invouterlength;
                     double open = side + (t) * invinnerlength;

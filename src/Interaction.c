@@ -153,7 +153,7 @@ boolean mob_move(int direction, Entity* mob)
                         moved = true;
                     }
 
-                    break;  
+                    break;
                 }
                 case S:
                 {
@@ -175,7 +175,7 @@ boolean mob_move(int direction, Entity* mob)
                 case E:
                 {
                     mob->direction = NE;
-                    
+
                     break;
                 }
                 case NW:
@@ -199,7 +199,7 @@ boolean mob_move(int direction, Entity* mob)
                 case SE:
                 {
                     mob->direction = E;
-                    
+
                     break;
                 }
             }
@@ -217,7 +217,7 @@ boolean mob_move(int direction, Entity* mob)
                         mob->direction = NE;
                     }
 
-                    break;  
+                    break;
                 }
                 case S:
                 {
@@ -239,31 +239,31 @@ boolean mob_move(int direction, Entity* mob)
                 case E:
                 {
                     mob->direction = SE;
-                    
+
                     break;
                 }
                 case NW:
                 {
                     mob->direction = W;
-                    
+
                     break;
                 }
                 case NE:
                 {
                     mob->direction = E;
-                    
+
                     break;
                 }
                 case SW:
                 {
                     mob->direction = S;
-                    
+
                     break;
                 }
                 case SE:
                 {
                     mob->direction = S;
-                    
+
                     break;
                 }
             }
@@ -276,7 +276,7 @@ boolean mob_move(int direction, Entity* mob)
                 {
                     mob->direction = NW;
 
-                    break;  
+                    break;
                 }
                 case S:
                 {
@@ -303,31 +303,31 @@ boolean mob_move(int direction, Entity* mob)
                     else{
                         mob->direction = SE;
                     }
-                    
+
                     break;
                 }
                 case NW:
                 {
                     mob->direction = W;
-                    
+
                     break;
                 }
                 case NE:
                 {
                     mob->direction = N;
-                    
+
                     break;
                 }
                 case SW:
                 {
                     mob->direction = W;
-                    
+
                     break;
                 }
                 case SE:
                 {
                     mob->direction = S;
-                    
+
                     break;
                 }
             }
@@ -340,7 +340,7 @@ boolean mob_move(int direction, Entity* mob)
                 {
                     mob->direction = NE;
 
-                    break;  
+                    break;
                 }
                 case S:
                 {
@@ -367,31 +367,31 @@ boolean mob_move(int direction, Entity* mob)
                         mob->y += 0;
                         moved = true;
                     }
-                    
+
                     break;
                 }
                 case NW:
                 {
                     mob->direction = N;
-                    
+
                     break;
                 }
                 case NE:
                 {
                     mob->direction = E;
-                    
+
                     break;
                 }
                 case SW:
                 {
                     mob->direction = S;
-                    
+
                     break;
                 }
                 case SE:
                 {
                     mob->direction = E;
-                    
+
                     break;
                 }
             }
@@ -404,7 +404,7 @@ boolean mob_move(int direction, Entity* mob)
                 {
                     mob->direction = NW;
 
-                    break;  
+                    break;
                 }
                 case S:
                 {
@@ -421,7 +421,7 @@ boolean mob_move(int direction, Entity* mob)
                 case E:
                 {
                     mob->direction = NE;
-                    
+
                     break;
                 }
                 case NW:
@@ -432,19 +432,19 @@ boolean mob_move(int direction, Entity* mob)
                         mob->y += -1;
                         moved = true;
                     }
-                    
+
                     break;
                 }
                 case NE:
                 {
                     mob->direction = N;
-                    
+
                     break;
                 }
                 case SW:
                 {
                     mob->direction = W;
-                    
+
                     break;
                 }
                 case SE:
@@ -455,7 +455,7 @@ boolean mob_move(int direction, Entity* mob)
                     else{
                         mob->direction = S;
                     }
-                    
+
                     break;
                 }
             }
@@ -468,7 +468,7 @@ boolean mob_move(int direction, Entity* mob)
                 {
                     mob->direction = NE;
 
-                    break;  
+                    break;
                 }
                 case S:
                 {
@@ -485,13 +485,13 @@ boolean mob_move(int direction, Entity* mob)
                 case E:
                 {
                     mob->direction = NE;
-                    
+
                     break;
                 }
                 case NW:
                 {
                     mob->direction = N;
-                    
+
                     break;
                 }
                 case NE:
@@ -502,7 +502,7 @@ boolean mob_move(int direction, Entity* mob)
                         mob->y += -1;
                         moved = true;
                     }
-                    
+
                     break;
                 }
                 case SW:
@@ -513,13 +513,13 @@ boolean mob_move(int direction, Entity* mob)
                     else{
                         mob->direction = W;
                     }
-                    
+
                     break;
                 }
                 case SE:
                 {
                     mob->direction = E;
-                    
+
                     break;
                 }
             }
@@ -532,7 +532,7 @@ boolean mob_move(int direction, Entity* mob)
                 {
                     mob->direction = NW;
 
-                    break;  
+                    break;
                 }
                 case S:
                 {
@@ -549,13 +549,13 @@ boolean mob_move(int direction, Entity* mob)
                 case E:
                 {
                     mob->direction = SE;
-                    
+
                     break;
                 }
                 case NW:
                 {
                     mob->direction = W;
-                    
+
                     break;
                 }
                 case NE:
@@ -566,7 +566,7 @@ boolean mob_move(int direction, Entity* mob)
                     else{
                         mob->direction = E;
                     }
-                    
+
                     break;
                 }
                 case SW:
@@ -577,13 +577,13 @@ boolean mob_move(int direction, Entity* mob)
                         mob->y += 1;
                         moved = true;
                     }
-                    
+
                     break;
                 }
                 case SE:
                 {
                     mob->direction = S;
-                    
+
                     break;
                 }
             }
@@ -596,7 +596,7 @@ boolean mob_move(int direction, Entity* mob)
                 {
                     mob->direction = NE;
 
-                    break;  
+                    break;
                 }
                 case S:
                 {
@@ -613,7 +613,7 @@ boolean mob_move(int direction, Entity* mob)
                 case E:
                 {
                     mob->direction = SE;
-                    
+
                     break;
                 }
                 case NW:
@@ -624,19 +624,19 @@ boolean mob_move(int direction, Entity* mob)
                     else{
                         mob->direction = N;
                     }
-                    
+
                     break;
                 }
                 case NE:
                 {
                     mob->direction = E;
-                    
+
                     break;
                 }
                 case SW:
                 {
                     mob->direction = S;
-                    
+
                     break;
                 }
                 case SE:
@@ -780,7 +780,7 @@ boolean checkCollision(sfVector2f origin, int direction)
             }
         }
     }
-    
+
     return true;
 }
 
@@ -830,7 +830,7 @@ boolean checkEntityCollision(sfVector2i origin, int direction){
             {
                 if(map[MAP_COORD(x+1,y-1)].entity)
                     return false;
-                
+
                 break;
             }
             case SW:

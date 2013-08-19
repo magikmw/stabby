@@ -210,7 +210,7 @@ void makeBorders(int point_x, int point_y, int w, int h, char* mod)
                         map[MAP_X * y + x].edge = makeWall(S);
                     else
                         map[MAP_X * y + x].edge -> S = true;
-                }   
+                }
             }
     }
 
@@ -245,7 +245,7 @@ void makeBorders(int point_x, int point_y, int w, int h, char* mod)
                         map[MAP_X * (y+1) + x].edge = makeWall(N);
                     else
                         map[MAP_X * (y+1) + x].edge -> N = true;
-                }   
+                }
             }
     }
 }
@@ -266,7 +266,7 @@ boolean hasAllEdges(int x, int y){
                         && map[MAP_COORD(x,y)].edge -> W)
         return true;
     else
-        return false;  
+        return false;
 }
 
 boolean isMap(int x, int y){

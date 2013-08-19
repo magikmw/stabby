@@ -87,7 +87,7 @@ int main(void)
     // printf("strlen: %lu\n",  strlen(sfText_getString(text)));
     sfText_setPosition(text, (sfVector2f){(PANEL_ZERO_X + (WINDOW_X+BORDER_OFFSET - PANEL_ZERO_X)/2) - (sfText_getCharacterSize(text) * strlen(sfText_getString(text))/4), BORDER_OFFSET});
     // sfText_setPosition(text, (sfVector2f){PANEL_ZERO_X + (WINDOW_X - PANEL_ZERO_X)/2 - , BORDER_OFFSET});
-    sfText_setColor(text, sfBlack);    
+    sfText_setColor(text, sfBlack);
 
     #ifdef DEBUG
     // DMap debug text object
@@ -105,7 +105,7 @@ int main(void)
     sfText_setColor(debug_text, sfBlack);
     sfText_setPosition(debug_text, (sfVector2f){WINDOW_X-BORDER_OFFSET*2-1, BORDER_OFFSET});
     char fps_text[5];
-    
+
     // Debug variables
     boolean debug_dmap_view = false;
     #endif
@@ -195,7 +195,7 @@ int main(void)
         // Draw static UI
         for(int i=0; i < STATIC_UI_NO; i++)
             sfRenderWindow_drawSprite(window, staticUI[i], NULL);
-        
+
         // Render the map and entities
         // [TODO] Change map/entity rendering into a Graphics.c function
         for(int x=0; x < MAP_X; x++)

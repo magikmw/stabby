@@ -61,7 +61,7 @@ int handleKeys(void)
     else if(sfKeyboard_isKeyPressed(sfKeyEscape)){
         return quit;
     }
-    
+
     #ifdef DEBUG
     // DEBUG KEYS
     else if(sfKeyboard_isKeyPressed(sfKeyNumpad0)){ // Display edge/wall status of a tile

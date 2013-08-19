@@ -35,7 +35,7 @@ void DMapAddPOI(DMap* dmap, int position){
     if(dmap->poi_list->first != NULL){
         temp_position = (int*)dmap->poi_list->first->data;
     }
-    
+
     if(temp_position == NULL){ // list empty, add position
         list_add(dmap->poi_list, &position, sizeof(int));
     }
@@ -206,7 +206,7 @@ int DMapFollow(DMap* dmap, int current){
                 next = n;
                 break;
             }
-        }   
+        }
     }
 
     return next;
