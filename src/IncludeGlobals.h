@@ -16,6 +16,9 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 
+#ifndef __INCLUDE_GLOBALS_H__
+#define __INCLUDE_GLOBALS_H__
+
 // Graphics
 void loadTextures(void);
 void makeShapes(void);
@@ -91,3 +94,5 @@ void createMob(int type, Tile map_tile);
 void spawnMobs(void);
 
 // [TODO] Sort the function prototypes properly by files + re add the variable names
+
+#endif

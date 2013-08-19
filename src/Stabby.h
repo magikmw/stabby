@@ -16,6 +16,9 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 
+#ifndef __STABBY_H__
+#define __STABBY_H__
+
 // STD includes
 #include <stdio.h>
 #include <string.h>
@@ -170,3 +173,5 @@ struct DMap
     int value_map[MAP_X * MAP_Y]; // Holds the calculated values
     list_p frontier;              // Used for floodfill
 };
+
+#endif
