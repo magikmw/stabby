@@ -39,5 +39,5 @@ Room* rooms[MAX_ROOMS];
 sfSprite* staticUI[STATIC_UI_NO];
 
 // Constants
-// Relative positions of 8 tiles around n in array[24*16]
-const int neighbours[8] = {-24, 1, 24, -1, -25, -23, 25, 23};
+// Relative positions of 8 tiles around n in array[MAP_X*MAP_Y]
+const int neighbours[8] = {-MAP_X, 1, MAP_X, -1, -(MAP_X+1), -(MAP_X-1), MAP_X+1, MAP_X-1};
