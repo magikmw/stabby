@@ -36,7 +36,7 @@ boolean checkIntersection(Rect* this, Room* other);
 void makeCorridorH(int x1, int x2, int y);
 void makeCorridorV(int y1, int y2, int x);
 
-void createMap(){
+void createMap(void){
     #ifdef DEBUG
     sfClock* timer = sfClock_create();
     static int tries = 0;
