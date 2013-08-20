@@ -61,7 +61,10 @@ BIN_DIR			:=	bin/
 OBJ_FILES		:=	$(addsuffix .o, $(basename $(SRC_FILES)))
 OBJ_FILES		:=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
-all: $(BIN_DIR)$(TARGET)
+all: release
+
+release: $(BIN_DIR)$(TARGET)
+	@strip $(BIN_DIR)$(TARGET)
 
 # Assign the proper flags and defines for the debug build
 debug: LD_FLAGS	:= $(LD_FLAGS_DEBUG)
@@ -78,17 +81,17 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 # Create varios directories as needed
 _makedirs:
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 clean: 
 	rm -fr $(OBJ_DIR) $(BIN_DIR)$(TARGET)
 
 run: all
-	cd $(BIN_DIR) && ./$(TARGET)
+	@cd $(BIN_DIR) && ./$(TARGET)
 
 # Runs the debugger, requires debug build
 run_gdb: debug
-	cd $(BIN_DIR) && gdb ./$(TARGET)
+	@cd $(BIN_DIR) && gdb ./$(TARGET)
 
 info:
 	@echo "TARGET:		$(BIN_DIR)$(TARGET)"
@@ -98,7 +101,7 @@ info:
 	@echo "LIBRARIES:	$(LIBRARIES)"
 
 libds:
-	mkdir -p $(BIN_DIR)libs inc
-	cd lib/libds && make clean libds.a ds.h
-	cp lib/libds/libds.a $(BIN_DIR)libs/libds.a
-	cp lib/libds/ds.h inc/ds.h
+	@mkdir -p $(BIN_DIR)libs inc
+	@cd lib/libds && make clean libds.a ds.h
+	@cp lib/libds/libds.a $(BIN_DIR)libs/libds.a
+	@cp lib/libds/ds.h inc/ds.h
