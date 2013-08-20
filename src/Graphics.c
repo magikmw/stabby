@@ -84,8 +84,6 @@ void updateEntitySprite(Entity* entity)
     sfSprite_setPosition(entity->sprite, (sfVector2f){entity->x * TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET, entity->y * TILE_SIZE + TILE_SIZE/2 + BORDER_OFFSET});
 }
 
-Room* isInRoom(int x, int y);
-
 void makeMapSprites(void){
     for(int x=0; x < MAP_X; x++)
         for(int y=0; y < MAP_Y; y++) {
@@ -99,9 +97,6 @@ void makeMapSprites(void){
             else
                 sfSprite_setTextureRect(map[MAP_X * y + x].sprite, (sfIntRect){0*TILE_SIZE,1*TILE_SIZE,TILE_SIZE,TILE_SIZE});
             sfSprite_setPosition(map[MAP_X * y + x].sprite, (sfVector2f){map[MAP_X * y + x].x * TILE_SIZE + BORDER_OFFSET, map[MAP_X * y + x].y * TILE_SIZE + BORDER_OFFSET});
-            // if(isInRoom(x,y) != NULL){
-            //     sfSprite_setColor(map[MAP_X * y + x].sprite, sfRed);
-            // }
 
             // This section creates the sprites for the walls
             if(map[MAP_X * y + x].edge != NULL)
