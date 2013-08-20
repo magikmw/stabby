@@ -19,119 +19,118 @@
 #include "Stabby.h"
 #include "IncludeGlobals.h"
 
-boolean player_move(int direction, Entity* nul)
+boolean player_move(int direction, Entity* pc)
 {
-    // [TODO] Refactor to use the actual pointer instead of a global
     boolean moved = false;
     switch(direction){
         case N:
         {
-            player.direction = N;
-            if(checkCollision((sfVector2f){player.x, player.y}, N) && checkEntityCollision((sfVector2i){player.x, player.y}, N)){
-                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
-                map[MAP_COORD(player.x,player.y)].entity = NULL;
-                player.x += 0;
-                player.y += -1;
-                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+            pc->direction = N;
+            if(checkCollision((sfVector2f){pc->x, pc->y}, N) && checkEntityCollision((sfVector2i){pc->x, pc->y}, N)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
+                map[MAP_COORD(pc->x,pc->y)].entity = NULL;
+                pc->x += 0;
+                pc->y += -1;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 moved = true;
             }
             break;
         }
         case S:
         {
-            player.direction = S;
-            if(checkCollision((sfVector2f){player.x, player.y}, S) && checkEntityCollision((sfVector2i){player.x, player.y}, S)){
-                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
-                map[MAP_COORD(player.x,player.y)].entity = NULL;
-                player.x += 0;
-                player.y += 1;
-                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+            pc->direction = S;
+            if(checkCollision((sfVector2f){pc->x, pc->y}, S) && checkEntityCollision((sfVector2i){pc->x, pc->y}, S)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
+                map[MAP_COORD(pc->x,pc->y)].entity = NULL;
+                pc->x += 0;
+                pc->y += 1;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 moved = true;
             }
             break;
         }
         case W:
         {
-            player.direction = W;
-            if(checkCollision((sfVector2f){player.x, player.y}, W) && checkEntityCollision((sfVector2i){player.x, player.y}, W)){
-                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
-                map[MAP_COORD(player.x,player.y)].entity = NULL;
-                player.x += -1;
-                player.y += 0;
-                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+            pc->direction = W;
+            if(checkCollision((sfVector2f){pc->x, pc->y}, W) && checkEntityCollision((sfVector2i){pc->x, pc->y}, W)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
+                map[MAP_COORD(pc->x,pc->y)].entity = NULL;
+                pc->x += -1;
+                pc->y += 0;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 moved = true;
             }
             break;
         }
         case E:
         {
-            player.direction = E;
-            if(checkCollision((sfVector2f){player.x, player.y}, E) && checkEntityCollision((sfVector2i){player.x, player.y}, E)){
-                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
-                map[MAP_COORD(player.x,player.y)].entity = NULL;
-                player.x += 1;
-                player.y += 0;
-                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+            pc->direction = E;
+            if(checkCollision((sfVector2f){pc->x, pc->y}, E) && checkEntityCollision((sfVector2i){pc->x, pc->y}, E)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
+                map[MAP_COORD(pc->x,pc->y)].entity = NULL;
+                pc->x += 1;
+                pc->y += 0;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 moved = true;
             }
             break;
         }
         case NW:
         {
-            player.direction = NW;
-            if(checkCollision((sfVector2f){player.x, player.y}, NW) && checkEntityCollision((sfVector2i){player.x, player.y}, NW)){
-                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
-                map[MAP_COORD(player.x,player.y)].entity = NULL;
-                player.x += -1;
-                player.y += -1;
-                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+            pc->direction = NW;
+            if(checkCollision((sfVector2f){pc->x, pc->y}, NW) && checkEntityCollision((sfVector2i){pc->x, pc->y}, NW)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
+                map[MAP_COORD(pc->x,pc->y)].entity = NULL;
+                pc->x += -1;
+                pc->y += -1;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 moved = true;
             }
             break;
         }
         case NE:
         {
-            player.direction = NE;
-            if(checkCollision((sfVector2f){player.x, player.y}, NE) && checkEntityCollision((sfVector2i){player.x, player.y}, NE)){
-                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
-                map[MAP_COORD(player.x,player.y)].entity = NULL;
-                player.x += 1;
-                player.y += -1;
-                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+            pc->direction = NE;
+            if(checkCollision((sfVector2f){pc->x, pc->y}, NE) && checkEntityCollision((sfVector2i){pc->x, pc->y}, NE)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
+                map[MAP_COORD(pc->x,pc->y)].entity = NULL;
+                pc->x += 1;
+                pc->y += -1;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 moved = true;
             }
             break;
         }
         case SW:
         {
-            player.direction = SW;
-            if(checkCollision((sfVector2f){player.x, player.y}, SW) && checkEntityCollision((sfVector2i){player.x, player.y}, SW)){
-                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
-                map[MAP_COORD(player.x,player.y)].entity = NULL;
-                player.x += -1;
-                player.y += 1;
-                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+            pc->direction = SW;
+            if(checkCollision((sfVector2f){pc->x, pc->y}, SW) && checkEntityCollision((sfVector2i){pc->x, pc->y}, SW)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
+                map[MAP_COORD(pc->x,pc->y)].entity = NULL;
+                pc->x += -1;
+                pc->y += 1;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 moved = true;
             }
             break;
         }
         case SE:
         {
-            player.direction = SE;
-            if(checkCollision((sfVector2f){player.x, player.y}, SE) && checkEntityCollision((sfVector2i){player.x, player.y}, SE)){
-                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
-                map[MAP_COORD(player.x,player.y)].entity = NULL;
-                player.x += 1;
-                player.y += 1;
-                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(player.x, player.y));
+            pc->direction = SE;
+            if(checkCollision((sfVector2f){pc->x, pc->y}, SE) && checkEntityCollision((sfVector2i){pc->x, pc->y}, SE)){
+                DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
+                map[MAP_COORD(pc->x,pc->y)].entity = NULL;
+                pc->x += 1;
+                pc->y += 1;
+                DMapAddPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 moved = true;
             }
             break;
         }
     }
 
-    map[MAP_COORD(player.x,player.y)].entity = &player;
-    updateEntitySprite(&player);
+    map[MAP_COORD(pc->x,pc->y)].entity = pc;
+    updateEntitySprite(pc);
     return moved;
 }
 

@@ -23,35 +23,35 @@ int handleKeys(void)
 {
     boolean game_action = false; // did the player take action _in_game_ (turn passes)
     if(sfKeyboard_isKeyPressed(sfKeyNumpad8) || sfKeyboard_isKeyPressed(sfKeyK)){
-        game_action = player.move(N, NULL);
+        game_action = player.move(N, &player);
         return game_action;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyNumpad2) || sfKeyboard_isKeyPressed(sfKeyJ)){
-        game_action = player.move(S, NULL);
+        game_action = player.move(S, &player);
         return game_action;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyNumpad4) || sfKeyboard_isKeyPressed(sfKeyH)){
-        game_action = player.move(W, NULL);
+        game_action = player.move(W, &player);
         return game_action;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyNumpad6) || sfKeyboard_isKeyPressed(sfKeyL)){
-        game_action = player.move(E, NULL);
+        game_action = player.move(E, &player);
         return game_action;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyNumpad7) || sfKeyboard_isKeyPressed(sfKeyY)){
-        game_action = player.move(NW, NULL);
+        game_action = player.move(NW, &player);
         return game_action;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyNumpad9) || sfKeyboard_isKeyPressed(sfKeyU)){
-        game_action = player.move(NE, NULL);
+        game_action = player.move(NE, &player);
         return game_action;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyNumpad1) || sfKeyboard_isKeyPressed(sfKeyB)){
-        game_action = player.move(SW, NULL);
+        game_action = player.move(SW, &player);
         return game_action;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyNumpad3) || sfKeyboard_isKeyPressed(sfKeyN)){
-        game_action = player.move(SE, NULL);
+        game_action = player.move(SE, &player);
         return game_action;
     }
     else if(sfKeyboard_isKeyPressed(sfKeyNumpad5) || sfKeyboard_isKeyPressed(sfKeyPeriod)){
