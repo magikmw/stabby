@@ -19,9 +19,9 @@
 #ifndef __INCLUDE_GLOBALS_H__
 #define __INCLUDE_GLOBALS_H__
 
+// Globals.c
+
 // Graphics
-void loadTextures(void);
-void makeShapes(void);
 extern sfTexture* textureArray[TEXTURE_NO];
 extern sfRectangleShape* shapeArray[SHAPE_NO];
 
@@ -49,50 +49,54 @@ extern Room* rooms[MAX_ROOMS];
 extern const int neighbours[8];
 
 // Functions
-void createMap();
-void createStaticUI(void);
-int handleKeys(void);
-double distance(int x1, int y1, int x2, int y2);
 
-// Interaction
-boolean player_move(int direction, Entity* nul);
-boolean mob_move(int direction, Entity* mob);
-boolean checkCollision(sfVector2f origin, int direction);
-boolean checkEntityCollision(sfVector2i origin, int direction);
-
-// graphics
-void updateEntitySprite(Entity* entity);
-void makeMapSprites(void);
-
-// map properties checks
+// Architect.c
+void createMap(void);
 boolean hasEdges(int x, int y);
 boolean hasAllEdges(int x, int y);
 boolean isMap(int x, int y);
 sfVector2i roomCenter(Room* room);
+
+// Demographics.c
+void spawnPlayer(void);
+void createMob(int type, Tile map_tile);
+void spawnMobs(void);
+
+// Dijkstra.c
+void DMapCreate(DMap* dmap);
+void DMapAddPOI(DMap* dmap, int position);
+void DMapRemPOI(DMap* dmap, int position);
+void DMapUpdate(DMap* dmap);
+void DMapDestroy(DMap* dmap);
+void addToFrontier(list_p frontier, int* value_map, int position);
+int DMapFollow(DMap* dmap, int current);
 
 // fov functions
 void showAll(void);
 void clearVisibility(void);
 void doFOV(void);
 
-// random
+// Graphics.c
+void loadTextures(void);
+void makeShapes(void);
+void updateEntitySprite(Entity* entity);
+void makeMapSprites(void);
+
+// Interaction.c
+boolean player_move(int direction, Entity* pc);
+boolean mob_move(int direction, Entity* mob);
+boolean checkCollision(sfVector2f origin, int direction);
+boolean checkEntityCollision(sfVector2i origin, int direction);
+double distance(int x1, int y1, int x2, int y2);
+
+// Keyboard.c
+int handleKeys(void);
+
+// Random.c
 void initRand(unsigned int seed);
-int randInt(int, int);
+int randInt(int min, int max);
 
-// dijkstra maps related
-void DMapCreate(DMap*);
-void DMapAddPOI(DMap*, int);
-void DMapRemPOI(DMap*, int);
-void DMapUpdate(DMap*);
-void DMapDestroy(DMap*);
-void addToFrontier(list_p, int*, int);
-int DMapFollow(DMap* dmap, int current);
-
-// demographics
-void spawnPlayer(void);
-void createMob(int type, Tile map_tile);
-void spawnMobs(void);
-
-// [TODO] Sort the function prototypes properly by files + re add the variable names
+// UI.c
+void createStaticUI(void);
 
 #endif
