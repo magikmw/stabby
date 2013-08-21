@@ -42,6 +42,13 @@ void createMap(void){
     static int tries = 0;
     #endif
 
+    for(int x = 0; x < MAP_X; x++){
+        for(int y = 0; y < MAP_Y; y++){
+            map[MAP_COORD(x,y)].x = x;
+            map[MAP_COORD(x,y)].y = y;
+        }
+    }
+
     clearMap();
 
     rooms_number = 0;

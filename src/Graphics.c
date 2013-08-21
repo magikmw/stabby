@@ -88,8 +88,6 @@ void makeMapSprites(void){
     for(int x=0; x < MAP_X; x++)
         for(int y=0; y < MAP_Y; y++) {
 
-            map[MAP_COORD(x,y)].x = x;
-            map[MAP_COORD(x,y)].y = y;
             map[MAP_COORD(x,y)].sprite = sfSprite_create();
             sfSprite_setTexture(map[MAP_COORD(x,y)].sprite, textureArray[0], sfTrue);
             if(hasAllEdges(x,y))
