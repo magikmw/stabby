@@ -26,7 +26,7 @@ boolean player_move(int direction, Entity* pc)
         case N:
         {
             pc->direction = N;
-            if(checkCollision((sfVector2f){pc->x, pc->y}, N) && checkEntityCollision((sfVector2i){pc->x, pc->y}, N)){
+            if(checkCollision(MAP_COORD(pc->x, pc->y), N) && checkEntityCollision(MAP_COORD(pc->x, pc->y), N)){
                 DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 map[MAP_COORD(pc->x,pc->y)].entity = NULL;
                 pc->x += 0;
@@ -39,7 +39,7 @@ boolean player_move(int direction, Entity* pc)
         case S:
         {
             pc->direction = S;
-            if(checkCollision((sfVector2f){pc->x, pc->y}, S) && checkEntityCollision((sfVector2i){pc->x, pc->y}, S)){
+            if(checkCollision(MAP_COORD(pc->x, pc->y), S) && checkEntityCollision(MAP_COORD(pc->x, pc->y), S)){
                 DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 map[MAP_COORD(pc->x,pc->y)].entity = NULL;
                 pc->x += 0;
@@ -52,7 +52,7 @@ boolean player_move(int direction, Entity* pc)
         case W:
         {
             pc->direction = W;
-            if(checkCollision((sfVector2f){pc->x, pc->y}, W) && checkEntityCollision((sfVector2i){pc->x, pc->y}, W)){
+            if(checkCollision(MAP_COORD(pc->x, pc->y), W) && checkEntityCollision(MAP_COORD(pc->x, pc->y), W)){
                 DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 map[MAP_COORD(pc->x,pc->y)].entity = NULL;
                 pc->x += -1;
@@ -65,7 +65,7 @@ boolean player_move(int direction, Entity* pc)
         case E:
         {
             pc->direction = E;
-            if(checkCollision((sfVector2f){pc->x, pc->y}, E) && checkEntityCollision((sfVector2i){pc->x, pc->y}, E)){
+            if(checkCollision(MAP_COORD(pc->x, pc->y), E) && checkEntityCollision(MAP_COORD(pc->x, pc->y), E)){
                 DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 map[MAP_COORD(pc->x,pc->y)].entity = NULL;
                 pc->x += 1;
@@ -78,7 +78,7 @@ boolean player_move(int direction, Entity* pc)
         case NW:
         {
             pc->direction = NW;
-            if(checkCollision((sfVector2f){pc->x, pc->y}, NW) && checkEntityCollision((sfVector2i){pc->x, pc->y}, NW)){
+            if(checkCollision(MAP_COORD(pc->x, pc->y), NW) && checkEntityCollision(MAP_COORD(pc->x, pc->y), NW)){
                 DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 map[MAP_COORD(pc->x,pc->y)].entity = NULL;
                 pc->x += -1;
@@ -91,7 +91,7 @@ boolean player_move(int direction, Entity* pc)
         case NE:
         {
             pc->direction = NE;
-            if(checkCollision((sfVector2f){pc->x, pc->y}, NE) && checkEntityCollision((sfVector2i){pc->x, pc->y}, NE)){
+            if(checkCollision(MAP_COORD(pc->x, pc->y), NE) && checkEntityCollision(MAP_COORD(pc->x, pc->y), NE)){
                 DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 map[MAP_COORD(pc->x,pc->y)].entity = NULL;
                 pc->x += 1;
@@ -104,7 +104,7 @@ boolean player_move(int direction, Entity* pc)
         case SW:
         {
             pc->direction = SW;
-            if(checkCollision((sfVector2f){pc->x, pc->y}, SW) && checkEntityCollision((sfVector2i){pc->x, pc->y}, SW)){
+            if(checkCollision(MAP_COORD(pc->x, pc->y), SW) && checkEntityCollision(MAP_COORD(pc->x, pc->y), SW)){
                 DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 map[MAP_COORD(pc->x,pc->y)].entity = NULL;
                 pc->x += -1;
@@ -117,7 +117,7 @@ boolean player_move(int direction, Entity* pc)
         case SE:
         {
             pc->direction = SE;
-            if(checkCollision((sfVector2f){pc->x, pc->y}, SE) && checkEntityCollision((sfVector2i){pc->x, pc->y}, SE)){
+            if(checkCollision(MAP_COORD(pc->x, pc->y), SE) && checkEntityCollision(MAP_COORD(pc->x, pc->y), SE)){
                 DMapRemPOI(&DMap_PlayerChase, MAP_COORD(pc->x, pc->y));
                 map[MAP_COORD(pc->x,pc->y)].entity = NULL;
                 pc->x += 1;
@@ -145,7 +145,7 @@ boolean mob_move(int direction, Entity* mob)
             switch(mob->direction){
                 case N:
                 {
-                    if(checkCollision((sfVector2f){mob->x, mob->y}, N) && checkEntityCollision((sfVector2i){mob->x, mob->y}, N)){
+                    if(checkCollision(MAP_COORD(mob->x, mob->y), N) && checkEntityCollision(MAP_COORD(mob->x, mob->y), N)){
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += 0;
                         mob->y += -1;
@@ -220,7 +220,7 @@ boolean mob_move(int direction, Entity* mob)
                 }
                 case S:
                 {
-                    if(checkCollision((sfVector2f){mob->x, mob->y}, S) && checkEntityCollision((sfVector2i){mob->x, mob->y}, S)){
+                    if(checkCollision(MAP_COORD(mob->x, mob->y), S) && checkEntityCollision(MAP_COORD(mob->x, mob->y), S)){
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += 0;
                         mob->y += 1;
@@ -285,7 +285,7 @@ boolean mob_move(int direction, Entity* mob)
                 }
                 case W:
                 {
-                    if(checkCollision((sfVector2f){mob->x, mob->y}, W) && checkEntityCollision((sfVector2i){mob->x, mob->y}, W)){
+                    if(checkCollision(MAP_COORD(mob->x, mob->y), W) && checkEntityCollision(MAP_COORD(mob->x, mob->y), W)){
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += -1;
                         mob->y += 0;
@@ -360,7 +360,7 @@ boolean mob_move(int direction, Entity* mob)
                 }
                 case E:
                 {
-                    if(checkCollision((sfVector2f){mob->x, mob->y}, E) && checkEntityCollision((sfVector2i){mob->x, mob->y}, E)){
+                    if(checkCollision(MAP_COORD(mob->x, mob->y), E) && checkEntityCollision(MAP_COORD(mob->x, mob->y), E)){
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += 1;
                         mob->y += 0;
@@ -425,7 +425,7 @@ boolean mob_move(int direction, Entity* mob)
                 }
                 case NW:
                 {
-                    if(checkCollision((sfVector2f){mob->x, mob->y}, NW) && checkEntityCollision((sfVector2i){mob->x, mob->y}, NW)){
+                    if(checkCollision(MAP_COORD(mob->x, mob->y), NW) && checkEntityCollision(MAP_COORD(mob->x, mob->y), NW)){
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += -1;
                         mob->y += -1;
@@ -495,7 +495,7 @@ boolean mob_move(int direction, Entity* mob)
                 }
                 case NE:
                 {
-                    if(checkCollision((sfVector2f){mob->x, mob->y}, NE) && checkEntityCollision((sfVector2i){mob->x, mob->y}, NE)){
+                    if(checkCollision(MAP_COORD(mob->x, mob->y), NE) && checkEntityCollision(MAP_COORD(mob->x, mob->y), NE)){
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += 1;
                         mob->y += -1;
@@ -570,7 +570,7 @@ boolean mob_move(int direction, Entity* mob)
                 }
                 case SW:
                 {
-                    if(checkCollision((sfVector2f){mob->x, mob->y}, SW) && checkEntityCollision((sfVector2i){mob->x, mob->y}, SW)){
+                    if(checkCollision(MAP_COORD(mob->x, mob->y), SW) && checkEntityCollision(MAP_COORD(mob->x, mob->y), SW)){
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += -1;
                         mob->y += 1;
@@ -640,7 +640,7 @@ boolean mob_move(int direction, Entity* mob)
                 }
                 case SE:
                 {
-                    if(checkCollision((sfVector2f){mob->x, mob->y}, SE) && checkEntityCollision((sfVector2i){mob->x, mob->y}, SE)){
+                    if(checkCollision(MAP_COORD(mob->x, mob->y), SE) && checkEntityCollision(MAP_COORD(mob->x, mob->y), SE)){
                         map[MAP_COORD(mob->x,mob->y)].entity = NULL;
                         mob->x += 1;
                         mob->y += 1;
@@ -662,10 +662,10 @@ boolean mob_move(int direction, Entity* mob)
 }
 
 // returns true if you can move in the direction from origin
-boolean checkCollision(sfVector2f origin, int direction)
+boolean checkCollision(int origin, int direction)
 {
-    int x = origin.x;
-    int y = origin.y;
+    int x = map[origin].x;
+    int y = map[origin].y;
 
     if(map[MAP_COORD(x,y)].edge != NULL){
         switch(direction)
@@ -783,10 +783,10 @@ boolean checkCollision(sfVector2f origin, int direction)
     return true;
 }
 
-boolean checkEntityCollision(sfVector2i origin, int direction){
+boolean checkEntityCollision(int origin, int direction){
     // returns true if there is no entity in given direction
-    int x = origin.x;
-    int y = origin.y;
+    int x = map[origin].x;
+    int y = map[origin].y;
 
     switch(direction)
     {

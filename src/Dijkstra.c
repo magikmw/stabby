@@ -136,10 +136,10 @@ void DMapUpdate(DMap* dmap){
     temp_position = (int*)list_poll(dmap->frontier);
     while(temp_position != NULL){
         for(int n = N; n <= SW; n++){
-            if(checkCollision((sfVector2f){map[*temp_position].x, map[*temp_position].y}, n) // n points to directions enum
+            if(checkCollision(*temp_position, n) // n points to directions enum
                 && dmap->value_map[(*temp_position)+neighbours[n]] > dmap->value_map[*temp_position]){
 
-                if(checkEntityCollision((sfVector2i){map[*temp_position].x, map[*temp_position].y}, n)){
+                if(checkEntityCollision(*temp_position, n)){
                     dmap->value_map[(*temp_position)+neighbours[n]] = dmap->value_map[*temp_position] + 1;
                 }
                 else{ // entity found in a given dir
@@ -175,7 +175,7 @@ int DMapFollow(DMap* dmap, int current){
     int lowest = INFINITE_DISTANCE;
 
     for(int n = N; n <= SW; n++){
-        if(checkCollision((sfVector2f){map[current].x, map[current].y}, n)){
+        if(checkCollision(current, n)){
             neighbour_values[n] = dmap->value_map[current+neighbours[n]];
         }
         if(neighbour_values[n] != -(INFINITE_DISTANCE) && neighbour_values[n] < lowest){

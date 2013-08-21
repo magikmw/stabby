@@ -87,8 +87,8 @@ void makeMapSprites(void);
 // Interaction.c
 boolean player_move(int direction, Entity* pc);
 boolean mob_move(int direction, Entity* mob);
-boolean checkCollision(sfVector2f origin, int direction);
-boolean checkEntityCollision(sfVector2i origin, int direction);
+boolean checkCollision(int origin, int direction);
+boolean checkEntityCollision(int origin, int direction);
 double distance(int x1, int y1, int x2, int y2);
 
 // Keyboard.c
