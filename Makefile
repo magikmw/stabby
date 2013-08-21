@@ -61,7 +61,8 @@ BIN_DIR			:=	bin/
 OBJ_FILES		:=	$(addsuffix .o, $(basename $(SRC_FILES)))
 OBJ_FILES		:=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
-all: release
+all:
+	@echo "Available targets: release, debug"
 
 release: $(BIN_DIR)$(TARGET)
 	@strip $(BIN_DIR)$(TARGET)
