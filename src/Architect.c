@@ -73,7 +73,6 @@ void createMap(void){
                 boolean intersects = false;
                 for(int j = 0; j < rooms_number; j++){
                     intersects = checkIntersection(temp_rect, rooms[j]);
-                    // printf("intersects: %i\n", intersects);
                     if(intersects == true) break;
                 }
                 if(intersects == false)
@@ -103,14 +102,10 @@ void createMap(void){
         int one = roomCenter(rooms[i]);
         int two = roomCenter(rooms[i+1]);
 
-        printf("one: %i, two: %i\n", one, two);
-
         int one_x = map[one].x;
         int one_y = map[one].y;
         int two_x = map[two].x;
         int two_y = map[two].y;
-
-        printf("one_x: %i, one_y: %i, two_x: %i, two_y: %i\n", one_x, one_y, two_x, two_y);
         
         if(randInt(0, 1) == 1){ // go horizontal, then vertical
             makeCorridorH(one_x, two_x, one_y);
@@ -176,10 +171,6 @@ Edge* makeWall(int direction)
 
 void makeBorders(int point_x, int point_y, int w, int h, char* mod)
 {
-    // printf("makeBorders() call strcmp(mod, in): %i\n", strcmp(mod, "in"));
-
-    // printf("makeBorders() call, x:%i, y:%i, w:%i, h:%i \n", point_x, point_y, w, h);
-
     int mode = 3; // mode flag - 0 for in, 1 of out, 2 for both
 
     if(strcmp(mod, "in") == 0)
@@ -191,11 +182,8 @@ void makeBorders(int point_x, int point_y, int w, int h, char* mod)
     else
         printf("makeBorders(): ERROR, WRONG MODE PROVIDED: %s\n", mod);
 
-    // printf("makeBorders(): %i\n", mode);
-
     if(mode == 0 || mode == 2)
     {
-        // printf("in executed\n");
         for(int x=point_x; x < point_x+w; x++)
             for(int y=point_y; y < point_y+h; y++) {
                 if(x == point_x)
@@ -306,7 +294,6 @@ void lightRooms(int lightness){
     // iterates through all the rooms and sets lightness% of them to lit
     for(int i=0; i < rooms_number; i++){
         if(randInt(0,100) < lightness){
-            // printf("Lit room\n");
             for(int x = rooms[i] -> x1; x < rooms[i] -> x2; x++)
                 for(int y = rooms[i] -> y1; y < rooms[i] -> y2; y++)
                     map[MAP_COORD(x,y)].light = true;
@@ -360,7 +347,6 @@ int roomCenter(Room* room){
 }
 
 void clearMap(void){
-    // printf("Clear map\n--\n");
     for(int x=0; x < MAP_X; x++)
         for(int y=0; y < MAP_Y; y++) {
             if(hasEdges(x,y)){
@@ -406,7 +392,6 @@ void fillMap(void){
 }
 
 void makeCorridorH(int x1, int x2, int y){
-    // printf("makeCorridorH() x1:%i, x2:%i, y:%i\n", x1, x2, y);
     Room* temp_room = NULL;
     for(int x=MIN(x1,x2); x <= MAX(x1,x2); x++){
         if((temp_room = isInRoom(x,y)) == NULL){
@@ -432,14 +417,10 @@ void makeCorridorH(int x1, int x2, int y){
                 map[MAP_COORD(x,y)].edge -> E = false;
             }
         }
-        // if(x == MIN(x1,x2) || x == MAX(x1,x2)){
-        //     map[MAP_COORD(x,y)].corridor_end = true;
-        // }
     }
 }
 
 void makeCorridorV(int y1, int y2, int x){
-    // printf("makeCorridorV() y1:%i, y2:%i, x:%i\n", y1, y2, x);
     Room* temp_room = NULL;
     for(int y=MIN(y1,y2); y <= MAX(y1,y2); y++){
         temp_room = isInRoom(x,y);
@@ -465,8 +446,5 @@ void makeCorridorV(int y1, int y2, int x){
                 map[MAP_COORD(x,y)].edge -> S = false;
             }
         }
-    //     if(y == MIN(y1,y2) || y == MAX(y1,y2)){
-    //         map[MAP_COORD(x,y)].corridor_end = true;
-    //     }
     }
 }
