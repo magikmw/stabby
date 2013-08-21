@@ -202,27 +202,27 @@ int main(void)
             for(int y=0; y < MAP_Y; y++) {
                 if(map[MAP_COORD(x,y)].visible){
                     sfSprite_setColor(map[MAP_COORD(x,y)].sprite, sfWhite);
-                    sfRenderWindow_drawSprite(window, map[MAP_X * y + x].sprite, NULL);
-                    if(map[MAP_X * y + x].edge != NULL)
+                    sfRenderWindow_drawSprite(window, map[MAP_COORD(x,y)].sprite, NULL);
+                    if(map[MAP_COORD(x,y)].edge != NULL)
                         for(int i = 0; i < 4; i++)
-                            if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
-                                sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
+                            if(map[MAP_COORD(x,y)].edge -> sprite[i] != NULL)
+                                sfRenderWindow_drawSprite(window, map[MAP_COORD(x,y)].edge -> sprite[i], NULL);
                 }
                 else if(map[MAP_COORD(x,y)].explored && (map[MAP_COORD(x,y)].light || hasAllEdges(x,y))){
                     sfSprite_setColor(map[MAP_COORD(x,y)].sprite, COLOR_EXPLORED_LIGHT);
-                    sfRenderWindow_drawSprite(window, map[MAP_X * y + x].sprite, NULL);
-                    if(map[MAP_X * y + x].edge != NULL)
+                    sfRenderWindow_drawSprite(window, map[MAP_COORD(x,y)].sprite, NULL);
+                    if(map[MAP_COORD(x,y)].edge != NULL)
                         for(int i = 0; i < 4; i++)
-                            if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
-                                sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
+                            if(map[MAP_COORD(x,y)].edge -> sprite[i] != NULL)
+                                sfRenderWindow_drawSprite(window, map[MAP_COORD(x,y)].edge -> sprite[i], NULL);
                 }
                 else if(map[MAP_COORD(x,y)].explored && !map[MAP_COORD(x,y)].light){
                     sfRectangleShape_setPosition(shapeArray[1], (sfVector2f){x*TILE_SIZE+BORDER_OFFSET,y*TILE_SIZE+BORDER_OFFSET});
                     sfRenderWindow_drawRectangleShape(window, shapeArray[1], NULL);
-                    if(map[MAP_X * y + x].edge != NULL)
+                    if(map[MAP_COORD(x,y)].edge != NULL)
                         for(int i = 0; i < 4; i++)
-                            if(map[MAP_X * y + x].edge -> sprite[i] != NULL)
-                                sfRenderWindow_drawSprite(window, map[MAP_X * y + x].edge -> sprite[i], NULL);
+                            if(map[MAP_COORD(x,y)].edge -> sprite[i] != NULL)
+                                sfRenderWindow_drawSprite(window, map[MAP_COORD(x,y)].edge -> sprite[i], NULL);
                 }
 
                 if(map[MAP_COORD(x,y)].visible && map[MAP_COORD(x,y)].entity)

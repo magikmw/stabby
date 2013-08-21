@@ -88,46 +88,46 @@ void makeMapSprites(void){
     for(int x=0; x < MAP_X; x++)
         for(int y=0; y < MAP_Y; y++) {
 
-            map[MAP_X * y + x].x = x;
-            map[MAP_X * y + x].y = y;
-            map[MAP_X * y + x].sprite = sfSprite_create();
-            sfSprite_setTexture(map[MAP_X * y + x].sprite, textureArray[0], sfTrue);
+            map[MAP_COORD(x,y)].x = x;
+            map[MAP_COORD(x,y)].y = y;
+            map[MAP_COORD(x,y)].sprite = sfSprite_create();
+            sfSprite_setTexture(map[MAP_COORD(x,y)].sprite, textureArray[0], sfTrue);
             if(hasAllEdges(x,y))
-                sfSprite_setTextureRect(map[MAP_X * y + x].sprite, (sfIntRect){5*TILE_SIZE,1*TILE_SIZE,TILE_SIZE,TILE_SIZE});
+                sfSprite_setTextureRect(map[MAP_COORD(x,y)].sprite, (sfIntRect){5*TILE_SIZE,1*TILE_SIZE,TILE_SIZE,TILE_SIZE});
             else
-                sfSprite_setTextureRect(map[MAP_X * y + x].sprite, (sfIntRect){0*TILE_SIZE,1*TILE_SIZE,TILE_SIZE,TILE_SIZE});
-            sfSprite_setPosition(map[MAP_X * y + x].sprite, (sfVector2f){map[MAP_X * y + x].x * TILE_SIZE + BORDER_OFFSET, map[MAP_X * y + x].y * TILE_SIZE + BORDER_OFFSET});
+                sfSprite_setTextureRect(map[MAP_COORD(x,y)].sprite, (sfIntRect){0*TILE_SIZE,1*TILE_SIZE,TILE_SIZE,TILE_SIZE});
+            sfSprite_setPosition(map[MAP_COORD(x,y)].sprite, (sfVector2f){map[MAP_COORD(x,y)].x * TILE_SIZE + BORDER_OFFSET, map[MAP_COORD(x,y)].y * TILE_SIZE + BORDER_OFFSET});
 
             // This section creates the sprites for the walls
-            if(map[MAP_X * y + x].edge != NULL)
+            if(map[MAP_COORD(x,y)].edge != NULL)
             {
-                if(map[MAP_X * y + x].edge -> N == true)
+                if(map[MAP_COORD(x,y)].edge -> N == true)
                 {
-                    map[MAP_X * y + x].edge -> sprite[0] = sfSprite_create();
-                    sfSprite_setTexture(map[MAP_X * y + x].edge -> sprite[0], textureArray[0], sfTrue);
-                    sfSprite_setTextureRect(map[MAP_X * y + x].edge -> sprite[0], (sfIntRect){1*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-                    sfSprite_setPosition(map[MAP_X * y + x].edge -> sprite[0], sfSprite_getPosition(map[MAP_X * y + x].sprite));
+                    map[MAP_COORD(x,y)].edge -> sprite[0] = sfSprite_create();
+                    sfSprite_setTexture(map[MAP_COORD(x,y)].edge -> sprite[0], textureArray[0], sfTrue);
+                    sfSprite_setTextureRect(map[MAP_COORD(x,y)].edge -> sprite[0], (sfIntRect){1*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
+                    sfSprite_setPosition(map[MAP_COORD(x,y)].edge -> sprite[0], sfSprite_getPosition(map[MAP_COORD(x,y)].sprite));
                 }
-                if(map[MAP_X * y + x].edge -> S == true)
+                if(map[MAP_COORD(x,y)].edge -> S == true)
                 {
-                    map[MAP_X * y + x].edge -> sprite[1] = sfSprite_create();
-                    sfSprite_setTexture(map[MAP_X * y + x].edge -> sprite[1], textureArray[0], sfTrue);
-                    sfSprite_setTextureRect(map[MAP_X * y + x].edge -> sprite[1], (sfIntRect){2*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-                    sfSprite_setPosition(map[MAP_X * y + x].edge -> sprite[1], sfSprite_getPosition(map[MAP_X * y + x].sprite));
+                    map[MAP_COORD(x,y)].edge -> sprite[1] = sfSprite_create();
+                    sfSprite_setTexture(map[MAP_COORD(x,y)].edge -> sprite[1], textureArray[0], sfTrue);
+                    sfSprite_setTextureRect(map[MAP_COORD(x,y)].edge -> sprite[1], (sfIntRect){2*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
+                    sfSprite_setPosition(map[MAP_COORD(x,y)].edge -> sprite[1], sfSprite_getPosition(map[MAP_COORD(x,y)].sprite));
                 }
-                if(map[MAP_X * y + x].edge -> W == true)
+                if(map[MAP_COORD(x,y)].edge -> W == true)
                 {
-                    map[MAP_X * y + x].edge -> sprite[2] = sfSprite_create();
-                    sfSprite_setTexture(map[MAP_X * y + x].edge -> sprite[2], textureArray[0], sfTrue);
-                    sfSprite_setTextureRect(map[MAP_X * y + x].edge -> sprite[2], (sfIntRect){3*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-                    sfSprite_setPosition(map[MAP_X * y + x].edge -> sprite[2], sfSprite_getPosition(map[MAP_X * y + x].sprite));
+                    map[MAP_COORD(x,y)].edge -> sprite[2] = sfSprite_create();
+                    sfSprite_setTexture(map[MAP_COORD(x,y)].edge -> sprite[2], textureArray[0], sfTrue);
+                    sfSprite_setTextureRect(map[MAP_COORD(x,y)].edge -> sprite[2], (sfIntRect){3*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
+                    sfSprite_setPosition(map[MAP_COORD(x,y)].edge -> sprite[2], sfSprite_getPosition(map[MAP_COORD(x,y)].sprite));
                 }
-                if(map[MAP_X * y + x].edge -> E == true)
+                if(map[MAP_COORD(x,y)].edge -> E == true)
                 {
-                    map[MAP_X * y + x].edge -> sprite[3] = sfSprite_create();
-                    sfSprite_setTexture(map[MAP_X * y + x].edge -> sprite[3], textureArray[0], sfTrue);
-                    sfSprite_setTextureRect(map[MAP_X * y + x].edge -> sprite[3], (sfIntRect){4*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
-                    sfSprite_setPosition(map[MAP_X * y + x].edge -> sprite[3], sfSprite_getPosition(map[MAP_X * y + x].sprite));
+                    map[MAP_COORD(x,y)].edge -> sprite[3] = sfSprite_create();
+                    sfSprite_setTexture(map[MAP_COORD(x,y)].edge -> sprite[3], textureArray[0], sfTrue);
+                    sfSprite_setTextureRect(map[MAP_COORD(x,y)].edge -> sprite[3], (sfIntRect){4*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE, TILE_SIZE});
+                    sfSprite_setPosition(map[MAP_COORD(x,y)].edge -> sprite[3], sfSprite_getPosition(map[MAP_COORD(x,y)].sprite));
                 }
             }
         }

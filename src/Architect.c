@@ -185,31 +185,31 @@ void makeBorders(int point_x, int point_y, int w, int h, char* mod)
             for(int y=point_y; y < point_y+h; y++) {
                 if(x == point_x)
                 {
-                    if(map[MAP_X * y + x].edge == NULL)
-                        map[MAP_X * y + x].edge = makeWall(W);
+                    if(map[MAP_COORD(x,y)].edge == NULL)
+                        map[MAP_COORD(x,y)].edge = makeWall(W);
                     else
-                        map[MAP_X * y + x].edge -> W = true;
+                        map[MAP_COORD(x,y)].edge -> W = true;
                 }
                 if(x == point_x + w-1)
                 {
-                    if(map[MAP_X * y + x].edge == NULL)
-                        map[MAP_X * y + x].edge = makeWall(E);
+                    if(map[MAP_COORD(x,y)].edge == NULL)
+                        map[MAP_COORD(x,y)].edge = makeWall(E);
                     else
-                        map[MAP_X * y + x].edge -> E = true;
+                        map[MAP_COORD(x,y)].edge -> E = true;
                 }
                 if(y == point_y)
                 {
-                    if(map[MAP_X * y + x].edge == NULL)
-                        map[MAP_X * y + x].edge = makeWall(N);
+                    if(map[MAP_COORD(x,y)].edge == NULL)
+                        map[MAP_COORD(x,y)].edge = makeWall(N);
                     else
-                        map[MAP_X * y + x].edge -> N = true;
+                        map[MAP_COORD(x,y)].edge -> N = true;
                 }
                 if(y == point_y + h - 1)
                 {
-                    if(map[MAP_X * y + x].edge == NULL)
-                        map[MAP_X * y + x].edge = makeWall(S);
+                    if(map[MAP_COORD(x,y)].edge == NULL)
+                        map[MAP_COORD(x,y)].edge = makeWall(S);
                     else
-                        map[MAP_X * y + x].edge -> S = true;
+                        map[MAP_COORD(x,y)].edge -> S = true;
                 }
             }
     }
@@ -220,31 +220,31 @@ void makeBorders(int point_x, int point_y, int w, int h, char* mod)
             for(int y=point_y; y < point_y+h; y++) {
                 if(x == point_x && point_x-1 >= 0)
                 {
-                    if(map[MAP_X * y + (x-1)].edge == NULL)
-                        map[MAP_X * y + (x-1)].edge = makeWall(E);
+                    if(map[MAP_COORD(x-1,y)].edge == NULL)
+                        map[MAP_COORD(x-1,y)].edge = makeWall(E);
                     else
-                        map[MAP_X * y + (x-1)].edge -> E = true;
+                        map[MAP_COORD(x-1,y)].edge -> E = true;
                 }
                 if(x == point_x + w-1 && point_x+w < MAP_X)
                 {
-                    if(map[MAP_X * y + (x+1)].edge == NULL)
-                        map[MAP_X * y + (x+1)].edge = makeWall(W);
+                    if(map[MAP_COORD(x+1,y)].edge == NULL)
+                        map[MAP_COORD(x+1,y)].edge = makeWall(W);
                     else
-                        map[MAP_X * y + (x+1)].edge -> W = true;
+                        map[MAP_COORD(x+1,y)].edge -> W = true;
                 }
                 if(y == point_y && point_y -1 >= 0)
                 {
-                    if(map[MAP_X * (y-1) + x].edge == NULL)
-                        map[MAP_X * (y-1) + x].edge = makeWall(S);
+                    if(map[MAP_COORD(x,y-1)].edge == NULL)
+                        map[MAP_COORD(x,y-1)].edge = makeWall(S);
                     else
-                        map[MAP_X * (y-1) + x].edge -> S = true;
+                        map[MAP_COORD(x,y-1)].edge -> S = true;
                 }
                 if(y == point_y + h - 1 && point_y+h < MAP_Y)
                 {
-                    if(map[MAP_X * (y+1) + x].edge == NULL)
-                        map[MAP_X * (y+1) + x].edge = makeWall(N);
+                    if(map[MAP_COORD(x,y+1)].edge == NULL)
+                        map[MAP_COORD(x,y+1)].edge = makeWall(N);
                     else
-                        map[MAP_X * (y+1) + x].edge -> N = true;
+                        map[MAP_COORD(x,y+1)].edge -> N = true;
                 }
             }
     }
