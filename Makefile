@@ -17,7 +17,7 @@
 # Executable name
 TARGET			:=	stabby
 # Window title - remember to escape special characters (inc. spaces)
-RELEASENAME 	:=	Stabby\ Alpha
+WINDOW_TITLE 	:=	Stabby\ Alpha\ Prerelease
 
 # Compiler flags
 CFLAGS			:=	-Wall -Wextra -ansi -pedantic -std=c99
@@ -27,8 +27,8 @@ LD_FLAGS		:=	-Wl,-rpath,. -O3
 LD_FLAGS_DEBUG	:=	-Wl,-rpath,. -O0 -ggdb
 
 # Defines for both release and debug builds - remember to escape characters
-DEFINES			:= 	-DNAME_VERSION=\"$(RELEASENAME)\"
-DEFINES_DEBUG	:=	-DNAME_VERSION=\"$(RELEASENAME)\ DEBUG\" -DDEBUG
+DEFINES			:= 	-DNAME_VERSION=\"$(WINDOW_TITLE)\"
+DEFINES_DEBUG	:=	-DNAME_VERSION=\"$(WINDOW_TITLE)\ DEBUG\" -DDEBUG
 
 # Include directories
 INCLUDES		:=	-Isrc -Iinc
