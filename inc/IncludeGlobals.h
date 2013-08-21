@@ -76,6 +76,8 @@ void showAll(void);
 void clearVisibility(void);
 void doFOV(void);
 
+void FOVfindCells(list_p edge, int origin, int edge_distance);
+
 // Graphics.c
 void loadTextures(void);
 void makeShapes(void);
