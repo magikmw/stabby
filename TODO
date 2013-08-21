@@ -13,7 +13,7 @@ Known Bugs:
 Unknown Bugs:
     * Probably
 
-Alpha Release 1:
+Alpha Release 1: ARRP 2013 - 21-22 September 2013
     * AI:
         # DMapFollow()
         * ? Experiment with moving & turning for some angles
@@ -37,10 +37,12 @@ Alpha Release 1:
 
     * Building / Makefile
         * Windows build method
+        * Arch Makefile target
 
     * Technical / Code
         # Change colors to use Stabby.h #defines
-        * Refactor all functions to use MAP_COORD(x,y) input
+        # Refactor all functions to use MAP_COORD(x,y) input/output
+        * ? Consider switching to SDL2
 
     * States
         * Split up the program into game / menu / etc
@@ -75,6 +77,10 @@ Alpha ...:
     * States
         * Intro
         * Game Menu
+
+    * Audio:
+        * Placeholder music / sound effects
+        * Audio integration
 
 Beta ...:
     * Manual PDF
