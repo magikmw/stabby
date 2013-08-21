@@ -81,7 +81,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 # Create varios directories as needed
 _makedirs:
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR) $(BIN_DIR)
 
 clean: 
 	rm -fr $(OBJ_DIR) $(BIN_DIR)$(TARGET)
@@ -101,7 +101,7 @@ info:
 	@echo "LIBRARIES:	$(LIBRARIES)"
 
 libds:
-	@mkdir -p $(BIN_DIR)libs inc
+	@mkdir -p $(BIN_DIR)libs
 	@cd lib/libds && make clean libds.a ds.h
 	@cp lib/libds/libds.a $(BIN_DIR)libs/libds.a
 	@cp lib/libds/ds.h inc/ds.h
