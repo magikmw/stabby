@@ -1,10 +1,22 @@
-TODO
-bin/assets
-bin/libs
-obj
-inc
-stabby
-log
+# Assets and binaries
+bin/*
 *.tar.gz
-temp
+
+# Lib includes
+inc/ds.h
+
+# Object files folder
+obj
+
+# Stabbu binary
+stabby
+
+# Log file (if exists)
+log
+
+# Temporary files
+temp*
 paste*
+
+# Spoilers :)
+VISION

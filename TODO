@@ -1,0 +1,82 @@
+Milestones:
+    * Alpha Release 1
+    * Alpha ...
+    * Beta Release 1
+    * Beta ...
+    * 1.0
+
+Known Bugs:
+    * Not enough comments
+    # Player can sometimes still walk into a mob
+    # Mob seems to teleport +2 tiles away
+
+Unknown Bugs:
+    * Probably
+
+Alpha Release 1:
+    * AI:
+        # DMapFollow()
+        * ? Experiment with moving & turning for some angles
+
+    * Plain Mob
+        * Plain_Standby()
+        * Plain_Alert()
+        * Plain_Pursue()
+
+    * FOV
+        * Player FOV
+        * Mob adjustable FOV
+
+    * Manual.txt
+
+    * Graphics
+        * Light / Dark tiles distinction beside 'not in vision'
+        * ? Experiment with different floor tiles
+        * Plain mob state graphics (different colors)
+        * Mob FOV display (state colored)
+
+    * Building / Makefile
+        * Windows build method
+
+    * Technical / Code
+        # Change colors to use Stabby.h #defines
+        * Refactor all functions to use MAP_COORD(x,y) input
+
+    * States
+        * Split up the program into game / menu / etc
+            * madgarden's way: https://groups.google.com/d/msg/c-game/wrMaMz42hlE/w8lIWiTQfLoJ
+            * Split
+            * Main Menu
+            * Game
+            * Win/Lose
+
+Alpha ...:
+    * DMaps:
+        * Make possible for POI to hold arbitrary values
+        * Flee maps
+        * Monster traffic:
+            # Don't skip monster tiles [check for .entity before collision?]
+            # Add +n to the cost of a monster-occupied tile where n is # of rounds the monster has not moved
+            * Allow monsters to swap places when one is 'moving' onto another
+
+    * Game modes
+        * Easy mode (no limits)
+        * Turn limit
+        * Real-time limit
+
+    * Graphics
+        * player -> mobs in darkness -> light creates silhuettes
+
+    * Technical / Code
+        * ? Pop-up message box
+        * Text wrapper for the side panel and messages
+        * Level / state cleanup (freeing, NULLing, re-declaring)
+
+    * States
+        * Intro
+        * Game Menu
+
+Beta ...:
+    * Manual PDF
+
+    * Graphics
