@@ -55,7 +55,7 @@ void createMap(void);
 boolean hasEdges(int x, int y);
 boolean hasAllEdges(int x, int y);
 boolean isMap(int x, int y);
-sfVector2i roomCenter(Room* room);
+int roomCenter(Room* room);
 
 // Demographics.c
 void spawnPlayer(void);

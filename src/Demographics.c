@@ -25,9 +25,11 @@ void Plain_Alerted(Entity* mob);
 void Plain_Pursue(Entity* mob);
 
 void spawnPlayer(void){
-    sfVector2i position = roomCenter(rooms[0]);
-    player.x = position.x;
-    player.y = position.y;
+    int position = roomCenter(rooms[0]);
+    int position_x = map[position].x;
+    int position_y = map[position].y;
+    player.x = position_x;
+    player.y = position_y;
     player.direction = N;
     player.sprite = sfSprite_create();
     sfSprite_setTexture(player.sprite, textureArray[0], sfTrue);
@@ -76,23 +78,11 @@ void spawnMobs(void){
 
     mobs_number = 0;
 
-    map[MAP_COORD(roomCenter(rooms[rooms_number-1]).x, roomCenter(rooms[rooms_number-1]).y)].entity = (Entity*)malloc(sizeof(Entity));
-    createMob(Plain, map[MAP_COORD(roomCenter(rooms[rooms_number-1]).x, roomCenter(rooms[rooms_number-1]).y)]);
-    mobs_number++;
+    for(int i = rooms_number-1; i > 0; i--){
+        int position = roomCenter(rooms[i]);
 
-    map[MAP_COORD(roomCenter(rooms[rooms_number-2]).x, roomCenter(rooms[rooms_number-2]).y)].entity = (Entity*)malloc(sizeof(Entity));
-    createMob(Plain, map[MAP_COORD(roomCenter(rooms[rooms_number-2]).x, roomCenter(rooms[rooms_number-2]).y)]);
-    mobs_number++;
-
-    map[MAP_COORD(roomCenter(rooms[rooms_number-3]).x, roomCenter(rooms[rooms_number-3]).y)].entity = (Entity*)malloc(sizeof(Entity));
-    createMob(Plain, map[MAP_COORD(roomCenter(rooms[rooms_number-3]).x, roomCenter(rooms[rooms_number-3]).y)]);
-    mobs_number++;
-
-    map[MAP_COORD(roomCenter(rooms[rooms_number-4]).x, roomCenter(rooms[rooms_number-4]).y)].entity = (Entity*)malloc(sizeof(Entity));
-    createMob(Plain, map[MAP_COORD(roomCenter(rooms[rooms_number-4]).x, roomCenter(rooms[rooms_number-4]).y)]);
-    mobs_number++;
-
-    map[MAP_COORD(roomCenter(rooms[rooms_number-5]).x, roomCenter(rooms[rooms_number-5]).y)].entity = (Entity*)malloc(sizeof(Entity));
-    createMob(Plain, map[MAP_COORD(roomCenter(rooms[rooms_number-5]).x, roomCenter(rooms[rooms_number-5]).y)]);
-    mobs_number++;
+        map[position].entity = (Entity*)malloc(sizeof(Entity));
+        createMob(Plain, map[position]);
+        mobs_number++;
+    }
 }

@@ -100,17 +100,25 @@ void createMap(void){
 
     // connect the rooms with corridors
     for(int i=0; i < rooms_number-1; i++){
-        sfVector2i one = roomCenter(rooms[i]);
-        sfVector2i two = roomCenter(rooms[i+1]);
-        // printf("one: x:%.0f, y:%.0f\n",one.x,one.y);
-        // printf("two: x:%.0f, y:%.0f\n",two.x,two.y);
+        int one = roomCenter(rooms[i]);
+        int two = roomCenter(rooms[i+1]);
+
+        printf("one: %i, two: %i\n", one, two);
+
+        int one_x = map[one].x;
+        int one_y = map[one].y;
+        int two_x = map[two].x;
+        int two_y = map[two].y;
+
+        printf("one_x: %i, one_y: %i, two_x: %i, two_y: %i\n", one_x, one_y, two_x, two_y);
+        
         if(randInt(0, 1) == 1){ // go horizontal, then vertical
-            makeCorridorH(one.x, two.x, one.y);
-            makeCorridorV(one.y, two.y, two.x);
+            makeCorridorH(one_x, two_x, one_y);
+            makeCorridorV(one_y, two_y, two_x);
         }
         else{
-            makeCorridorV(one.y, two.y, one.x);
-            makeCorridorH(one.x, two.x, two.y);
+            makeCorridorV(one_y, two_y, one_x);
+            makeCorridorH(one_x, two_x, two_y);
         }
     }
 
@@ -345,10 +353,10 @@ Room* makeRoom(Rect* rect){
     return temp;
 }
 
-sfVector2i roomCenter(Room* room){
+int roomCenter(Room* room){
     int x = (room -> x1 + room -> x2) / 2;
     int y = (room -> y1 + room -> y2) / 2;
-    return  (sfVector2i){x,y};
+    return MAP_COORD(x, y);
 }
 
 void clearMap(void){
