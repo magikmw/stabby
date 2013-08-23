@@ -43,6 +43,7 @@ Alpha Release 1: ARRP 2013 - 21-22 September 2013
         # Change colors to use Stabby.h #defines
         # Refactor all functions to use MAP_COORD(x,y) input/output
         * ? Consider switching to SDL2
+        * Move the map rendering to a function in Graphics.c
 
     * States
         * Split up the program into game / menu / etc
@@ -51,6 +52,10 @@ Alpha Release 1: ARRP 2013 - 21-22 September 2013
             * Main Menu
             * Game
             * Win/Lose
+
+    * Audio:
+        * Placeholder music / sound effects
+        * Audio integration
 
 Alpha ...:
     * DMaps:
@@ -77,10 +82,6 @@ Alpha ...:
     * States
         * Intro
         * Game Menu
-
-    * Audio:
-        * Placeholder music / sound effects
-        * Audio integration
 
 Beta ...:
     * Manual PDF
