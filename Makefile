@@ -39,18 +39,19 @@ LINKS			:= 	-Lbin/libs
 LIBRARIES 		:=	-lcsfml-graphics -lcsfml-system -lcsfml-window -lm -lds
 
 # Source files, without the path (assumed only one source dir exists)
-SRC_FILES		:= 	StabbyMain.c \
-			 		Globals.c \
-			 		Architect.c \
-			 		UI.c \
-			 		Keyboard.c \
-			 		Interaction.c \
-			 		Graphics.c \
-			 		SpiralShadowcasting.c \
-			 		Random.c \
-			 		Dijkstra.c \
-			 		Demographics.c \
-			 		AI.c
+SRC_FILES		:= 	AI.c \
+					Architect.c \
+					Demographics.c \
+					Dijkstra.c \
+					FieldOfView.c \
+					Globals.c \
+					Graphics.c \
+					Interaction.c \
+					Keyboard.c \
+					Random.c \
+					SpiralShadowcasting.c \
+					StabbyMain.c \
+					UI.c
 
 # Directory pathnames
 OBJ_DIR			:= 	obj/
